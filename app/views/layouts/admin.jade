@@ -1,0 +1,21 @@
+doctype html
+html(lang="en")
+extends ../layouts/default
+block content
+    div.desktop-content
+        h1 Administration
+        - var list = users ? users : "empty"
+        div.admin-users( _csrf="#{csrf_token}")
+            ul
+                each user, index in list
+                    div.admin-user(name=user._id)
+                        <div><span>ID:</span><span>#{user._id}</span></div>
+                        <div><span>Access:</span><span>#{user.Access}</span></div>
+                        <div><span>Username:</span><span>#{user.username}</span></div>
+                        <div><span>Email:</span><span>#{user.email}</span></div>
+                        <div><span>Name:</span><span>#{user.name}</span></div>
+                        <span>
+                        .btn-success(style="width:10%;" name=user._id onclick="edit(\"#{user._id}\")") Edit
+                        .btn-primary(style="width:10%;display:none;" name=user._id onclick="save(\"#{user._id}\")") Save
+                        </span>
+    script(src="/js/admin.js")

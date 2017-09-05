@@ -1,0 +1,259 @@
+
+/* Sticky footer styles
+-------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+
+.container .text-muted {
+  margin: 20px 0;
+}
+
+#footer > .container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* -----------------------------------------------
+  App styles
+  ------------------------------------------------ */
+
+.content {
+    padding-top: 15% !important;
+}
+
+body {
+    background-color: #222222;
+    overflow: hidden;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.error,
+a.error,
+a.error:hover,
+a.error:focus,
+button.error,
+button.error:hover,
+button.error:focus {
+  color: #D9534F;
+}
+
+.form-actions {
+  background: #fff;
+  border: 0;
+}
+
+#spacer {
+  display: inline-block;
+}
+
+.muted {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.alert {
+  margin-top: 10px;
+}
+
+.navbar {
+    background-color: #333333;
+    color: #FFFFFF !important;
+}
+
+.navbar-brand {
+  font-size: 14px;
+  color: #FFFFFF !important;
+}
+
+.navbar-right > li > a {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.oNav {
+    color:#FFFFFF !important;
+    background-color:#333333 !important;
+}
+/**
+ * Signup / login
+ */
+
+.form-signin input#email {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input#password {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-signin input[type="text"] {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/*
+ * Web
+ */
+
+.desktop-content {
+    position:absolute;
+    top:10%;
+    left:10%;
+    width:80%;
+    height:100%;
+    background-color: #222222;
+    color: #FFFFFF;
+}
+
+.desktop-description {
+   width:50%;
+}
+
+/*
+ * Admin
+ */
+
+.admin-users {
+    height:75%;
+    width:60%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.admin-user {
+    width:100%;
+    background-color: #555555;
+    margin-bottom: 2%;
+}
+
+
+
+
+
+
+
+
+
+/*
+ * Game Content
+ */
+
+.game-canvas {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+
+    background-color: #000000;
+}
+
+.game-content {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.game-ui-right {
+    width: 14.28%;
+    height: 100%;
+
+    position:absolute;
+    right: 0%;
+    float:right;
+
+    background-color:#ffffff;
+}
+
+.game-ui-left {
+    width: 14.28%;
+    height: 100%;
+
+    position:absolute;
+    left: 0%;
+    float:left;
+    background-color:#ffffff;
+}
+
+.game-ui-button {
+    width: 100%;
+    height: 13.75%;
+    margin-bottom: 4px;
+    background-color: #ff0000;
+}
+
+
+
+
+
+
+
+/**
+ * Navbar Additions
+ */
+
+.fullscreen-toggle {
+    position:absolute;
+
+    width:10%;
+
+
+    top:0%;
+    left:70%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
