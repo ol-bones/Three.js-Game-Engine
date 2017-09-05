@@ -25,7 +25,7 @@ const fail =
  * Expose routes
  */
 
-module.exports = function (app, passport, g_ServerList)
+module.exports = function (app, passport, viewGlobals)
 {
     const pauth = passport.authenticate.bind(passport);
 
@@ -44,7 +44,7 @@ module.exports = function (app, passport, g_ServerList)
         res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
         res.header('Access-Control-Allow-Credentials', true);
 
-        req = g_ServerList;
+        req.viewGlobals = viewGlobals;
         next();
     });
 

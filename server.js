@@ -11,6 +11,8 @@ console.log("[INFO] -- Server launching...");
  * Module dependencies
  */
 
+console.log("[INFO] -- Loading node modules");
+
 require('dotenv').config();
 
 const fs = require('fs');
@@ -23,6 +25,10 @@ const config = require('./config');
 const models = join(__dirname, 'app/models');
 const port = process.env.PORT || 5000;
 const app = express();
+
+
+const glob = require("glob")
+
 
 console.log("[INFO] -- Express loading");
 
@@ -42,12 +48,23 @@ fs.readdirSync(models)
     .filter(file => ~file.search(/^[^\.].*\.js$/))
     .forEach(file => require(join(models, file)));
 
+var allFiles = [];
+var clientJSFiles = [];
+
+// client js
+clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
+    .map((file) => file.replace(__dirname + "/public", ""));
+
+let viewGlobals = {};
+viewGlobals.clientJSFiles = clientJSFiles;
+console.log(viewGlobals);
+
 console.log("[INFO] -- Opening route endpoints");
 
 // Bootstrap routes
 require('./config/passport')(passport);
 require('./config/express')(app, passport);
-require('./config/routes')(app, passport);
+require('./config/routes')(app, passport, viewGlobals);
 
 
 
