@@ -73,8 +73,6 @@ module.exports = function (app, passport, g_ServerList)
     app.post('/admin/updateuser', auth.requiresLogin, admin.updateuser);
 
 
-console.log("routes opened");
-
     /**
     * Error handling
     */
