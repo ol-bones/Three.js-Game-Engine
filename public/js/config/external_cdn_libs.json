@@ -1,0 +1,5 @@
+[
+    "http://code.jquery.com/jquery-1.9.1.min.js",
+    "https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js",
+    "//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"
+]

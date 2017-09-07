@@ -50,13 +50,20 @@ fs.readdirSync(models)
 
 var allFiles = [];
 var clientJSFiles = [];
+var externalJSFiles = [];
 
 // client js
 clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
     .map((file) => file.replace(__dirname + "/public", ""));
 
-let viewGlobals = {};
+
+externalJSFiles = JSON.parse(fs.readFileSync(__dirname + '/public/js/config/external_cdn_libs.json', 'utf8'));
+
+
+var viewGlobals = {};
 viewGlobals.clientJSFiles = clientJSFiles;
+viewGlobals.externalJSFiles = externalJSFiles;
+
 console.log(viewGlobals);
 
 console.log("[INFO] -- Opening route endpoints");
