@@ -52,10 +52,79 @@ var allFiles = [];
 var clientJSFiles = [];
 var externalJSFiles = [];
 
+var curDir = "";
+function sortByDir(a, b)
+{
+    if(a.includes(curDir)) 
+    {
+	return 1;
+    }
+    else
+    {
+	return 0;
+    }
+}
+
 // client js
 clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
-    .map((file) => file.replace(__dirname + "/public", ""));
+    .map((file) =>
+    {
+	var fileString = fs.readFileSync(file).toString();
+	var dependencyStrings = [];
 
+	if(!file.includes("/libs/"))
+	{
+	    var re = /@(.*)@/g;
+	    dependencyStrings = (fileString.match(re));
+	}
+
+	if(dependencyStrings && dependencyStrings.length > 0)
+	{
+	    dependencyStrings = dependencyStrings.map(
+		(string) =>
+		    string.replace("@","")
+		    .replace("@", "")
+	    );
+	}
+	var parsed = 
+	{
+	    name: file.substring(file.lastIndexOf("/")+1, file.lastIndexOf(".js")),
+	    path: file.replace(__dirname + "/public", ""),
+	    contents: fileString,
+	    dependencies: dependencyStrings
+	};
+	console.log(parsed.name, " ", parsed.dependencies);
+	return parsed;
+    });
+
+    console.log("- - - - -  -");
+    clientJSFiles.sort((a,b) =>
+    {
+        if(b.dependencies && b.dependencies.length > 0)
+	{
+	    if([a.name].includes(b.dependencies))
+	    {
+		return 1;
+	    }
+	    else
+	    {
+		return -1;
+	    }
+	}
+	else if(a.path.includes("/libs/"))
+	{
+	    return -1;
+	}
+	return 1;
+    })
+    .forEach((file, index, array) =>
+    {
+	console.log(index, " |  ", file.name);
+	if(file.dependencies)
+	{
+	    file.dependencies.forEach((dep) => console.log("    | - " + dep));
+	}
+    });
 
 externalJSFiles = JSON.parse(fs.readFileSync(__dirname + '/public/js/config/external_cdn_libs.json', 'utf8'));
 
@@ -63,8 +132,6 @@ externalJSFiles = JSON.parse(fs.readFileSync(__dirname + '/public/js/config/exte
 var viewGlobals = {};
 viewGlobals.clientJSFiles = clientJSFiles;
 viewGlobals.externalJSFiles = externalJSFiles;
-
-console.log(viewGlobals);
 
 console.log("[INFO] -- Opening route endpoints");
 
