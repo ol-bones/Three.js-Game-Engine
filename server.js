@@ -52,19 +52,6 @@ var allFiles = [];
 var clientJSFiles = [];
 var externalJSFiles = [];
 
-var curDir = "";
-function sortByDir(a, b)
-{
-    if(a.includes(curDir)) 
-    {
-	return 1;
-    }
-    else
-    {
-	return 0;
-    }
-}
-
 // client js
 clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
     .map((file) =>
@@ -93,7 +80,6 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	    contents: fileString,
 	    dependencies: dependencyStrings
 	};
-	console.log(parsed.name, " ", parsed.dependencies);
 	return parsed;
     });
 

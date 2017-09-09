@@ -21,6 +21,9 @@ class World
 	this.m_Scene = new THREE.Scene();
 
 	var k = new Entity();
+	k.addComponent(new RenderComponent({}));
+	k.Initialise();
+
 
 	this.m_Camera = new THREE.PerspectiveCamera(
 	    70, window.innerWidth / window.innerHeight, 0.1, 10000
