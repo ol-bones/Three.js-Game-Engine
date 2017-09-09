@@ -3,7 +3,7 @@
 
 class Entity extends mix(BaseObject).with(Movable, Clickable)
 {
-    constructor()
+    constructor(x,y,z)
     {
 	super();
 	this.m_ID = GAME.m_World.m_Entities.length;
@@ -11,7 +11,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 
 	this.m_Components = {};
 
-	this.m_Position = new THREE.Vector3(0,0,0);
+	this.m_Position = new THREE.Vector3(x,y,z);
 
 	console.log("entity constructor();");
     }

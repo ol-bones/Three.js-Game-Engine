@@ -20,9 +20,13 @@ class World
 
 	this.m_Scene = new THREE.Scene();
 
-	var k = new Entity();
-	k.addComponent(new RenderComponent({}));
+	var k = new Entity(0,5,0);
+	k.addComponent(new RenderComponent({Parent: k}));
 	k.Initialise();
+
+	var l = new Entity(0,0,0);
+	l.addComponent(new RenderComponent({Parent: l}));
+	l.Initialise();
 
 
 	this.m_Camera = new THREE.PerspectiveCamera(
