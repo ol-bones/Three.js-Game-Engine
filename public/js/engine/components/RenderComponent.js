@@ -21,12 +21,15 @@ class RenderComponent extends mix(Component).with()
 	var matBox = new THREE.MeshPhongMaterial( { color: 0xaaaaaa } );
 	var geoBox = new THREE.BoxGeometry( 3, 1, 2 );
 	var mshBox = new THREE.Mesh(geoBox, matBox );
+
 	this.m_Mesh = mshBox;
 	this.m_Mesh.position.set(
 	    this.m_Parent.m_Position.x,
 	    this.m_Parent.m_Position.y,
 	    this.m_Parent.m_Position.z
 	);
+
+	this.m_Mesh.m_ParentEntity = this.m_Parent || null;
 
 	GAME.m_World.m_Scene.add(this.m_Mesh);
 

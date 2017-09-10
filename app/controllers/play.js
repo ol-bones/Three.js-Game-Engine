@@ -16,6 +16,5 @@ const assign = Object.assign;
 
 exports.play = function (req, res)
 {
-    console.log(req.viewGlobals);
     res.render('play', {viewGlobals: req.viewGlobals});
 };
