@@ -1,5 +1,7 @@
 // Dependencies
 // @BaseObject@
+// @Movable@
+// @Clickable@
 
 class Entity extends mix(BaseObject).with(Movable, Clickable)
 {

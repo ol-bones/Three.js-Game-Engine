@@ -1,8 +1,7 @@
 // Dependencies
 // @Component@
-// @BasicBoxMeshRenderComponent@
-
-class RenderComponent extends mix(BasicBoxMeshRenderComponent).with()
+// @Entity@
+class RenderComponent extends mix(Component).with()
 {
     constructor(args)
     {
@@ -19,7 +18,6 @@ class RenderComponent extends mix(BasicBoxMeshRenderComponent).with()
     {
 	super.Initialise();
 
-	this.m_Mesh.m_ParentEntity = this.m_Parent || null;
 	console.log("RenderComponent Initialise()");
     }
 

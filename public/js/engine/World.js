@@ -20,14 +20,14 @@ class World
 
 	this.m_Scene = new THREE.Scene();
 
-	var k = new Entity(0,5,0);
-	k.addComponent(new RenderComponent({Parent: k}));
+	var k = new Entity(0,0,40);
+	k.addComponent(new BasicShapeMeshRenderComponent({Parent: k}));
 	k.Initialise();
-
-	var l = new Entity(0,0,0);
-	l.addComponent(new RenderComponent({Parent: l}));
-	l.Initialise();
-
+//
+//	var l = new Entity(0,0,0);
+//	l.addComponent(new RenderComponent({Parent: l}));
+//	l.Initialise();
+//
 
 	this.m_Camera = new THREE.PerspectiveCamera(
 	    70, window.innerWidth / window.innerHeight, 0.1, 10000
@@ -37,13 +37,13 @@ class World
 	this.m_Renderer.setClearColor(new THREE.Color(0x0, 0x0, 0x0));
 	this.m_Renderer.setSize(window.innerWidth, window.innerHeight);
 	this.m_Renderer.shadowMapEnabled = true;
-	
+
 	// create the ground plane
 	var planeGeometry = new THREE.PlaneGeometry(60, 40, 1, 1);
 	var planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
 	var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 	plane.receiveShadow = true;
-	
+
 	// rotate and position the
 	// plane
 	plane.rotation.x = -0.5 * Math.PI;
@@ -56,7 +56,7 @@ class World
 	// to
 	// the
 	// scene
-	this.m_Scene.add(plane);
+//	this.m_Scene.add(plane);
 	// position
 	// and
 	// point

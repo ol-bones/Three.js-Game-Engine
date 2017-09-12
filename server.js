@@ -29,6 +29,7 @@ const app = express();
 
 const glob = require("glob")
 
+const toposort = require("toposort")
 
 console.log("[INFO] -- Express loading");
 
@@ -73,7 +74,7 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 		    .replace("@", "")
 	    );
 	}
-	var parsed = 
+	var parsed =
 	{
 	    name: file.substring(file.lastIndexOf("/")+1, file.lastIndexOf(".js")),
 	    path: file.replace(__dirname + "/public", ""),
@@ -83,32 +84,26 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	return parsed;
     });
 
-    console.log("- - - - -  -");
-    clientJSFiles.sort((a,b) =>
+    let graph = [];
+    let libs = [];
+
+    clientJSFiles.forEach(file =>
     {
-        if(b.dependencies && b.dependencies.length > 0)
-	{
-	    if([a.name].includes(b.dependencies))
-	    {
-		return 1;
-	    }
-	    else
-	    {
-		return -1;
-	    }
-	}
-	else if(a.path.includes("/libs/"))
-	{
-	    return -1;
-	}
-	return 1;
-    })
-    .forEach((file, index, array) =>
+	if(file.path.includes("/lib")) { libs.push(file); return; }
+	if(!file.dependencies) { graph.push([file]); return; }
+
+	file.dependencies.forEach(d => graph.push([file, clientJSFiles.find(f => f.name === d)]));
+    });
+
+
+    clientJSFiles = libs.concat(toposort(graph).filter(f=>f).reverse());
+
+    clientJSFiles.forEach((file, index, array) =>
     {
-	console.log(index, " |  ", file.name);
+	console.log(index, " | +  ", file.name);
 	if(file.dependencies)
 	{
-	    file.dependencies.forEach((dep) => console.log("    | - " + dep));
+	    file.dependencies.forEach((dep) => console.log("     |  - " + dep));
 	}
     });
 

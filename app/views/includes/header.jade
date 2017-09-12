@@ -10,10 +10,10 @@ nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
       a.navbar-brand(href='/') <span style="font-weight:bold;">ZOMBIE RTS</h5>
     .collapse.navbar-collapse
       ul.nav.navbar-nav
-        - if (req.user.Access === 1000)
+        - if (req.user && req.user.Access && req.user.Access === 1000)
           li
             a(class="oNav", href="/admin", title="Admin") Admin
-        - if (req.user.Access >= 1)
+        - if (req.user && req.user.Access && req.user.Access >= 1)
           li
             a(class="oNav", href="/play", title="Play") Play
         - if (req.isAuthenticated())

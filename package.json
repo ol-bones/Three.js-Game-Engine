@@ -51,6 +51,8 @@
     "passport-local": "~1.0.0",
     "passport-twitter": "~1.0.3",
     "request": "^2.81.0",
+    "toposort": "^1.0.3",
+    "tsort": "0.0.1",
     "view-helpers": "~0.1.5",
     "winston": "~2.3.0"
   },
