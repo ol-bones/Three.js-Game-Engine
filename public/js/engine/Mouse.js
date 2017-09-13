@@ -30,8 +30,8 @@ class Mouse
 	this.m_Ray.setFromCamera(this.m_ScreenPosition, GAME.m_World.m_Camera);
 
 
-	var intersects = this.m_Ray.intersectObjects(GAME.m_World.m_Entities.map((entity) =>
-	entity.m_Components.RenderComponent.m_Mesh));
+	var intersects = this.m_Ray.intersectObjects(GAME.m_World.m_Entities.filter(e =>
+	e.m_Renderable).map(e => e.m_Components.RenderComponent.m_Mesh));
 
 	if(intersects.length > 0)
 	{
@@ -44,7 +44,7 @@ class Mouse
 
 	    GAME.m_World.m_Entities.forEach((entity) =>
 	    {
-		if(entity.m_Components.RenderComponent.m_Mesh)
+		if(entity.m_Renderable && entity.m_Components.RenderComponent.m_Mesh)
 		{
 		    entity.m_Components.RenderComponent.m_Mesh.material.color.setHex(0xFFFFFF);
 		}

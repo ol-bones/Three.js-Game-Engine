@@ -12,6 +12,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 	this.addToWorld();
 
 	this.m_Components = {};
+	this.m_Children = [];
 
 	this.m_Position = new THREE.Vector3(x,y,z);
 
@@ -44,9 +45,33 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 	return false;
     }
 
+    addChild(entity)
+    {
+	this.m_Children.push(entity);
+    }
+
+    removeChild(entity)
+    {
+	delete this.m_Children[this.m_Children.indexOf(entity)];
+	this.m_Children.splice(this.m_Children.indexOf(entity), 1);
+
+    }
+
     addToWorld()
     {
 	GAME.m_World.m_Entities.push(this);
 	return true;
+    }
+
+    Update()
+    {
+	Object.keys(this.m_Components).forEach(c => this.m_Components[c].Update());
+	if(this.m_Components.RenderComponent)
+	{
+	    this.m_Components.RenderComponent.m_Mesh.position.set
+	    (
+		this.m_Position.x, this.m_Position.y, this.m_Position.z
+	    );
+	}
     }
 }

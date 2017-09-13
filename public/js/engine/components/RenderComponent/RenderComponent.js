@@ -8,6 +8,7 @@ class RenderComponent extends mix(Component).with()
 	super(args);
 
 	this.m_Name = "RenderComponent";
+	this.m_Parent.m_Renderable = true;
 
 	this.m_Mesh = args.Mesh || null;
 
@@ -23,6 +24,5 @@ class RenderComponent extends mix(Component).with()
 
     Update()
     {
-	console.log("RenderComponent Update();");
     }
 }

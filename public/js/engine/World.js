@@ -10,6 +10,11 @@ class World
 	this.m_Scene = {};
 
 	this.m_Camera = {};
+
+	this.m_Controls = {};
+	this.m_LocalPlayer = {};
+
+
 	this.m_Renderer = {};
     }
 
@@ -20,14 +25,40 @@ class World
 
 	this.m_Scene = new THREE.Scene();
 
-	var k = new Entity(0,0,40);
+	var k = new Entity(0,0,0);
 	k.addComponent(new BasicShapeMeshRenderComponent({Parent: k}));
 	k.Initialise();
-//
-//	var l = new Entity(0,0,0);
-//	l.addComponent(new RenderComponent({Parent: l}));
-//	l.Initialise();
-//
+
+	var Points = [];
+	    Points[0] = new THREE.Vector2(0, 0);
+	    Points[1] = new THREE.Vector2(400, 0);
+	    Points[2] = new THREE.Vector2(400, 400);
+	    Points[3] = new THREE.Vector2(0, 400);
+
+	var l = new Entity(15,0,20);
+	l.addComponent(new BasicShapeMeshRenderComponent({Parent: l, Points: Points}));
+	l.Initialise();
+
+	var Points2 = [];
+	    Points2[0] = new THREE.Vector2(0, 0);
+	    Points2[1] = new THREE.Vector2(50, 0);
+	    Points2[2] = new THREE.Vector2(50, 100);
+	    Points2[3] = new THREE.Vector2(0, 100);
+
+	var o = new Entity(10,0,0);
+	o.addComponent(new BasicShapeMeshRenderComponent({Parent: o, Points: Points2}));
+	o.Initialise();
+
+
+	var f = new FloorGrid(0,0,0);
+	f.Initialise();
+
+	var p = new Entity(5, 5, -5);
+	p.addComponent(new BasicBoxMeshRenderComponent({Parent: p}));
+	p.addComponent(new GRIDPlayerControlComponent({Parent: p}));
+	p.Initialise();
+
+	this.m_LocalPlayer = p;
 
 	this.m_Camera = new THREE.PerspectiveCamera(
 	    70, window.innerWidth / window.innerHeight, 0.1, 10000
@@ -72,6 +103,9 @@ class World
 	this.m_Camera.position.y = 40;
 	this.m_Camera.position.z = 30;
 	this.m_Camera.lookAt(this.m_Scene.position);
+
+	this.m_Controls = new THREE.OrbitControls( this.m_Camera, this.m_Renderer.domElement );
+
 	// add
 	// subtle
 	// ambient
@@ -91,10 +125,17 @@ class World
         document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
 
 	requestAnimationFrame(this.render.bind(this));
+	setInterval(this.Update.bind(this), 1000/30);
+    }
+
+    Update()
+    {
+	this.m_Entities.forEach(e => e.Update());
     }
 
     render()
     {
+	this.m_Controls.update();
 	this.m_Renderer.render(this.m_Scene, this.m_Camera);
 	requestAnimationFrame(this.render.bind(this));
     }

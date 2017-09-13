@@ -32,20 +32,20 @@ class BasicShapeMeshRenderComponent extends mix(RenderComponent).with()
     Initialise()
     {
 	super.Initialise();
-	var matBox = new THREE.MeshPhongMaterial( { color: 0xFFFFFF } );                             
-	
+	var matBox = new THREE.MeshPhongMaterial( { color: 0xFFFFFF } );
+
 	var roadShape = new THREE.Shape(this.m_Points);
 
 	var geometry = new THREE.ShapeBufferGeometry(roadShape);
 	var mesh = new THREE.Mesh(geometry, matBox);
-	
+
 	mesh.scale.set(0.1, 0.1, 0.1);
 
 	mesh.rotateX(-Math.PI/2);
 
 	this.m_Mesh = mesh;
 	this.m_Mesh.position.set
-	(	
+	(
 	    this.m_Parent.m_Position.x,
 	    this.m_Parent.m_Position.y,
 	    this.m_Parent.m_Position.z
@@ -57,6 +57,5 @@ class BasicShapeMeshRenderComponent extends mix(RenderComponent).with()
 
     Update()
     {
-	console.log("BasicShapeRenderComponent Update();");
     }
 }
