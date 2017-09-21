@@ -8,8 +8,11 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
     constructor(x,y,z)
     {
 	super();
+
 	this.m_ID = GAME.m_World.m_Entities.length;
 	this.addToWorld();
+
+	this.m_Parent = {};
 
 	this.m_Components = {};
 	this.m_Children = [];
@@ -47,6 +50,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 
     addChild(entity)
     {
+	entity.m_Parent = this;
 	this.m_Children.push(entity);
     }
 
