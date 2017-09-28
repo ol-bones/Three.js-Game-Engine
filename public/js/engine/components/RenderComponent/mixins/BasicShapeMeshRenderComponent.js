@@ -37,6 +37,7 @@ class BasicShapeMeshRenderComponent extends mix(RenderComponent).with()
 	var roadShape = new THREE.Shape(this.m_Points);
 
 	var geometry = new THREE.ShapeBufferGeometry(roadShape);
+	geometry.center();
 	var mesh = new THREE.Mesh(geometry, matBox);
 
 	mesh.scale.set(0.1, 0.1, 0.1);
@@ -44,7 +45,7 @@ class BasicShapeMeshRenderComponent extends mix(RenderComponent).with()
 	mesh.rotateX(-Math.PI/2);
 
 	this.m_Mesh = mesh;
-	this.m_Mesh.position.set
+	this.SetPosition
 	(
 	    this.m_Parent.m_Position.x,
 	    this.m_Parent.m_Position.y,

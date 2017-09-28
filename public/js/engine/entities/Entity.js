@@ -67,12 +67,17 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 	return true;
     }
 
+    SetPosition(x,y,z)
+    {
+	this.m_Position.set(x,y,z);
+    }
+
     Update()
     {
 	Object.keys(this.m_Components).forEach(c => this.m_Components[c].Update());
 	if(this.m_Components.RenderComponent)
 	{
-	    this.m_Components.RenderComponent.m_Mesh.position.set
+	    this.m_Components.RenderComponent.SetPosition
 	    (
 		this.m_Position.x, this.m_Position.y, this.m_Position.z
 	    );

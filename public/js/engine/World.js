@@ -35,7 +35,7 @@ class World
 	    Points[2] = new THREE.Vector2(400, 400);
 	    Points[3] = new THREE.Vector2(0, 400);
 
-	var l = new Entity(15,0,20);
+	var l = new Entity(40,0,40);
 	l.addComponent(new BasicShapeMeshRenderComponent({Parent: l, Points: Points}));
 	l.Initialise();
 
@@ -45,12 +45,16 @@ class World
 	    Points2[2] = new THREE.Vector2(50, 100);
 	    Points2[3] = new THREE.Vector2(0, 100);
 
-	var o = new Entity(10,0,0);
+	var o = new Entity(17.5,0,35);
 	o.addComponent(new BasicShapeMeshRenderComponent({Parent: o, Points: Points2}));
 	o.Initialise();
 
+	var u = new Entity(10,5,45);
+	u.addComponent(new BasicHullMeshRenderComponent({Parent: u}));
+	u.Initialise();
 
-	var f = new FloorGrid(0,0,0);
+
+	var f = new FloorGrid(5,0,40);
 	f.Initialise();
 
 	var p = new Entity(5, 5, -5);

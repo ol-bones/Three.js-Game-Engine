@@ -12,6 +12,8 @@ class RenderComponent extends mix(Component).with()
 
 	this.m_Mesh = args.Mesh || null;
 
+	this.m_Axis = {};
+
 	console.log("RenderComponent constructor()");
     }
 
@@ -19,7 +21,17 @@ class RenderComponent extends mix(Component).with()
     {
 	super.Initialise();
 
+	this.m_Axis = new THREE.AxisHelper(5);
+
+	GAME.m_World.m_Scene.add(this.m_Axis);
+
 	console.log("RenderComponent Initialise()");
+    }
+
+    SetPosition(x,y,z)
+    {
+	this.m_Mesh.position.set(x,y,z);
+	this.m_Axis.position.set(x,y,z);
     }
 
     Update()

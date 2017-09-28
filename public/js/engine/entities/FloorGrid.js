@@ -4,21 +4,21 @@
 
 class FloorGrid extends Entity
 {
-    constructor(args)
+    constructor(x,y,z)
     {
-	super(args);
+	super(x,y,z);
     }
 
     Initialise()
     {
 	super.Initialise();
 
-	var count = 0;
-	for(var f = 0; f < 40; f++)
+	let count = 0;
+	for(let f = 0; f < 40; f++)
 	{
-	    for(var i = 0; i < 4; i++)
+	    for(let i = 0; i < 4; i++)
 	    {
-		var e = new Entity(this.m_Position.x + (i * 2.5) + (2.5/2),
+		let e = new Entity(this.m_Position.x + (i * 2.5) + (2.5/2),
 				   this.m_Position.y,
 				   this.m_Position.z - (2.5/2) - (f * 2.5));
 		e.addComponent(new BasicBoxMeshRenderComponent(
@@ -60,18 +60,17 @@ class FloorGrid extends Entity
 	    let current = open.shift();
 	    if(current === to) { break; }
 
-	    let current_neighbours = current.m_Components.PathFindingNodeComponent.GetNeighbours()
+	    current.m_Components.PathFindingNodeComponent.GetNeighbours()
 		.filter((n) => !n.m_Components.PathFindingNodeComponent.m_Closed)
-		.filter((n) => !n.m_Components.PathFindingNodeComponent.m_Visited || n.m_Components.PathFindingNodeComponent.TF(to,current) < n.m_Components.PathFindingNodeComponent.m_F);
+		.filter((n) => !n.m_Components.PathFindingNodeComponent.m_Visited || n.m_Components.PathFindingNodeComponent.TF(to,current) < n.m_Components.PathFindingNodeComponent.m_F)
+		.forEach((n) =>
+		{
+		    n.m_Components.PathFindingNodeComponent.m_Visited = true;
+		    n.m_Components.PathFindingNodeComponent.m_Previous = current;
+		    n.m_Components.PathFindingNodeComponent.F(to);
 
-	    current_neighbours.forEach((n) =>
-	    {
-		n.m_Components.PathFindingNodeComponent.m_Visited = true;
-		n.m_Components.PathFindingNodeComponent.m_Previous = current;
-		n.m_Components.PathFindingNodeComponent.F(to);
-
-		open.push(n);
-	    });
+		    open.push(n);
+		});
 
 	    current.m_Components.PathFindingNodeComponent.m_Closed = true;
 	    open.sort((a,b) => a.m_Components.PathFindingNodeComponent.m_F - b.m_Components.PathFindingNodeComponent.m_F);
