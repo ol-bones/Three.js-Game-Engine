@@ -182,7 +182,7 @@ class World
 	spotLight.castShadow = true;
 	this.m_Scene.add(spotLight);
 
-        document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
+	document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
 
 	requestAnimationFrame(this.render.bind(this));
 	setInterval(this.Update.bind(this), 1000/30);
