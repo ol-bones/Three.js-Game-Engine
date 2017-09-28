@@ -24,8 +24,8 @@ class Mouse
     {
 	evt.preventDefault();
 
-	this.m_ScreenPosition.x = (  event.clientX / window.innerWidth  ) * 2 - 1;
-	this.m_ScreenPosition.y = -( event.clientY / window.innerHeight ) * 2 + 1;
+	this.m_ScreenPosition.x = ( evt.clientX / window.innerWidth  ) * 2 - 1;
+	this.m_ScreenPosition.y = -( evt.clientY / window.innerHeight ) * 2 + 1;
 
 	this.m_Ray.setFromCamera(this.m_ScreenPosition, GAME.m_World.m_Camera);
 
