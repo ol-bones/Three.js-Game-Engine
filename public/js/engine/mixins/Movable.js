@@ -2,12 +2,10 @@ let Movable = (Entity) => class extends Entity
 {
     constructor()
     {
-	super();
-	console.log("movable constructor();");
+		super();
     }
 
     move()
     {
-	console.log("moooove");
     }
 }
