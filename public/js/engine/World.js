@@ -107,6 +107,77 @@ class World
 	}));
 
 
+	walls[3] = new Entity(4, 5, 20);
+	walls[3].addComponent(new BasicHullMeshRenderComponent(
+	{
+	    Parent: walls[3],
+	    Points:
+	    [
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(-20, 0, 0),
+		new THREE.Vector3(-20, 100, 0),
+		new THREE.Vector3(0, 100, 0),
+		new THREE.Vector3(0, 100, 400),
+		new THREE.Vector3(0, 0, 400),
+		new THREE.Vector3(-20, 100, 400),
+		new THREE.Vector3(-20, 0, 400)
+	    ]
+	}));
+
+
+	walls[4] = new Entity(4, 5, -35);
+	walls[4].addComponent(new BasicHullMeshRenderComponent(
+	{
+	    Parent: walls[4],
+	    Points:
+	    [
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(-20, 0, 0),
+		new THREE.Vector3(-20, 100, 0),
+		new THREE.Vector3(0, 100, 0),
+		new THREE.Vector3(0, 100, 500),
+		new THREE.Vector3(0, 0, 500),
+		new THREE.Vector3(-20, 100, 500),
+		new THREE.Vector3(-20, 0, 500)
+	    ]
+	}));
+
+	walls[5] = new Entity(16, 5, -30);
+	walls[5].addComponent(new BasicHullMeshRenderComponent(
+	{
+	    Parent: walls[5],
+	    Points:
+	    [
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(-20, 0, 0),
+		new THREE.Vector3(-20, 100, 0),
+		new THREE.Vector3(0, 100, 0),
+		new THREE.Vector3(0, 100, 600),
+		new THREE.Vector3(0, 0, 600),
+		new THREE.Vector3(-20, 100, 600),
+		new THREE.Vector3(-20, 0, 600)
+	    ]
+	}));
+
+
+	walls[6] = new Entity(16, 5, 20);
+	walls[6].addComponent(new BasicHullMeshRenderComponent(
+	{
+	    Parent: walls[6],
+	    Points:
+	    [
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(-20, 0, 0),
+		new THREE.Vector3(-20, 100, 0),
+		new THREE.Vector3(0, 100, 0),
+		new THREE.Vector3(0, 100, 200),
+		new THREE.Vector3(0, 0, 200),
+		new THREE.Vector3(-20, 100, 200),
+		new THREE.Vector3(-20, 0, 200)
+	    ]
+	}));
+
+
 
 	walls.forEach(wall => wall.Initialise());
 
