@@ -351,6 +351,7 @@ class World
 	var p = new Entity(5, 5, -5);
 	p.addComponent(new BasicBoxMeshRenderComponent({Parent: p}));
 	p.addComponent(new GRIDPlayerControlComponent({Parent: p}));
+	p.addComponent(new DebugComponent({Parent: p}));
 	p.Initialise();
 
 	this.m_LocalPlayer = p;
