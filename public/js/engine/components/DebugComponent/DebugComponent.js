@@ -1,6 +1,7 @@
 // Dependencies
 // @Component@
 // @Entity@
+// @RenderComponent@
 class DebugComponent extends mix(Component).with()
 {
     constructor(args)
@@ -19,6 +20,7 @@ class DebugComponent extends mix(Component).with()
 		GAME.m_World.m_Scene.add(this.m_Axis);
     }
 	
+	// Called by RenderComponent
 	SetPosition(x,y,z)
     {
 		if (this.m_Axis.position)
