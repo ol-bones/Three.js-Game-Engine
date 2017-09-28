@@ -53,6 +53,62 @@ class World
 	u.addComponent(new BasicHullMeshRenderComponent({Parent: u}));
 	u.Initialise();
 
+	var walls = [];
+	walls[0] = new Entity(-15,5,1);
+	walls[0].addComponent(new BasicHullMeshRenderComponent(
+	{
+	    Parent: walls[0],
+	    Points:
+	    [
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(-400, 0, 0),
+		new THREE.Vector3(-400, 100, 0),
+		new THREE.Vector3(0, 100, 0),
+		new THREE.Vector3(0, 100, 20),
+		new THREE.Vector3(0, 0, 20),
+		new THREE.Vector3(-400, 0, 20),
+		new THREE.Vector3(-400, 100, 20)
+	    ]
+	}));
+
+	walls[1] = new Entity(-15,5,-11);
+	walls[1].addComponent(new BasicHullMeshRenderComponent(
+	{
+	    Parent: walls[1],
+	    Points:
+	    [
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(-400, 0, 0),
+		new THREE.Vector3(-400, 100, 0),
+		new THREE.Vector3(0, 100, 0),
+		new THREE.Vector3(0, 100, 20),
+		new THREE.Vector3(0, 0, 20),
+		new THREE.Vector3(-400, 0, 20),
+		new THREE.Vector3(-400, 100, 20)
+	    ]
+	}));
+
+
+	walls[2] = new Entity(-36,5,-5);
+	walls[2].addComponent(new BasicHullMeshRenderComponent(
+	{
+	    Parent: walls[2],
+	    Points:
+	    [
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(-20, 0, 0),
+		new THREE.Vector3(-20, 100, 0),
+		new THREE.Vector3(0, 100, 0),
+		new THREE.Vector3(0, 100, -100),
+		new THREE.Vector3(0, 0, -100),
+		new THREE.Vector3(-20, 100, -100),
+		new THREE.Vector3(-20, 0, -100)
+	    ]
+	}));
+
+
+
+	walls.forEach(wall => wall.Initialise());
 
 	var f = new FloorGrid(5,0,40);
 	f.Initialise();
