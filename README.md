@@ -1,4 +1,4 @@
-HOW TO USE
+#HOW TO USE
 ```
 > npm install
 ```
@@ -11,7 +11,7 @@ Go to: localhost:5000
 
 
 
-HOW TO CONTRIBUTE NICELY
+#HOW TO CONTRIBUTE NICELY
 
 1. Create your own branch (YourName-dev)
 2. Always commit and push to YourName-dev
@@ -21,7 +21,7 @@ HOW TO CONTRIBUTE NICELY
    
    If you want someone else to check it over or something set them as a reviewer
    
-BEFORE YOU BEGIN CODING:
+##BEFORE YOU BEGIN CODING:
 
 >git checkout master
 
@@ -34,3 +34,8 @@ BEFORE YOU BEGIN CODING:
 >git merge master
 
 >... continue coding...
+
+
+#DEVELOPMENT NOTES
+
+O: I am making Physics, then Texturing, then Open World, then Level Editor
