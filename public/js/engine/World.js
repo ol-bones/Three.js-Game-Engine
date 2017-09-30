@@ -14,7 +14,7 @@ class World
 		this.m_Controls = {};
 		this.m_LocalPlayer = {};
 
-
+	this.m_PhysicsWorld = {};
 		this.m_Renderer = {};
     }
 
@@ -23,6 +23,7 @@ class World
 		console.log(GAME);
 		this.m_Entities = [];
 
+	this.m_PhysicsWorld = new OIMO.World({info: true, worldscale: 100});
 		this.m_Scene = new THREE.Scene();
 
 		var k = new Entity(0,0,0);
@@ -351,6 +352,7 @@ class World
 		var p = new Entity(5, 5, -5);
 		p.addComponent(new BasicBoxMeshRenderComponent({Parent: p}));
 		p.addComponent(new GRIDPlayerControlComponent({Parent: p}));
+		p.addComponent(new PhysicsComponent({Parent: p}));
 		p.addComponent(new DebugComponent({Parent: p}));
 		p.Initialise();
 
@@ -426,6 +428,9 @@ class World
 
     Update()
     {
+	this.m_PhysicsWorld.step();
+
+
 		this.m_Entities.forEach(e => e.Update());
     }
 
