@@ -24,8 +24,13 @@ HOW TO CONTRIBUTE NICELY
 BEFORE YOU BEGIN CODING:
 
 >git checkout master
+
 >git fetch --all
+
 >git pull
+
 >git checkout YourName-dev
+
 >git merge master
+
 >... continue coding...
