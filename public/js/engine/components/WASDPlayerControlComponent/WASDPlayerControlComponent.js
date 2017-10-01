@@ -86,19 +86,25 @@ class WASDPlayerControlComponent extends mix(Component).with()
 
 	this.m_Arrow.position.set(this.m_Ray.ray.origin.x, this.m_Ray.ray.origin.y, this.m_Ray.ray.origin.z);
 
-	if(this.m_Keys.W) { this.m_Ray.ray.origin.z += 0.25; }
-	if(this.m_Keys.S) { this.m_Ray.ray.origin.z -= 0.25; }
-	if(this.m_Keys.A) { this.m_Ray.ray.origin.x += 0.25; }
-	if(this.m_Keys.D) { this.m_Ray.ray.origin.x -= 0.25; }
+	if(this.m_Keys.W) { this.m_Ray.ray.origin.z += 2.5; }
+	if(this.m_Keys.S) { this.m_Ray.ray.origin.z -= 2.5; }
+	if(this.m_Keys.A) { this.m_Ray.ray.origin.x += 2.5; }
+	if(this.m_Keys.D) { this.m_Ray.ray.origin.x -= 2.5; }
 
 	var intersects = this.m_Ray.intersectObjects(GAME.m_World.m_Entities.filter(e => e.m_Renderable).map(e => e.m_Components.RenderComponent.m_Mesh));//.filter(e => e === this.m_Parent));
 
 	if(intersects.length > 0)
 	{
-	   if(this.m_Keys.W) { this.m_Parent.m_Position.z += 0.25; }
-	   if(this.m_Keys.S) { this.m_Parent.m_Position.z -= 0.25; }
-	   if(this.m_Keys.A) { this.m_Parent.m_Position.x += 0.25; }
-	   if(this.m_Keys.D) { this.m_Parent.m_Position.x -= 0.25; }
+	   if(this.m_Keys.W) { this.m_Parent.SetPositionZ(this.m_Parent.m_Position.z + 2.5); }
+	   if(this.m_Keys.S) { this.m_Parent.SetPositionZ(this.m_Parent.m_Position.z - 2.5); }
+	   if(this.m_Keys.A) { this.m_Parent.SetPositionX(this.m_Parent.m_Position.x + 2.5); }
+	   if(this.m_Keys.D) { this.m_Parent.SetPositionX(this.m_Parent.m_Position.x - 2.5); }
+
+	   let arrow_pos = new THREE.Vector3(this.m_Parent.m_Position.x, this.m_Parent.m_Position.y, this.m_Parent.m_Position.z);
+	   this.m_Arrow.position.set(this.m_Parent.m_Position.x, this.m_Parent.m_Position.y, this.m_Parent.m_Position.z);
+	   this.m_Arrow.setDirection((arrow_pos.sub(intersects[0].point)).normalize().multiplyScalar(-1));
+	   this.m_Arrow.setLength(this.m_Arrow.position.distanceTo(intersects[0].point));
+	   this.m_Parent.SetPositionY(intersects[0].point.y + 50);
 	}
     }
 }
