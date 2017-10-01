@@ -39,3 +39,8 @@ Go to: localhost:5000
 # DEVELOPMENT NOTES
 
 O: I am making Physics, then Texturing, then Open World, then Level Editor
+
+### Open Tasks (add stuff here as it's thought of I guess)
+Engine development tasks: Asset management/loading/rendering, skeletal/human bodies, activatable entities (doors, light switches, etc), AI (enemies, companions, npcs (dialogue and events and other capabilities?)), items, weapons
+
+Game development tasks: user interface, cutscenes, quests, inventory
