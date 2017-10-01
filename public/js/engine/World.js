@@ -23,8 +23,12 @@ class World
 		console.log(GAME);
 		this.m_Entities = [];
 
-	this.m_PhysicsWorld = new OIMO.World({info: true, worldscale: 100});
+	this.m_PhysicsWorld = new CANNON.World();
+	this.m_PhysicsWorld.gravity.set(0, -6, 0);
+	this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
+
 		this.m_Scene = new THREE.Scene();
+//		this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
 
 		var k = new Entity(0,0,0);
 		k.addComponent(new BasicShapeMeshRenderComponent({Parent: k}));
@@ -36,7 +40,7 @@ class World
 			Points[2] = new THREE.Vector2(400, 400);
 			Points[3] = new THREE.Vector2(0, 400);
 
-		var l = new Entity(40,0,40);
+		var l = new Entity(400, 0, 400);
 		l.addComponent(new BasicShapeMeshRenderComponent({Parent: l, Points: Points}));
 		l.Initialise();
 
@@ -46,16 +50,34 @@ class World
 			Points2[2] = new THREE.Vector2(50, 100);
 			Points2[3] = new THREE.Vector2(0, 100);
 
-		var o = new Entity(17.5,0,35);
+		var o = new Entity(175, 0, 350);
 		o.addComponent(new BasicShapeMeshRenderComponent({Parent: o, Points: Points2}));
 		o.Initialise();
 
-		var u = new Entity(10,5,45);
+		var u = new Entity(10, 50, 450);
 		u.addComponent(new BasicHullMeshRenderComponent({Parent: u}));
 		u.Initialise();
 
+		let boxes = [];
+		for(let i = 0; i < 10; i++)
+		{
+		    boxes[i] = new Entity(i * 50, 200, 0);
+		    boxes[i].addComponent(new BasicBoxMeshRenderComponent({Parent: boxes[i]}));
+		    boxes[i].addComponent(new PhysicsComponent({Parent: boxes[i], Type: CANNON.Body.DYNAMIC}));
+		    boxes[i].addComponent(new DebugComponent({Parent: boxes[i]}));
+		    boxes[i].Initialise();
+		}
+
+		let ground = new Entity(0,0,0);
+		ground.addComponent(new BasicBoxMeshRenderComponent({Parent: ground, Scale: {x:
+1000, y: 5, z: 1000}}));
+		ground.addComponent(new PhysicsComponent({Parent: ground, Type:
+CANNON.Body.KINEMATIC}));
+		ground.addComponent(new DebugComponent({Parent: ground}));
+		ground.Initialise();
+
 		var walls = [];
-		walls[0] = new Entity(-15,5,1);
+		walls[0] = new Entity(-150, 50, 10);
 		walls[0].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[0],
@@ -72,7 +94,7 @@ class World
 			]
 		}));
 
-		walls[1] = new Entity(-15,5,-11);
+		walls[1] = new Entity(-150, 50, -110);
 		walls[1].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[1],
@@ -90,7 +112,7 @@ class World
 		}));
 
 
-		walls[2] = new Entity(-36,5,-5);
+		walls[2] = new Entity(-360, 50, -50);
 		walls[2].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[2],
@@ -108,7 +130,7 @@ class World
 		}));
 
 
-		walls[3] = new Entity(4, 5, 20);
+		walls[3] = new Entity(40, 50, 200);
 		walls[3].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[3],
@@ -126,7 +148,7 @@ class World
 		}));
 
 
-		walls[4] = new Entity(4, 5, -35);
+		walls[4] = new Entity(40, 50, -350);
 		walls[4].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[4],
@@ -143,7 +165,7 @@ class World
 			]
 		}));
 
-		walls[5] = new Entity(16, 5, -30);
+		walls[5] = new Entity(160, 50, -300);
 		walls[5].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[5],
@@ -161,7 +183,7 @@ class World
 		}));
 
 
-		walls[6] = new Entity(16, 5, 20);
+		walls[6] = new Entity(160, 50, 200);
 		walls[6].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[6],
@@ -179,7 +201,7 @@ class World
 		}));
 
 
-		walls[7] = new Entity(35, 5, 5);
+		walls[7] = new Entity(350, 50, 50);
 		walls[7].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[7],
@@ -197,7 +219,7 @@ class World
 		}));
 
 
-		walls[8] = new Entity(60, 5, 40);
+		walls[8] = new Entity(600, 50, 400);
 		walls[8].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[8],
@@ -215,7 +237,7 @@ class World
 		}));
 
 
-		walls[9] = new Entity(19, 5, 25);
+		walls[9] = new Entity(190, 50, 250);
 		walls[9].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[9],
@@ -233,7 +255,7 @@ class World
 		}));
 
 
-		walls[10] = new Entity(19, 5, 50);
+		walls[10] = new Entity(190, 50, 500);
 		walls[10].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[10],
@@ -252,7 +274,7 @@ class World
 
 
 
-		walls[11] = new Entity(40, 5, 61);
+		walls[11] = new Entity(400, 50, 610);
 		walls[11].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[11],
@@ -270,7 +292,7 @@ class World
 		}));
 
 
-		walls[12] = new Entity(40, 5, 19);
+		walls[12] = new Entity(400, 50, 190);
 		walls[12].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[12],
@@ -288,7 +310,7 @@ class World
 		}));
 
 
-		walls[13] = new Entity(25, 5, 11);
+		walls[13] = new Entity(250, 50, 101);
 		walls[13].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[13],
@@ -306,7 +328,7 @@ class World
 		}));
 
 
-		walls[14] = new Entity(25, 5, -1);
+		walls[14] = new Entity(250, 50, -10);
 		walls[14].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[14],
@@ -324,7 +346,7 @@ class World
 		}));
 
 
-		walls[15] = new Entity(10, 5, -61);
+		walls[15] = new Entity(100, 50, -610);
 		walls[15].addComponent(new BasicHullMeshRenderComponent(
 		{
 			Parent: walls[15],
@@ -344,15 +366,18 @@ class World
 
 
 
-		walls.forEach(wall => wall.Initialise());
+		walls.forEach(wall => { wall.addComponent(new PhysicsComponent({Parent: wall, Type:
+CANNON.Body.KINEMATIC}));
+					wall.addComponent(new DebugComponent({Parent: wall}));
+					wall.Initialise(); });
 
-		var f = new FloorGrid(5,0,40);
-		f.Initialise();
+		//var f = new FloorGrid(5,0,40);
+		//f.Initialise();
 
-		var p = new Entity(5, 5, -5);
+		var p = new Entity(50, 100, -50);
 		p.addComponent(new BasicBoxMeshRenderComponent({Parent: p}));
-		p.addComponent(new GRIDPlayerControlComponent({Parent: p}));
-		p.addComponent(new PhysicsComponent({Parent: p}));
+		p.addComponent(new WASDPlayerControlComponent({Parent: p}));
+		p.addComponent(new PhysicsComponent({Parent: p, Type: CANNON.Body.DYNAMIC}));
 		p.addComponent(new DebugComponent({Parent: p}));
 		p.Initialise();
 
@@ -428,8 +453,8 @@ class World
 
     Update()
     {
-	this.m_PhysicsWorld.step();
-
+	this.m_PhysicsWorld.step(1/60);
+	//this.m_DebugRenderer.update(); // only use this if shit is really weird
 
 		this.m_Entities.forEach(e => e.Update());
     }

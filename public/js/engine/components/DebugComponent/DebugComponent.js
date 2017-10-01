@@ -12,6 +12,7 @@ class DebugComponent extends mix(Component).with()
 
 	this.m_Axis = {};
 	this.m_Mesh = {};
+	this.m_MeshBoundingBox = {};
     }
 
     Initialise()
@@ -25,16 +26,20 @@ class DebugComponent extends mix(Component).with()
 	    {
 		case "cylinder": phys_geom = new THREE.CylinderGeometry(
 		    this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.size[0],
-		    this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.size[2],
-		    this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.size[1], 10, 10
+		    this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.size[1],
+		    this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.size[2], 10, 10
+		);
+		break;
+
+		case "box": phys_geom = new THREE.BoxGeometry(
+		    this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.size[0],
+		    this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.size[1],
+		    this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.size[2]
 		);
 	    }
 
 	    let material = new THREE.LineBasicMaterial({
-		color: 0xff0000,
-		linewidth: 1,
-		linecap: 'round',
-		linejoin:  'round'
+		color: 0xff0000
 	    });
 
 	    this.m_Mesh = new THREE.LineSegments(phys_geom, material);
@@ -43,9 +48,12 @@ class DebugComponent extends mix(Component).with()
 
 	}
 
-	this.m_Axis = new THREE.AxisHelper(5);
+	this.m_MeshBoundingBox = new
+THREE.BoxHelper(this.m_Parent.m_Components.RenderComponent.m_Mesh, 0x0000ff);
+	this.m_Axis = new THREE.AxisHelper(50);
 	GAME.m_World.m_Scene.add(this.m_Axis);
 	GAME.m_World.m_Scene.add(this.m_Mesh);
+	GAME.m_World.m_Scene.add(this.m_MeshBoundingBox);
     }
 
     // Called by RenderComponent
@@ -57,7 +65,20 @@ class DebugComponent extends mix(Component).with()
 	}
 	if(this.m_Mesh.position)
 	{
-	    this.m_Mesh.position.set(x,y,z);
+	    this.m_Mesh.position.set
+	    (
+		this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.x,
+		this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.y,
+		this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.z
+	    );
+	    this.m_MeshBoundingBox.position.set
+	    (
+		this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.x,
+		this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.y,
+		this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.z
+	    );
+
+	    this.m_MeshBoundingBox.update();
 	}
     }
 
