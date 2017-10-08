@@ -18,8 +18,6 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 	this.m_Children = [];
 
 	this.m_Position = new THREE.Vector3(x,y,z);
-
-	console.log("entity constructor();");
     }
 
     Initialise()
@@ -58,7 +56,6 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
     {
 	delete this.m_Children[this.m_Children.indexOf(entity)];
 	this.m_Children.splice(this.m_Children.indexOf(entity), 1);
-
     }
 
     addToWorld()
