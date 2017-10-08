@@ -47,7 +47,7 @@ class PhysicsComponent extends mix(Component).with()
 
 		if(this.m_Args.Type === CANNON.Body.DYNAMIC)
 		{
-			this.m_PhysicsBody.addEventListener("collide", c => GAME.log(c));
+			//this.m_PhysicsBody.addEventListener("collide", c => GAME.log(c));
 		}
 
 		this.m_BodySettings.world.add(this.m_PhysicsBody);
