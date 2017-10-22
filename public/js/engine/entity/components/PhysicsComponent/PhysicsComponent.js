@@ -51,6 +51,7 @@ class PhysicsComponent extends mix(Component).with()
 		}
 
 		this.m_BodySettings.world.add(this.m_PhysicsBody);
+		this.m_IsInitialised = true;
     }
 
     Update()

@@ -27,7 +27,48 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 
     _InitialiseComponents()
     {
-	Object.keys(this.m_Components).forEach((key) => this.m_Components[key].Initialise());
+	Object.keys(this.m_Components)
+	    .filter(key => !this.m_Components[key].m_IsInitialised)
+	    .filter(key =>
+	    {
+		return (this.IsFirstComponent(key)
+		||
+		this.PreviousComponent(key).m_IsInitialised);
+	    })
+	    .forEach((key) => this.m_Components[key].Initialise());
+    }
+
+    IsInitialised()
+    {
+	return (Object.keys(this.m_Components)
+	    .filter(key => this.m_Components[key].m_IsInitialised))
+	    .length === this.ComponentCount();
+    }
+
+    IsFirstComponent(componentName)
+    {
+	return (Object.keys(this.m_Components).indexOf(componentName) === 0);
+    }
+
+    PreviousComponent(componentName)
+    {
+	let prevComponentIndex = this.PreviousComponentIndex(componentName);
+	let componentKeys = Object.keys(this.m_Components);
+	let previousComponentKey = componentKeys[prevComponentIndex];
+
+	let previousComponent = this.m_Components[previousComponentKey];
+
+	return previousComponent;
+    }
+
+    PreviousComponentIndex(componentName)
+    {
+	return Object.keys(this.m_Components).indexOf(componentName) - 1;
+    }
+
+    ComponentCount()
+    {
+	return Object.keys(this.m_Components).length;
     }
 
     addComponent(component)
@@ -84,13 +125,20 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 
     Update()
     {
-	Object.keys(this.m_Components).forEach(c => this.m_Components[c].Update());
-	if(this.m_Components.RenderComponent)
+	if(this.IsInitialised())
 	{
-	    this.m_Components.RenderComponent.SetPosition
-	    (
-		this.m_Position.x, this.m_Position.y, this.m_Position.z
-	    );
+	    Object.keys(this.m_Components).forEach(c => this.m_Components[c].Update());
+	    if(this.m_Components.RenderComponent)
+	    {
+		this.m_Components.RenderComponent.SetPosition
+		(
+		    this.m_Position.x, this.m_Position.y, this.m_Position.z
+		);
+	    }
+	}
+	else
+	{
+	    this._InitialiseComponents();
 	}
     }
 }

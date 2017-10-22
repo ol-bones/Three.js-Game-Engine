@@ -20,7 +20,6 @@ class RenderComponent extends mix(Component).with()
     SetPosition(x,y,z)
     {
 		this.m_Mesh.position.set(x,y,z);
-		
 		if(this.m_Parent.m_Components.DebugComponent)
 		{
 			this.m_Parent.m_Components.DebugComponent.SetPosition(x,y,z);

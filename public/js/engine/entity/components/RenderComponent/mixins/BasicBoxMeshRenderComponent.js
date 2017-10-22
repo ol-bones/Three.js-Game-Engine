@@ -6,15 +6,16 @@ class BasicBoxMeshRenderComponent extends mix(RenderComponent).with()
     constructor(args)
     {
 	super(args);
-
-	console.log("BasicBoxMeshRenderComponent constructor();");
     }
 
     Initialise()
     {
 	super.Initialise();
 
-	var matBox = new THREE.MeshPhongMaterial( { color: 0xaaaaaa } );
+	var boxTex = texture("check.png");
+	if(!boxTex.isTexture) { return; }
+
+	var matBox = new THREE.MeshPhongMaterial( { color: 0xffffff, map: boxTex } );
 
 	var geoBox = new THREE.BoxGeometry(
 	    this.m_Args.Scale ? this.m_Args.Scale.x : 25,
@@ -35,6 +36,7 @@ class BasicBoxMeshRenderComponent extends mix(RenderComponent).with()
 	);
 	this.m_Mesh.m_ParentEntity = this.m_Parent || null;
 	GAME.m_World.m_Scene.add(this.m_Mesh);
+	this.m_IsInitialised = true;
     }
 
     Update()

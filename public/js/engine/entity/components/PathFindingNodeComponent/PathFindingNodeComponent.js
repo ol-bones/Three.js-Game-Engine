@@ -64,7 +64,7 @@ class PathFindingNodeComponent extends mix(Component).with()
     Initialise()
     {
 	super.Initialise();
-
+	this.m_IsInitialised = true;
     }
 
     Update()

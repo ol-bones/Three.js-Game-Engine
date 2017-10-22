@@ -457,6 +457,8 @@ CANNON.Body.KINEMATIC}));
 	//this.m_DebugRenderer.update(); // only use this if shit is really weird
 
 		this.m_Entities.forEach(e => e.Update());
+		GAME.m_AssetCache.Update();
+		GAME.m_AssetCache._AssetLoader.Update();
     }
 
     render()

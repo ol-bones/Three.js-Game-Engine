@@ -19,8 +19,6 @@ class BasicHullMeshRenderComponent extends mix(RenderComponent).with()
 	points[7] = new THREE.Vector3(Math.random()*100, Math.random()*100, 100);
 
 	this.m_Points = args.Points || points;
-
-	console.log("BasicShapeMeshRenderComponent constructor();");
     }
 
     Initialise()
@@ -45,6 +43,7 @@ class BasicHullMeshRenderComponent extends mix(RenderComponent).with()
 
 	this.m_Mesh.m_ParentEntity = this.m_Parent || null;
 	GAME.m_World.m_Scene.add(this.m_Mesh);
+	this.m_IsInitialised = true;
     }
 
     Update()
