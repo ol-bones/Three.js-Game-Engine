@@ -45,10 +45,16 @@ class PhysicsComponent extends mix(Component).with()
 		this.m_PhysicsBody.position.set(this.m_BodySettings.pos[0], this.m_BodySettings.pos[1],
 		this.m_BodySettings.pos[2]);
 
-		if(this.m_Args.Type === CANNON.Body.DYNAMIC)
+		let triggerComponent = this.m_Parent.m_Components.TriggerComponent;
+		if(triggerComponent)
 		{
-			//this.m_PhysicsBody.addEventListener("collide", c => GAME.log(c));
+		    this.m_PhysicsBody.addEventListener("collide", c =>
+triggerComponent.onTrigger(c));
 		}
+
+		this.m_PhysicsBody.m_ParentEntity = this.m_Parent;
+		this.m_PhysicsBody.collisionResponse = (triggerComponent) ?
+					!triggerComponent.m_IsHolographic : true;
 
 		this.m_BodySettings.world.add(this.m_PhysicsBody);
 		this.m_IsInitialised = true;

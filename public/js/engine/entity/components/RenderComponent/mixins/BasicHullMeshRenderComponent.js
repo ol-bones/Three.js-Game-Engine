@@ -28,7 +28,17 @@ class BasicHullMeshRenderComponent extends mix(RenderComponent).with()
 
 	var geometry = new THREE.ConvexBufferGeometry(this.m_Points);
 	geometry.center();
-	var mesh = new THREE.Mesh(geometry, matBox);
+
+	var mat =
+	(
+	    this.m_Parent.m_Components.MaterialComponent
+	) ?
+	    this.m_Parent.m_Components.MaterialComponent.m_Material
+	:
+	    matBox
+	;
+
+	var mesh = new THREE.Mesh(geometry, mat);
 
 	this.m_Mesh = mesh;
 	this.SetPosition

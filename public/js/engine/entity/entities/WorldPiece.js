@@ -345,6 +345,26 @@ CANNON.Body.KINEMATIC}));
 	    ]
 	}));
 
+	walls[16] = new Entity(100, 50, -300);
+	walls[16].addComponent(new MaterialComponent({Parent: walls[16], texture: "swirl.jpg"}));
+	walls[16].addComponent(new BasicHullMeshRenderComponent(
+	{
+	    Parent: walls[16],
+	    Points:
+	    [
+		new THREE.Vector3(0, 0, 0),
+		new THREE.Vector3(-100, 0, 0),
+		new THREE.Vector3(-100, 100, 0),
+		new THREE.Vector3(0, 100, 0),
+		new THREE.Vector3(0, 100, 20),
+		new THREE.Vector3(0, 0, 20),
+		new THREE.Vector3(-100, 0, 20),
+		new THREE.Vector3(-100, 100, 20)
+	    ]
+	}));
+
+	walls[16].addComponent(new TriggerComponent({Parent: walls[16]}));
+
 	walls.forEach(wall =>
 	{
 	    wall.addComponent(new PhysicsComponent({Parent: wall, Type: CANNON.Body.KINEMATIC}));

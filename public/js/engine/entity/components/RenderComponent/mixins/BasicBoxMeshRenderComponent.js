@@ -23,6 +23,11 @@ class BasicBoxMeshRenderComponent extends mix(RenderComponent).with()
 	    this.m_Args.Scale ? this.m_Args.Scale.z : 25
 	);
 
+	if(this.m_Parent.m_Components.MaterialComponent)
+	{
+	    matBox = this.m_Parent.m_Components.MaterialComponent.m_Material;
+	}
+
 	geoBox.center();
 
 	var mshBox = new THREE.Mesh(geoBox, matBox );
