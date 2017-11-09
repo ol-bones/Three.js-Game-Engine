@@ -69,7 +69,7 @@ class Mouse
 
 		if(evt && this.m_CurrentHoveredObject)
 		{
-			console.log(this.m_CurrentHoveredObject);
+			console.log(this.m_CurrentHoveredObject.m_ParentEntity.GetSavableData());
 			if(this.m_CurrentHoveredObject !== this.m_CurrentClickedObject)
 			{
 			this.m_LastClickedObject = this.m_CurrentClickedObject;

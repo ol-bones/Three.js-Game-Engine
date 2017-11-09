@@ -24,6 +24,7 @@ class GRIDPlayerControlComponent extends mix(Component).with()
 	super.Initialise();
 
 	this.m_Ray = new THREE.Raycaster();
+	this.m_IsInitialised = true;
     }
 
     Activate(entity)

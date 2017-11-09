@@ -54,6 +54,8 @@ THREE.BoxHelper(this.m_Parent.m_Components.RenderComponent.m_Mesh, 0x0000ff);
 	GAME.m_World.m_Scene.add(this.m_Axis);
 	GAME.m_World.m_Scene.add(this.m_Mesh);
 	GAME.m_World.m_Scene.add(this.m_MeshBoundingBox);
+
+	this.m_IsInitialised = true;
     }
 
     // Called by RenderComponent
