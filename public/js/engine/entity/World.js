@@ -33,6 +33,10 @@ class World
 		let wp = new WorldPiece(new THREE.Vector3(0,0,0));
 		wp.Initialise();
 
+	let wp2 = new WorldPiece(new THREE.Vector3(1000, 0, 0));
+	wp2.Initialise();
+	console.log(wp2);
+
 		var p = new Entity(50, 100, -50);
 		p.addComponent(new BasicBoxMeshRenderComponent({Parent: p}));
 		p.addComponent(new WASDPlayerControlComponent({Parent: p}));

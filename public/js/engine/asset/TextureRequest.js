@@ -16,7 +16,7 @@ class TextureRequest extends mix(AssetRequest).with()
 	THREE.TextureLoader.prototype.crossOrigin = "";
 	this.m_Loader = new THREE.TextureLoader();
 
-	this.m_Loader.setPath("http://80.255.0.159:5000/textures/");
+	this.m_Loader.setPath("http://sarian.world:5000/textures/");
 	this.m_Loader.setCrossOrigin("");
 	this.m_Loader.crossOrigin = "";
 

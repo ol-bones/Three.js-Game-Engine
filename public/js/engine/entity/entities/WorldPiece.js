@@ -18,6 +18,10 @@ class WorldPiece extends mix(Entity).with()
 	k.addComponent(new BasicShapeMeshRenderComponent({Parent: k}));
 	k.Initialise();
 
+	k.SetPosition(k.m_Position.x + this.m_PieceOrigin.x,
+		      k.m_Position.y + this.m_PieceOrigin.y,
+		      k.m_Position.z + this.m_PieceOrigin.z);
+
 	var Points = [];
 	    Points[0] = new THREE.Vector2(0, 0);
 	    Points[1] = new THREE.Vector2(400, 0);
@@ -27,6 +31,10 @@ class WorldPiece extends mix(Entity).with()
 	var l = new Entity(400, 0, 400);
 	l.addComponent(new BasicShapeMeshRenderComponent({Parent: l, Points: Points}));
 	l.Initialise();
+
+	l.SetPosition(l.m_Position.x + this.m_PieceOrigin.x,
+		      l.m_Position.y + this.m_PieceOrigin.y,
+		      l.m_Position.z + this.m_PieceOrigin.z);
 
 	var Points2 = [];
 	    Points2[0] = new THREE.Vector2(0, 0);
@@ -38,9 +46,17 @@ class WorldPiece extends mix(Entity).with()
 	o.addComponent(new BasicShapeMeshRenderComponent({Parent: o, Points: Points2}));
 	o.Initialise();
 
+	o.SetPosition(o.m_Position.x + this.m_PieceOrigin.x,
+		      o.m_Position.y + this.m_PieceOrigin.y,
+		      o.m_Position.z + this.m_PieceOrigin.z);
+
 	var u = new Entity(10, 50, 450);
 	u.addComponent(new BasicHullMeshRenderComponent({Parent: u}));
 	u.Initialise();
+
+	u.SetPosition(u.m_Position.x + this.m_PieceOrigin.x,
+		      u.m_Position.y + this.m_PieceOrigin.y,
+		      u.m_Position.z + this.m_PieceOrigin.z);
 
 	let boxes = [];
 	for(let i = 0; i < 10; i++)
@@ -50,8 +66,12 @@ class WorldPiece extends mix(Entity).with()
 	    boxes[i].addComponent(new PhysicsComponent({Parent: boxes[i], Type:
 CANNON.Body.DYNAMIC}));
 	    boxes[i].addComponent(new DebugComponent({Parent: boxes[i]}));
+
+	    boxes[i].onInitialised = (b) => {b.SetPosition(b.m_Position.x + this.m_PieceOrigin.x,
+	    b.m_Position.y + this.m_PieceOrigin.y,
+	    b.m_Position.z + this.m_PieceOrigin.z);};
 	    boxes[i].Initialise();
-	}
+	   }
 
 	let ground = new Entity(0,0,0);
 	ground.addComponent(new BasicBoxMeshRenderComponent({Parent: ground, Scale: {x:
@@ -61,6 +81,9 @@ CANNON.Body.KINEMATIC}));
 	ground.addComponent(new DebugComponent({Parent: ground}));
 	ground.Initialise();
 
+	ground.onInitialised = (b) => {b.SetPosition(b.m_Position.x + this.m_PieceOrigin.x,
+	    b.m_Position.y + this.m_PieceOrigin.y,
+	    b.m_Position.z + this.m_PieceOrigin.z);};
 	var walls = [];
 	walls[0] = new Entity(-150, 50, 10);
 	walls[0].addComponent(new BasicHullMeshRenderComponent(
@@ -369,8 +392,18 @@ CANNON.Body.KINEMATIC}));
 	{
 	    wall.addComponent(new PhysicsComponent({Parent: wall, Type: CANNON.Body.KINEMATIC}));
 	    wall.addComponent(new DebugComponent({Parent: wall}));
+	    wall.onInitialised = (b) => {;b.SetPosition(b.m_Position.x + this.m_PieceOrigin.x,
+	    b.m_Position.y + this.m_PieceOrigin.y,
+	    b.m_Position.z + this.m_PieceOrigin.z);};
 	    wall.Initialise();
 	});
+    }
+
+    SaveToJSON()
+    {
+	let json = [];
+	this.m_Entities.forEach(e => json.push(e.GetSavableData()));
+	console.log(json);
     }
 
     Update()

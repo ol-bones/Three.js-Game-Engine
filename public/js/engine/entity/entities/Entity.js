@@ -2,8 +2,9 @@
 // @BaseObject@
 // @Movable@
 // @Clickable@
+// @Savable@
 
-class Entity extends mix(BaseObject).with(Movable, Clickable)
+class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 {
     constructor(x,y,z)
     {
@@ -17,6 +18,8 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 	this.m_Components = {};
 	this.m_Children = [];
 
+	this.__IsInitialised = false;
+
 	this.m_Position = new THREE.Vector3(x,y,z);
     }
 
@@ -25,8 +28,24 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 	this._InitialiseComponents();
     }
 
+    onInitialised() { }
+
     _InitialiseComponents()
     {
+	if(Object.keys(this.m_Components).length === 0)
+	{
+	    if(!this.IsInitialised())
+	    {
+		this.__IsInitialised = true;
+		this.onInitialised(this);
+	    }
+	}
+	else if(!this.IsInitialised() && this._IsInitialised())
+	{
+		this.__IsInitialised = true;
+		this.onInitialised(this);
+	}
+
 	Object.keys(this.m_Components)
 	    .filter(key => !this.m_Components[key].m_IsInitialised)
 	    .filter(key =>
@@ -38,7 +57,9 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 	    .forEach((key) => this.m_Components[key].Initialise());
     }
 
-    IsInitialised()
+    IsInitialised() { return this.__IsInitialised; }
+
+    _IsInitialised()
     {
 	return (Object.keys(this.m_Components)
 	    .filter(key => this.m_Components[key].m_IsInitialised))
@@ -74,6 +95,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
     addComponent(component)
     {
 	this.m_Components[component.m_Name] = component;
+	this.__IsInitialised = false;
 	return true;
     }
 
@@ -141,4 +163,29 @@ class Entity extends mix(BaseObject).with(Movable, Clickable)
 	    this._InitialiseComponents();
 	}
     }
+
+    DataModel()
+    {
+	return new EntityModel(this);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

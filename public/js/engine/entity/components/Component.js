@@ -1,4 +1,3 @@
-
 // Dependencies
 
 class Component
@@ -17,6 +16,8 @@ class Component
     Initialise()
     {
     }
+
+    DataModel() { return new ComponentModel(this); }
 
     Update()
     {
