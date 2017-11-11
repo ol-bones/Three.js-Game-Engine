@@ -18,13 +18,21 @@ class AssetCache
 	}
 	else
 	{
+	    let request = null;
 	    switch(type)
 	    {
 		case "texture":
-		    let request = new TextureRequest(assetURI);
-		    this._AssetLoader.Enqueue(request);
-		    return request;
+		    request = new TextureRequest(assetURI);
+		    break;
+		case "json":
+		    request = new JSONDataRequest(assetURI);
+		    break;
+		default:
+		    return false;
 	    }
+
+	    this._AssetLoader.Enqueue(request);
+	    return request;
 	}
 	return false;
     }

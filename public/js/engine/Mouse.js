@@ -30,7 +30,7 @@ class Mouse
 		this.m_Ray.setFromCamera(this.m_ScreenPosition, GAME.m_World.m_Camera);
 
 
-		var intersects = this.m_Ray.intersectObjects(GAME.m_World.m_Entities.filter(e =>
+		let intersects = this.m_Ray.intersectObjects(entities().filter(e =>
 		e.m_Renderable).map(e => e.m_Components.RenderComponent.m_Mesh));
 
 		if(intersects.length > 0)
@@ -42,7 +42,7 @@ class Mouse
 			intersects[0].point.z
 			);
 
-			GAME.m_World.m_Entities.forEach((entity) =>
+			entities().forEach((entity) =>
 			{
 			if(entity.m_Renderable && entity.m_Components.RenderComponent.m_Mesh)
 			{

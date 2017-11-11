@@ -31,13 +31,14 @@ class MaterialComponent extends mix(Component).with()
 	    opacity: 0
 	});
 
-	this.m_IsInitialised = true;
+	this.onInitialised();
     }
 
     Update()
     {
 	this.m_Material.color.setHex("0x00FF00");
-	this._Fade += 0.01;
+	this._Fade += 0.1;
+	if(this._Fade > 3) { this._Fade = 0.5; }
 	this.m_Material.opacity = Math.sin(this._Fade);
     }
 }

@@ -10,8 +10,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
     {
 	super();
 
-	this.m_ID = GAME.m_World.m_Entities.length;
-	this.addToWorld();
+	this.m_ID = Entity._idGenerator();
 
 	this.m_Parent = {};
 
@@ -28,7 +27,10 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 	this._InitialiseComponents();
     }
 
-    onInitialised() { }
+    onInitialised()
+    {
+	entities().push(this);
+    }
 
     _InitialiseComponents()
     {
@@ -121,12 +123,6 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 	this.m_Children.splice(this.m_Children.indexOf(entity), 1);
     }
 
-    addToWorld()
-    {
-	GAME.m_World.m_Entities.push(this);
-	return true;
-    }
-
     SetPosition(x,y,z)
     {
 	this.m_Position.set(x,y,z);
@@ -157,6 +153,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 		    this.m_Position.x, this.m_Position.y, this.m_Position.z
 		);
 	    }
+	    this.m_Children.forEach(e => e.Update());
 	}
 	else
 	{
@@ -170,9 +167,32 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
     }
 }
 
+Entity._idCount = 0;
 
+Entity._idGenerator = () => Entity._idCount++;
 
-
+Entity.FromFile = (json) =>
+{
+    let entity = new Entity(json.pos.x, json.pos.y, json.pos.z);
+    try
+    {
+	entities().find(e => e.m_ID === Number(json.parent)).addChild(entity);
+    }
+    catch(e)
+    {
+	GAME.m_World.m_Entities.push(entity);
+    }
+    finally
+    {
+	json.components.forEach(c =>
+	{
+	    c.args.Parent = entity;
+	    entity.addComponent(Component.FromFile(c));
+	});
+	json.children.forEach(c => Entity.FromFile(c));
+	return entity;
+    }
+};
 
 
 

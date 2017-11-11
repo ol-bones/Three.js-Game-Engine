@@ -6,7 +6,9 @@ class World
 {
     constructor()
     {
+	this.m_EntityCount = 0;
 		this.m_Entities = [];
+	this.m_FlatEntities = [];
 		this.m_Scene = {};
 
 		this.m_Camera = {};
@@ -30,21 +32,6 @@ class World
 		this.m_Scene = new THREE.Scene();
 //		this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
 
-		let wp = new WorldPiece(new THREE.Vector3(0,0,0));
-		wp.Initialise();
-
-	let wp2 = new WorldPiece(new THREE.Vector3(1000, 0, 0));
-	wp2.Initialise();
-	console.log(wp2);
-
-		var p = new Entity(50, 100, -50);
-		p.addComponent(new BasicBoxMeshRenderComponent({Parent: p}));
-		p.addComponent(new WASDPlayerControlComponent({Parent: p}));
-		p.addComponent(new PhysicsComponent({Parent: p, Type: CANNON.Body.DYNAMIC}));
-		p.addComponent(new DebugComponent({Parent: p}));
-		p.Initialise();
-
-		this.m_LocalPlayer = p;
 
 		this.m_Camera = new THREE.PerspectiveCamera(
 			70, window.innerWidth / window.innerHeight, 0.1, 10000
@@ -116,7 +103,17 @@ class World
 
     Update()
     {
-	this.m_PhysicsWorld.step(1/60);
+	if(!this.first)
+	{
+	    let data = json("http://sarian.world:5000/data/world/0.json");
+	    if(data.constructor.name !== "JSONDataRequest")
+	    {
+		this.first = true;
+		Entity.FromFile(data);
+	    }
+	}
+
+	this.m_PhysicsWorld.step(1/30);
 	//this.m_DebugRenderer.update(); // only use this if shit is really weird
 
 		this.m_Entities.forEach(e => e.Update());

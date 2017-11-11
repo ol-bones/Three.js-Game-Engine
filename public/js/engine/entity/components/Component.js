@@ -17,9 +17,19 @@ class Component
     {
     }
 
+    onInitialised()
+    {
+	this.m_IsInitialised = true;
+    }
+
     DataModel() { return new ComponentModel(this); }
 
     Update()
     {
     }
 }
+
+Component.Types = [];
+
+Component._TypeFromName = (json) => Component.Types.find(t => t.name === json.name);
+Component.FromFile = (json) => new (Component._TypeFromName(json))(json.args);
