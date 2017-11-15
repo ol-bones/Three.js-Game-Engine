@@ -1,6 +1,6 @@
 "use strict";
 
-edit = (id) =>
+window.edit = (id) =>
 {
     var user_div = $("div[name="+id+"]")[0];
 
@@ -27,7 +27,7 @@ edit = (id) =>
     $(".btn-primary[name="+id+"]").show();
 };
 
-save = (id) =>
+window.save = (id) =>
 {
     var user_div = $("div[name="+id+"]")[0];
 
