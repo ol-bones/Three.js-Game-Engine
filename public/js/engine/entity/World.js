@@ -109,7 +109,13 @@ class World
 	    if(data.constructor.name !== "JSONDataRequest")
 	    {
 		this.first = true;
-		Entity.FromFile(data);
+		for(let y = 0; y < 6; y++)
+		{
+		    for(let x = 0; x < 6; x++)
+		    {
+			Entity.FromFile(data, null, new THREE.Vector3(x*1000,0,y*1000));
+		    }
+		}
 	    }
 	}
 

@@ -171,12 +171,12 @@ Entity._idCount = 0;
 
 Entity._idGenerator = () => Entity._idCount++;
 
-Entity.FromFile = (json) =>
+Entity.FromFile = (json, parent, offset) =>
 {
-    let entity = new Entity(json.pos.x, json.pos.y, json.pos.z);
+    let entity = new Entity(json.pos.x + offset.x, json.pos.y + offset.y, json.pos.z + offset.z);
     try
     {
-	entities().find(e => e.m_ID === Number(json.parent)).addChild(entity);
+	parent.addChild(entity);
     }
     catch(e)
     {
@@ -189,7 +189,7 @@ Entity.FromFile = (json) =>
 	    c.args.Parent = entity;
 	    entity.addComponent(Component.FromFile(c));
 	});
-	json.children.forEach(c => Entity.FromFile(c));
+	json.children.forEach(c => Entity.FromFile(c, entity, offset));
 	return entity;
     }
 };
