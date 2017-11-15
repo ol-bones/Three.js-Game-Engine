@@ -1,3 +1,5 @@
+"use strict";
+
 let LOADSTATE = {};
 
 LOADSTATE.ERROR		= 0;

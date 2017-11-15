@@ -1,3 +1,5 @@
+"use strict";
+
 edit = (id) =>
 {
     var user_div = $("div[name="+id+"]")[0];
