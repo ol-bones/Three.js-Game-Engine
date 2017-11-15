@@ -3,13 +3,7 @@
 // @World@
 
 window.Game = {};
-window.texture = function(uri)
-{
-    return window.GAME.m_AssetCache.GetAsset(uri, "texture");
-}
-
 var GAME = window.Game;
-var texture = window.texture;
 
 $(document).ready(function ()
 {

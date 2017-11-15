@@ -72,6 +72,8 @@ module.exports = function (app, passport, viewGlobals)
     app.get('/admin', auth.requiresLogin, admin.main);
     app.post('/admin/updateuser', auth.requiresLogin, admin.updateuser);
 
+    app.get("/recordings/", (req,res) => res.send("kek"));
+    app.get("/a2billing/admin/Public/index.php", (req,res) => res.send("kek"));
 
     /**
     * Error handling

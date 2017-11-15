@@ -49,20 +49,22 @@ fs.readdirSync(models)
     .filter(file => ~file.search(/^[^\.].*\.js$/))
     .forEach(file => require(join(models, file)));
 
-var allFiles = [];
-var clientJSFiles = [];
-var externalJSFiles = [];
+let allFiles = [];
+let clientJSFiles = [];
+let externalJSFiles = [];
+let componentTypes = [];
 
 // client js
 clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
     .map((file) =>
     {
-	var fileString = fs.readFileSync(file).toString();
-	var dependencyStrings = [];
+	let fileName = file.substring(file.lastIndexOf("/")+1, file.lastIndexOf(".js"));
+	let fileString = fs.readFileSync(file).toString();
+	let dependencyStrings = [];
 
 	if(!file.includes("/libs/"))
 	{
-	    var re = /@(.*)@/g;
+	    let re = /@(.*)@/g;
 	    dependencyStrings = (fileString.match(re));
 	}
 
@@ -74,9 +76,15 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 		    .replace("@", "")
 	    );
 	}
-	var parsed =
+
+	if(file.includes("/entity/components/"))
 	{
-	    name: file.substring(file.lastIndexOf("/")+1, file.lastIndexOf(".js")),
+	    componentTypes.push(fileName);
+	}
+
+	let parsed =
+	{
+	    name: fileName,
 	    path: file.replace(__dirname + "/public", ""),
 	    contents: fileString,
 	    dependencies: dependencyStrings
@@ -113,7 +121,7 @@ externalJSFiles = JSON.parse(fs.readFileSync(__dirname + '/public/js/config/exte
 var viewGlobals = {};
 viewGlobals.clientJSFiles = clientJSFiles;
 viewGlobals.externalJSFiles = externalJSFiles;
-
+viewGlobals.componentTypes = componentTypes;
 console.log("[INFO] -- Opening route endpoints");
 
 // Bootstrap routes

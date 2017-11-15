@@ -9,8 +9,18 @@ class AssetLoader
 	this.m_AssetDisposalQueue = [];
     }
 
+    Queued(assetRequest)
+    {
+	if(this.m_DequeuedRequests.find(r => r.m_URI === assetRequest.m_URI)) return true;
+	if(this.m_AssetRequestQueue.find(r => r.m_URI === assetRequest.m_URI)) return true;
+	if(this.m_AssetDisposalQueue.find(r => r.m_URI === assetRequest.m_URI)) return true;
+
+	return false;
+    }
+
     Enqueue(assetRequest)
     {
+	if(this.Queued(assetRequest)) return;
 	this.m_DequeuedRequests.push(assetRequest);
 	assetRequest.onQueued();
     }

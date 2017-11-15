@@ -78,10 +78,15 @@ class WASDPlayerControlComponent extends mix(Component).with()
 					break;
 			}
 		});
-		
-		this.m_Arrow = new THREE.ArrowHelper(new THREE.Vector3(0,0,0), new THREE.Vector3(0,1,0), 2.5, 0xFF0000);
-		GAME.m_World.m_Scene.add(this.m_Arrow);
-		this.m_IsInitialised = true;
+
+		this.onInitialised();
+    }
+
+    onInitialised()
+    {
+	this.m_Arrow = new THREE.ArrowHelper(new THREE.Vector3(0,0,0), new THREE.Vector3(0,1,0), 2.5, 0xFF0000);
+	GAME.m_World.m_Scene.add(this.m_Arrow);
+	this.m_IsInitialised = true;
     }
 
     Update()
@@ -96,7 +101,7 @@ class WASDPlayerControlComponent extends mix(Component).with()
 		if(this.m_Keys.A) { this.m_Ray.ray.origin.x += 2.5; }
 		if(this.m_Keys.D) { this.m_Ray.ray.origin.x -= 2.5; }
 
-		var intersects = this.m_Ray.intersectObjects(GAME.m_World.m_Entities.filter(e =>
+		let intersects = this.m_Ray.intersectObjects(entities().filter(e =>
 e.m_Components.PhysicsComponent).map(e => e.m_Components.RenderComponent.m_Mesh));//.filter(e => e === this.m_Parent));
 
 		this.m_TargetPosition = this.m_Parent.m_Position.clone();

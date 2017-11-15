@@ -19,41 +19,20 @@ class BasicHullMeshRenderComponent extends mix(RenderComponent).with()
 	points[7] = new THREE.Vector3(Math.random()*100, Math.random()*100, 100);
 
 	this.m_Points = args.Points || points;
+	this.m_Points = this.m_Points.map(p => {return p.isVector3 ? p : new THREE.Vector3(p.x, p.y, p.z);});
     }
 
     Initialise()
     {
 	super.Initialise();
-	var matBox = new THREE.MeshPhongMaterial( { color: 0xFFFFFF } );
-
 	var geometry = new THREE.ConvexBufferGeometry(this.m_Points);
 	geometry.center();
 
-	var mat =
-	(
-	    this.m_Parent.m_Components.MaterialComponent
-	) ?
-	    this.m_Parent.m_Components.MaterialComponent.m_Material
-	:
-	    matBox
-	;
-
-	var mesh = new THREE.Mesh(geometry, mat);
+	var mesh = new THREE.Mesh(geometry,
+this.m_Parent.m_Components.MaterialComponent.m_Material);
 
 	this.m_Mesh = mesh;
-	this.SetPosition
-	(
-	    this.m_Parent.m_Position.x,
-	    this.m_Parent.m_Position.y,
-	    this.m_Parent.m_Position.z
-	);
-
-//	mesh.rotateX(-Math.PI/2);
-
-
-	this.m_Mesh.m_ParentEntity = this.m_Parent || null;
-	GAME.m_World.m_Scene.add(this.m_Mesh);
-	this.m_IsInitialised = true;
+	this.onInitialised();
     }
 
     Update()

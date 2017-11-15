@@ -3,3 +3,7 @@ each item in viewGlobals.externalJSFiles
 
 each item in viewGlobals.clientJSFiles
    script(src=item.path)
+
+each item in viewGlobals.componentTypes
+    script.
+        Component.Types.push(#{item});

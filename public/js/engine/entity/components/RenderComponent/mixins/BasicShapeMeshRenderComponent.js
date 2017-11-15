@@ -30,27 +30,16 @@ class BasicShapeMeshRenderComponent extends mix(RenderComponent).with()
     Initialise()
     {
 	super.Initialise();
-	var matBox = new THREE.MeshPhongMaterial( { color: 0xFFFFFF } );
 
-	var roadShape = new THREE.Shape(this.m_Points);
-
-	var geometry = new THREE.ShapeBufferGeometry(roadShape);
+	let shape = new THREE.Shape(this.m_Points);
+	let geometry = new THREE.ShapeBufferGeometry(shape);
 	geometry.center();
-	var mesh = new THREE.Mesh(geometry, matBox);
+	let mesh = new THREE.Mesh(geometry, this.m_Parent.m_Components.MaterialComponent.m_Material);
 
 	mesh.rotateX(-Math.PI/2);
 
 	this.m_Mesh = mesh;
-	this.SetPosition
-	(
-	    this.m_Parent.m_Position.x,
-	    this.m_Parent.m_Position.y,
-	    this.m_Parent.m_Position.z
-	);
-
-	this.m_Mesh.m_ParentEntity = this.m_Parent || null;
-	GAME.m_World.m_Scene.add(this.m_Mesh);
-	this.m_IsInitialised = true;
+	this.onInitialised();
     }
 
     Update()
