@@ -67,6 +67,8 @@ class Mouse
 
     _onMouseClick(evt)
     {
+	if(evt.target.tagName === "CANVAS")
+	{
 		evt.preventDefault();
 
 		if(evt && this.m_CurrentHoveredObject)
@@ -84,6 +86,7 @@ class Mouse
 			this.m_CurrentClickedObject.m_ParentEntity.Click();
 			}
 		}
+	}
     }
 
     Update()

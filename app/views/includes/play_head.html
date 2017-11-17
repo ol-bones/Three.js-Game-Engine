@@ -1,0 +1,15 @@
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/app.css">
+    {for external in viewGlobals.externalJSFiles}
+	<script crossorigin="anonymous" src={>external}></script>
+    {/for}
+    {for client in viewGlobals.clientJSFiles}
+	<script crossorigin="anonymous" src={>client.path}></script>
+    {/for}
+    {for component in viewGlobals.componentTypes}
+	<script>Component.Types.push({>component});</script>
+    {/for}
+</head>

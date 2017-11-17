@@ -14,21 +14,20 @@ const request = require('request');
 
 const assign = Object.assign;
 
-exports.no = function (req, res)
+exports.editor = function (req, res)
 {
-    res.render('layouts/default',
+    res.render('layouts/default.html',
     {
 	partials:
 	{
-	    head:"includes/head.html",
+	    head: "includes/play_head.html",
 	    header: "includes/header.html",
-	    content: "No",
+	    content: "play.html",
 	    footer: "includes/footer.html",
 	    foot: "includes/foot.html"
 	},
-	User: req.user
+	nav_edit: true,
+	User: req.user,
+	viewGlobals: req.viewGlobals
     });
 };
-
-
-

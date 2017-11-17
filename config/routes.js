@@ -9,6 +9,7 @@ const users = require('../app/controllers/users');
 const play = require('../app/controllers/play');
 const admin = require('../app/controllers/admin');
 const no_beta = require('../app/controllers/no_beta');
+const edit = require('../app/controllers/edit');
 
 const auth = require('./middlewares/authorization');
 
@@ -45,6 +46,14 @@ module.exports = function (app, passport, viewGlobals)
         res.header('Access-Control-Allow-Credentials', true);
 
         req.viewGlobals = viewGlobals;
+	if(req.user && req.user.Access)
+	{
+	    req.user.canplay = req.user.Access >= 500;
+	    req.user.canedit = req.user.Access >= 750;
+	    req.user.canadmin = req.user.Access >= 1000;
+	}
+
+
         next();
     });
 
@@ -52,6 +61,7 @@ module.exports = function (app, passport, viewGlobals)
     app.get('/', index.index);
     app.get('/no_beta_access', auth.requiresLogin, no_beta.no);
     app.get('/play', auth.requiresLogin, play.play);
+    app.get('/edit', auth.requiresLogin, edit.editor);
 
     // user routes
     app.get('/login', users.login);
@@ -93,12 +103,34 @@ module.exports = function (app, passport, viewGlobals)
 
         if (err.stack.includes('ValidationError'))
         {
-            res.status(422).render('422', { error: err.stack });
+            res.status(422).render('layouts/default.html',
+	    {
+		partials:
+		{
+		    head: "includes/head.html",
+		    header: "includes/header.html",
+		    content: "500.html",
+		    footer: "includes/footer.html",
+		    foot: "includes/foot.html"
+		},
+		error: err.stack
+	    });
             return;
         }
 
         // error page
-        res.status(500).render('500', { error: err.stack });
+        res.status(500).render('layouts/default.html',
+	{
+	    partials:
+	    {
+		head: "includes/head.html",
+		header: "includes/header.html",
+		content: "500.html",
+		footer: "includes/footer.html",
+		foot: "includes/foot.html"
+	    },
+	    error: err.stack
+	});
     });
 
     // assume 404 since no middleware responded
@@ -109,7 +141,17 @@ module.exports = function (app, passport, viewGlobals)
             url: req.originalUrl,
             error: 'Not found'
         };
-        if (req.accepts('json')) return res.status(404).json(payload);
-        res.status(404).render('404', payload);
+        res.status(404).render('layouts/default.html',
+	{
+	    partials:
+	    {
+		head: "includes/head.html",
+		header: "includes/header.html",
+		content: "500.html",
+		footer: "includes/footer.html",
+		foot: "includes/foot.html"
+	    },
+	    error: payload.error
+	});
     });
 };

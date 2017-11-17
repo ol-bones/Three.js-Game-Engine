@@ -107,7 +107,7 @@ class World
     {
 	if(!this.first)
 	{
-	    let data = json("http://sarian.world:5000/data/world/0.json");
+	    let data = json("http://sarian.world/data/world/0.json");
 	    if(data.constructor.name !== "JSONDataRequest")
 	    {
 		this.first = true;

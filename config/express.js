@@ -23,6 +23,8 @@ const helpers = require('view-helpers');
 const config = require('./');
 const pkg = require('../package.json');
 
+const whiskers = require("../lib/whiskers");
+
 const env = process.env.NODE_ENV || 'development';
 
 /**
@@ -61,7 +63,9 @@ module.exports = function (app, passport) {
 
   // set views path, template engine and default layout
   app.set('views', config.root + '/app/views');
-  app.set('view engine', 'jade');
+
+  app.engine(".html", whiskers.__express);
+  app.set("view engine", "html");
 
   // expose package.json to views
   app.use(function (req, res, next) {
