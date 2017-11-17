@@ -22,6 +22,7 @@ exports.editor = function (req, res)
 	{
 	    head: "includes/play_head.html",
 	    header: "includes/header.html",
+	    editor: "edit.html",
 	    content: "play.html",
 	    footer: "includes/footer.html",
 	    foot: "includes/foot.html"
