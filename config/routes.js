@@ -49,7 +49,7 @@ module.exports = function (app, passport, viewGlobals)
 	if(req.user && req.user.Access)
 	{
 	    req.user.canplay = req.user.Access >= 500;
-	    req.user.canedit = req.user.Access >= 750;
+	    req.user.canedit = req.user.Access >= 500;
 	    req.user.canadmin = req.user.Access >= 1000;
 	}
 

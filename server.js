@@ -119,7 +119,8 @@ externalJSFiles = JSON.parse(fs.readFileSync(__dirname + '/public/js/config/exte
 
 
 var viewGlobals = {};
-viewGlobals.clientJSFiles = clientJSFiles;
+viewGlobals.editorJSFiles = clientJSFiles.filter(js => js.path.includes("/editor/"));
+viewGlobals.clientJSFiles = clientJSFiles.filter(js => !js.path.includes("/editor/"));
 viewGlobals.externalJSFiles = externalJSFiles;
 viewGlobals.componentTypes = componentTypes;
 console.log("[INFO] -- Opening route endpoints");

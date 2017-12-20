@@ -117,6 +117,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
     {
 	entity.m_Parent = this;
 	this.m_Children.push(entity);
+	if(window.Editor) { EDITOR.render(); }
     }
 
     removeChild(entity)
@@ -192,6 +193,7 @@ Entity.FromFile = (json, parent, offset) =>
 	    entity.addComponent(Component.FromFile(c));
 	});
 	json.children.forEach(c => Entity.FromFile(c, entity, offset));
+	if(window.Editor) { EDITOR.render(); }
 	return entity;
     }
 };

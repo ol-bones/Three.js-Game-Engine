@@ -1,5 +1,5 @@
-<div>
-    <div class="nav navbar-inverse">
+<div class="container" style="pointer-events:none;position:absolute;width:100%;height:100%;padding:0;">
+    <div class="nav navbar-inverse row" style="pointer-events:all;">
 	<div class="container-fluid">
 	    <div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -122,4 +122,87 @@ data-target="#editNavbar">
 	    </ul>
 	</div>
     </div>
+
+    <div class="row grid-fix" style="height:100%;">
+	<div class="col-xs-3 editor-left-pane">
+	    <div class="row grid-fix" style="height:100%;background-color:#222;">
+		<div class="row grid-fix"
+style="height:45%;overflow:scroll;margin-bottom:5%;background-color:#111;">
+		{>entitytreeview}
+		</div>
+		<div class="row"
+style="height:45%;margin-left:0px;overflow:hidden;margin-bottom:5%;margin-right:0;background-color:#111;">
+		    <div class="container entity-manipulator-window" style="width:100%;">
+      
+			<div id="entity-manipulator-view">
+			    <div class="input-group">
+				<span class="input-group-addon"><i>Name</i></span>
+				<input autocomplete="off" id="entity-name" type="text" class="form-control" name="entity-name" placeholder="L">
+			    </div>
+			    <div class="input-group">
+				<span class="input-group-addon"><i>ID</i></span>
+				<input id="entity-id" type="text" class="form-control" name="entity-id" placeholder="null">
+			    </div>
+			    <h3>Position</h3>
+			    <div class="input-group">
+				<span class="input-group-addon">x</span>
+				<input id="entity-x" type="text" class="form-control" name="entity-x" placeholder="0">
+			    </div>
+			    <div class="input-group">
+				<span class="input-group-addon">y</span>
+				<input id="entity-y" type="text" class="form-control" name="entity-y" placeholder="0">
+			    </div>
+			    <div class="input-group">
+				<span class="input-group-addon">z</span>
+				<input id="entity-z" type="text" class="form-control" name="entity-z" placeholder="0">
+			    </div></br>
+			    <div class="input-group" style="width:100%;">
+				<div class="input-group-btn">
+				    <button class="btn btn-default" style="width:100%;"
+onclick="$('#editor-component-modal').modal();">
+					<i class="glyphicon glyphicon-edit"> Components</i>
+				    </button>
+				</div>
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+	</div>
+	<div class="col"></div>
+    </div>
 </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="editor-component-modal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding-top:50px;">
+          <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+          <h4>
+	    <div id="editor-component-modal-entity-name">Entity</div>
+	    Components
+	  </h4>
+	    <ul class="nav nav-tabs" id="component-modal-tabs" style="border:0;">
+	    </ul>
+        </div>
+        <div class="modal-body">
+	    <div class="tab-content" id="component-modal-content">
+	    </div>
+	 </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left"
+data-dismiss="modal"><span style="color:red;" class="glyphicon glyphicon-remove"></span> Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

@@ -15,4 +15,12 @@ object.m_Parent.m_ID : -1;
     {
 	return {args:this.ARGS, name:this.NAME, updateable:this.UPDATEABLE};
     }
+
+    ToHTML()
+    {
+	return "<div id=\"" + this.NAME + "\""
+		+ "class=\"tab-pane fade in active\">"
+		+ "<h3>" + this.NAME + "</h3>"
+		+ "<p> etc </p></div>";
+    }
 }

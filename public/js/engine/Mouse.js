@@ -83,6 +83,7 @@ class Mouse
 			if(this.m_CurrentClickedObject.m_ParentEntity
 			&& this.m_CurrentClickedObject.m_ParentEntity.m_IsClickable)
 			{
+			EDITOR.SelectEntity(this.m_CurrentClickedObject.m_ParentEntity.m_ID);
 			this.m_CurrentClickedObject.m_ParentEntity.Click();
 			}
 		}
