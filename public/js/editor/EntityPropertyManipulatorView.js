@@ -36,24 +36,18 @@ class EntityPropertyManipulatorView
 
 	let first = true;
 	let list_html = "";
+
 	component_models.forEach((model) =>
 	{
-	    let html = "";
-	    if(first)
+	    list_html += whiskers.render(WHTML["component_modal_tab"],
 	    {
-		html += "<li class=\"active\">";
-	    }
-	    else
-	    {
-		html += "<li>";
-	    }
-	    html += "<a data-toggle=\"tab\" ";
-	    html += "href=\"#" + model.name + "\">";
-	    html += model.name + "</a></li>";
+		firstComponent: first,
+		componentName: model.name
+	    });
 
-	    list_html += html;
 	    first = false;
 	});
+
 	this.fillargs(component_models);
 	components.append(list_html);
     }
@@ -68,32 +62,24 @@ class EntityPropertyManipulatorView
 
 	components.forEach(c =>
 	{
-	    let html = "<div id=\"";
-	    html += c.name + "\" class=\"";
-	    if(first)
-	    {
-		html += "tab-pane fade in active\">";
-	    }
-	    else
-	    {
-		html += "tab-pane fade\">";
-	    }
+	    let componentKeyValuePairs = [];
 	    Object.keys(c.args).forEach((key) =>
 	    {
 		if(c.args[key] || !c.args[key] || Object.keys(c.args[key]).length === 1)
 		{
-		    html += "<div class=\"input-group\">";
-		    html += "<span class=\"input-group-addon\">" + key + "</span>";
-		    html += "<input id=\"arg\" type=\"text\" class=\"form-control\" name=\"arg\" value=\"" + c.args[key] + "\"></div>";
-		}
-		else
-		{
+		    componentKeyValuePairs.push([key, c.args[key]]);
 		}
 	    });
-	    html += "</div>";
-	    args_html += html;
+	    args_html += whiskers.render(WHTML["component_modal_body"],
+	    {
+		firstComponent: first,
+		componentName: c.name,
+		componentKeys: componentKeyValuePairs.map(kvp => kvp[0]),
+		componentValues: componentKeyValuePairs.map(kvp => kvp[1])
+	    });
 	    first = false;
 	});
+
 	args.append(args_html);
     }
 }

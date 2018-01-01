@@ -85,6 +85,8 @@ module.exports = function (app, passport, viewGlobals)
     app.get("/recordings/", (req,res) => res.send("kek"));
     app.get("/a2billing/admin/Public/index.php", (req,res) => res.send("kek"));
 
+    app.get("/whiskerTemplates", (req,res) => res.json(app.whiskerTemplates));
+
     /**
     * Error handling
     */

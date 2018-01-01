@@ -1,0 +1,21 @@
+<div id="{componentName}"
+{if firstComponent}
+    class="tab-pane fade in active">
+{else}
+    class="tab-pane fade">
+{/if}
+<div style="width:50%;left:0;float:left;">
+{for key in componentKeys}
+    <div class="input-group">
+	<span class="input-group-addon">
+	    {key}
+	</span>
+    </div>
+{/for}
+</div>
+<div style="width:50%;left:50%;float:right;">
+{for value in componentValues}
+    <input id="arg" type="text" class="form-control" name="arg" value="{value}">
+{/for}
+</div>
+</div>
