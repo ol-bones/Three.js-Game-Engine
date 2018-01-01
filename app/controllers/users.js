@@ -42,10 +42,18 @@ exports.create = async(function* (req, res) {
     const errors = Object.keys(err.errors)
       .map(field => err.errors[field].message);
 
-    res.render('users/signup', {
-      title: 'Sign up',
-      errors,
-      user
+    res.render("layouts/default",
+    {
+	partials:
+	{
+	    head: "includes/head.html",
+	    header: "includes/header.html",
+	    content: "users/signup.html",
+	    footer: "includes/footer.html",
+	    foot: "includes/foot.html"
+	},
+	loginrrors: errors,
+	User: req.user
     });
   }
 });
@@ -57,10 +65,20 @@ exports.create = async(function* (req, res) {
 exports.show = function (req, res) {
   const user = req.profile;
   console.log(user);
-  res.render('users/show', {
-    title: user.name,
-    user: user
-  });
+  res.render("layouts/default",
+    {
+	partials:
+	{
+	    head: "includes/head.html",
+	    header: "includes/header.html",
+	    content: "users/show.html",
+	    footer: "includes/footer.html",
+	    foot: "includes/foot.html"
+	},
+	nav_account: true,
+	profile: user,
+	User: req.user
+    });
 };
 
 exports.signin = function () {};
@@ -76,9 +94,19 @@ exports.authCallback = login;
  */
 
 exports.login = function (req, res) {
-  res.render('users/login', {
-    title: 'Login'
-  });
+    res.render("layouts/default",
+    {
+	partials:
+	{
+	    head: "includes/head.html",
+	    header: "includes/header.html",
+	    content: "users/login.html",
+	    footer: "includes/footer.html",
+	    foot: "includes/foot.html"
+	},
+	csrf: res.locals.csrf_token,
+	User: req.user
+    });
 };
 
 /**
@@ -86,10 +114,20 @@ exports.login = function (req, res) {
  */
 
 exports.signup = function (req, res) {
-  res.render('users/signup', {
-    title: 'Sign up',
-    user: new User()
-  });
+    res.render("layouts/default",
+    {
+	partials:
+	{
+	    head: "includes/head.html",
+	    header: "includes/header.html",
+	    content: "users/signup.html",
+	    footer: "includes/footer.html",
+	    foot: "includes/foot.html"
+	},
+	csrf: res.locals.csrf_token,
+	submit_user: new User(),
+	User: req.user
+    });
 };
 
 /**

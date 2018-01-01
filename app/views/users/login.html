@@ -1,0 +1,20 @@
+<div class="container text-center" style="color:#FFFFFF;">
+    <div class="row">
+	<div class="col-sm-5" style="left:25%;">
+	    <div class="text-center h3">Login or Sign Up</div>
+	    <form class="form-horizontal form-signin" action="/users/session" method="post" role="form">
+		<input type="hidden" name="_csrf" value="{csrf}">
+		    <div class="form-group">
+			<input class="form-control" type="email" placeholder="Email" name="email"></input>
+			<input class="form-control" type="password" placeholder="Password" name="password"></input>
+			<button class="btn-primary btn-block" type="submit">Log in</button>
+		    </div>
+		    </br>
+		    <div class="text-center">
+			<a class="show-signup" href="/signup"> Sign up</a>
+		    </div>
+		</input>
+	    </form>
+	</div>
+    </div>
+</div>

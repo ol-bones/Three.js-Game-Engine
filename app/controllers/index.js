@@ -13,7 +13,20 @@ const assign = Object.assign;
 
 exports.index = function (req, res)
 {
-    res.render('articles/index');
+    res.render("layouts/default.html",
+    {
+	partials:
+	{
+	    head: "includes/head.html",
+	    header: "includes/header.html",
+	    content: "index.html",
+	    footer: "includes/footer.html",
+	    foot: "includes/foot.html"
+	},
+	nav_home: true,
+	User: req.user,
+	viewGlobals: req.viewGlobals
+    });
 };
 
 

@@ -16,7 +16,18 @@ const assign = Object.assign;
 
 exports.no = function (req, res)
 {
-    res.render('layouts/no_beta');
+    res.render('layouts/default',
+    {
+	partials:
+	{
+	    head:"includes/head.html",
+	    header: "includes/header.html",
+	    content: "No",
+	    footer: "includes/footer.html",
+	    foot: "includes/foot.html"
+	},
+	User: req.user
+    });
 };
 
 

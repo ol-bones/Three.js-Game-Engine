@@ -1,3 +1,5 @@
+"use strict";
+
 
 let Savable = (Entity) => class extends Entity
 {

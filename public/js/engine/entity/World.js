@@ -1,3 +1,5 @@
+"use strict";
+
 // Dependencies
 // @Entity@
 // @Game@
@@ -28,7 +30,7 @@ class World
 	this.m_PhysicsWorld = new CANNON.World();
 	this.m_PhysicsWorld.gravity.set(0, -6, 0);
 	this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
-
+	this.m_PhysicsWorld.solver.iterations = 1;
 		this.m_Scene = new THREE.Scene();
 //		this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
 
@@ -105,11 +107,17 @@ class World
     {
 	if(!this.first)
 	{
-	    let data = json("http://sarian.world:5000/data/world/0.json");
+	    let data = json("http://sarian.world/data/world/0.json");
 	    if(data.constructor.name !== "JSONDataRequest")
 	    {
 		this.first = true;
-		Entity.FromFile(data);
+		for(let y = 0; y < 1; y++)
+		{
+		    for(let x = 0; x < 1; x++)
+		    {
+			Entity.FromFile(data, null, new THREE.Vector3(x*1000,0,y*1000));
+		    }
+		}
 	    }
 	}
 

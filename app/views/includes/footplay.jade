@@ -1,9 +1,0 @@
-each item in viewGlobals.externalJSFiles
-    script(src=item)
-
-each item in viewGlobals.clientJSFiles
-   script(src=item.path)
-
-each item in viewGlobals.componentTypes
-    script.
-        Component.Types.push(#{item});

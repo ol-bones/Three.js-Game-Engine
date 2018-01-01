@@ -1,3 +1,5 @@
+"use strict";
+
 let Clickable = (Entity) => class extends Entity
 {
     constructor()

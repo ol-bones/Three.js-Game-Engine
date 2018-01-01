@@ -23,7 +23,7 @@ const passport = require('passport');
 const config = require('./config');
 
 const models = join(__dirname, 'app/models');
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 80;
 const app = express();
 
 
@@ -53,12 +53,29 @@ let allFiles = [];
 let clientJSFiles = [];
 let externalJSFiles = [];
 let componentTypes = [];
+let whiskerTemplates = glob.sync(join(__dirname, "public/js/**/*.whtml"));
 
 // client js
 clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
+    .concat(whiskerTemplates)
     .map((file) =>
     {
-	let fileName = file.substring(file.lastIndexOf("/")+1, file.lastIndexOf(".js"));
+	whiskerTemplates = [];
+
+	let extensionIndex = 0;
+	if(file.search(".js") > -1)
+	{
+	    extensionIndex = file.lastIndexOf(".js")
+	    console.log("INDEX: " + extensionIndex);
+	}
+
+	if(file.search(".whtml") > -1)
+	{
+	    extensionIndex = file.lastIndexOf(".whtml");
+	    console.log("INDEX: " + extensionIndex);
+	}
+
+	let fileName = file.substring(file.lastIndexOf("/")+1, extensionIndex);
 	let fileString = fs.readFileSync(file).toString();
 	let dependencyStrings = [];
 
@@ -98,11 +115,11 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
     clientJSFiles.forEach(file =>
     {
 	if(file.path.includes("/lib")) { libs.push(file); return; }
+	if(file.path.includes("/views")) { whiskerTemplates.push(file); return; }
 	if(!file.dependencies) { graph.push([file]); return; }
 
 	file.dependencies.forEach(d => graph.push([file, clientJSFiles.find(f => f.name === d)]));
     });
-
 
     clientJSFiles = libs.concat(toposort(graph).filter(f=>f).reverse());
 
@@ -115,21 +132,30 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	}
     });
 
+    console.log("---- CLIENT WHISKER TEMPLATES ----");
+    whiskerTemplates.forEach((file) =>
+    {
+	console.log(file.name);
+    });
+
 externalJSFiles = JSON.parse(fs.readFileSync(__dirname + '/public/js/config/external_cdn_libs.json', 'utf8'));
 
 
 var viewGlobals = {};
-viewGlobals.clientJSFiles = clientJSFiles;
+viewGlobals.editorJSFiles = clientJSFiles.filter(js => js.path.includes("/editor/"));
+viewGlobals.clientJSFiles = clientJSFiles.filter(js => !js.path.includes("/editor/"));
 viewGlobals.externalJSFiles = externalJSFiles;
 viewGlobals.componentTypes = componentTypes;
+viewGlobals.whiskerTemplates = whiskerTemplates.map(file => file.name);
 console.log("[INFO] -- Opening route endpoints");
 
 // Bootstrap routes
+
+app.whiskerTemplates = whiskerTemplates;
+
 require('./config/passport')(passport);
 require('./config/express')(app, passport);
 require('./config/routes')(app, passport, viewGlobals);
-
-
 
 connect()
     .on('error', console.log)

@@ -1,9 +1,21 @@
+"use strict";
+
 // Dependencies
 // @Game@
 // @World@
 
 window.Game = {};
 var GAME = window.Game;
+
+window.whtml = {};
+var WHTML = window.whtml;
+
+$.holdReady( true );
+$.ajax("/whiskerTemplates").done(xhr =>
+{
+    xhr.forEach(json => WHTML[json.name] = json.contents);
+    $.holdReady( false );
+});
 
 $(document).ready(function ()
 {

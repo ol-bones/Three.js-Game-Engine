@@ -1,3 +1,5 @@
+"use strict";
+
 // Dependencies
 // @Game@
 
@@ -65,6 +67,8 @@ class Mouse
 
     _onMouseClick(evt)
     {
+	if(evt.target.tagName === "CANVAS")
+	{
 		evt.preventDefault();
 
 		if(evt && this.m_CurrentHoveredObject)
@@ -79,9 +83,11 @@ class Mouse
 			if(this.m_CurrentClickedObject.m_ParentEntity
 			&& this.m_CurrentClickedObject.m_ParentEntity.m_IsClickable)
 			{
+			EDITOR.SelectEntity(this.m_CurrentClickedObject.m_ParentEntity.m_ID);
 			this.m_CurrentClickedObject.m_ParentEntity.Click();
 			}
 		}
+	}
     }
 
     Update()

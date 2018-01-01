@@ -13,6 +13,10 @@ exports.requiresLogin = function (req, res, next) {
   {
     res.redirect("/no_beta_access");
   }
+  else if(req.originalUrl === "/pedit" && req.user && req.user.Access <= 750)
+  {
+    res.redirect("/no_beta_access");
+  }
   if (req.isAuthenticated()) return next();
   if (req.method == 'GET') req.session.returnTo = req.originalUrl;
   res.redirect('/login');

@@ -1,3 +1,5 @@
+"use strict";
+
 class ComponentModel
 {
     constructor(object)
@@ -14,3 +16,4 @@ object.m_Parent.m_ID : -1;
 	return {args:this.ARGS, name:this.NAME, updateable:this.UPDATEABLE};
     }
 }
+

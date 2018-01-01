@@ -1,0 +1,24 @@
+<div class="container text-center" style="color:#FFFFFF;">
+    <div class="row">
+	<div class="col-sm-5" style="left:25% !important;">
+	    <div class="text-center h3">Register</div>
+	    <form class="form-horizontal form-signin" action="/users" method="post" role="form">
+		<input type='hidden' name='_csrf' value="{csrf}">
+		    <div class="form-group">
+			<input class="email form-control" type='text' name="email" placeholder='Email'></input>
+			<input class="name form-control" type='text' name="name" placeholder='Full name'></input>
+			<input class="username form-control" type='text' name="username" placeholder='Username'></input>
+			<input class="password form-control" type='password' name="password" placeholder='Password'></input>
+		    </div>
+		    </br>
+		    <div class="text-center">
+			<button class="btn-primary btn-block" type='submit'>Sign up</button>
+			</br>
+			</br>
+			<a class="show-login" href="/login"> Log in</a>
+		    </div>
+		</input>
+	    </form>
+	</div>
+    </div>
+</div>

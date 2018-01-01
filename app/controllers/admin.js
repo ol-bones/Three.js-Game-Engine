@@ -10,9 +10,19 @@ exports.main = (req, res) =>
 {
     User.find({}, (err, users) =>
     {
-        res.render("layouts/admin",
+        res.render("layouts/default",
         {
-            users: users
+	    partials:
+	    {
+		head: "includes/head.html",
+		header: "includes/header.html",
+		content: "layouts/admin.html",
+		footer: "includes/footer.html",
+		foot: "includes/foot.html"
+	    },
+	    nav_admin: true,
+	    User: req.user,
+	    users: users
         });
     });
 };
