@@ -282,6 +282,7 @@ button.error:focus {
     padding-left:0;
     background-color: #222;
     height:100%;
+    width:15%;
 }
 
 
@@ -424,3 +425,59 @@ ol.tree
 .modal-header .nav > li > li:hover { background-color: #111 !important; border:0; color:#fff;}
 .modal-header .nav .active > a { background-color: #151515 !important; color: #FFF !important; border:0 !important; }
 .modal-header .nav .active > a:hover { background-color: #333 !important; color: #FFF !important; border:0 !important;}
+
+
+
+
+.editor-bottom-pane {
+    height:15%;
+    width:85%;
+    bottom:0%;
+    left:15%;
+    position:absolute;
+    background-color:#222;
+    padding:0;
+    margin:0;
+}
+
+.bottom-options {
+    height:100%;
+    width:100%;
+    padding:0;
+    margin:0;
+    background-color:#111;
+    margin-top:0.5%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
