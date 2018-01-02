@@ -24,12 +24,12 @@ class AssetRequest
 	this.m_LoadState = LOADSTATE.ERROR;
     }
 
-    onInitialised()
+    OnInitialised()
     {
 	this.m_LoadState = LOADSTATE.INITIALISED;
     }
 
-    onQueued()
+    OnQueued()
     {
 	this.m_LoadState = LOADSTATE.QUEUED;
     }
@@ -39,28 +39,28 @@ class AssetRequest
 	this.m_LoadState = LOADSTATE.ERROR;
     }
 
-    onDownloading()
+    OnDownloading()
     {
 	this.m_LoadState = LOADSTATE.DOWNLOADING;
     }
 
-    onProgress()
+    OnProgress()
     {
 	this.m_Progress += 1;
 	console.log(this.m_Progress);
     }
 
-    onFinished()
+    OnFinished()
     {
 	this.m_LoadState = LOADSTATE.FINISHED;
     }
 
-    onCached()
+    OnCached()
     {
 	this.m_LoadState = LOADSTATE.CACHED;
     }
 
-    onError()
+    OnError()
     {
 	this.m_LoadState = LOADSTATE.ERROR;
 	console.error("ASSET LOAD ERROR: [" + this.m_FileName + "]");

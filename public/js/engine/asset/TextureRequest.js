@@ -27,7 +27,7 @@ class TextureRequest extends mix(AssetRequest).with()
 	//	    - Should expire after 5minutes or something
 	//	    - Prevents ddos/spam/chinese theives
 
-	this.onInitialised();
+	this.OnInitialised();
     }
 
     Download()
@@ -37,22 +37,22 @@ class TextureRequest extends mix(AssetRequest).with()
 	    this.m_Loader.load
 	    (
 		this.m_URI,
-		this.onFinished.bind(this),
-		this.onProgress.bind(this),
-		this.onError.bind(this)
+		this.OnFinished.bind(this),
+		this.OnProgress.bind(this),
+		this.OnError.bind(this)
 	    );
 
-	    this.onDownloading();
+	    this.OnDownloading();
 	}
 	catch(Exception)
 	{
-	    this.onError();
+	    this.OnError();
 	}
     }
 
-    onFinished(texture)
+    OnFinished(texture)
     {
 	this.m_Asset = texture;
-	super.onFinished();
+	super.OnFinished();
     }
 }

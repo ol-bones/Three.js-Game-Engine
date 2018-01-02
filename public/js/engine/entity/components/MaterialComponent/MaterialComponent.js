@@ -33,7 +33,7 @@ class MaterialComponent extends mix(Component).with()
 	    opacity: 0
 	});
 
-	this.onInitialised();
+	this.OnInitialised();
     }
 
     Update()

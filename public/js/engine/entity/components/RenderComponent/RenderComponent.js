@@ -20,7 +20,7 @@ class RenderComponent extends mix(Component).with()
 	super.Initialise();
     }
 
-    onInitialised()
+    OnInitialised()
     {
 	this.SetPosition(this.m_Parent.m_Position.x, this.m_Parent.m_Position.y,
 this.m_Parent.m_Position.z);

@@ -18,7 +18,7 @@ class WorldPieceComponent extends mix(Component).with()
 	super.Initialise();
 
 
-	this.onInitialised();
+	this.OnInitialised();
     }
 
     Update()

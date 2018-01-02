@@ -19,7 +19,7 @@ class Component
     {
     }
 
-    onInitialised()
+    OnInitialised()
     {
 	this.m_IsInitialised = true;
     }

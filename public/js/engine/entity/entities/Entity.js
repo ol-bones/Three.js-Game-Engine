@@ -17,7 +17,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 	this.m_Parent = {};
 
 	this.m_Components = {};
-	this.m_Children = [];
+	this.m_Entities = [];
 
 	this.__IsInitialised = false;
 
@@ -29,7 +29,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 	this._InitialiseComponents();
     }
 
-    onInitialised()
+    OnInitialised()
     {
 	entities().push(this);
     }
@@ -41,13 +41,13 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 	    if(!this.IsInitialised())
 	    {
 		this.__IsInitialised = true;
-		this.onInitialised(this);
+		this.OnInitialised(this);
 	    }
 	}
 	else if(!this.IsInitialised() && this._IsInitialised())
 	{
 		this.__IsInitialised = true;
-		this.onInitialised(this);
+		this.OnInitialised(this);
 	}
 
 	Object.keys(this.m_Components)
@@ -96,14 +96,14 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 	return Object.keys(this.m_Components).length;
     }
 
-    addComponent(component)
+    AddComponent(component)
     {
 	this.m_Components[component.m_Name] = component;
 	this.__IsInitialised = false;
 	return true;
     }
 
-    removeComponent(component)
+    RemoveComponent(component)
     {
 	if(typeof component === "string")
 	{
@@ -113,17 +113,17 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 	return false;
     }
 
-    addChild(entity)
+    AddChild(entity)
     {
 	entity.m_Parent = this;
-	this.m_Children.push(entity);
+	this.m_Entities.push(entity);
 	if(window.Editor) { EDITOR.render(); }
     }
 
-    removeChild(entity)
+    RemoveChild(entity)
     {
-	delete this.m_Children[this.m_Children.indexOf(entity)];
-	this.m_Children.splice(this.m_Children.indexOf(entity), 1);
+	delete this.m_Entities[this.m_Entities.indexOf(entity)];
+	this.m_Entities.splice(this.m_Entities.indexOf(entity), 1);
     }
 
     SetPosition(x,y,z)
@@ -156,7 +156,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 		    this.m_Position.x, this.m_Position.y, this.m_Position.z
 		);
 	    }
-	    this.m_Children.forEach(e => e.Update());
+	    this.m_Entities.forEach(e => e.Update());
 	}
 	else
 	{
@@ -179,7 +179,7 @@ Entity.FromFile = (json, parent, offset) =>
     let entity = new Entity(json.pos.x + offset.x, json.pos.y + offset.y, json.pos.z + offset.z);
     try
     {
-	parent.addChild(entity);
+	parent.AddChild(entity);
     }
     catch(e)
     {
@@ -190,9 +190,9 @@ Entity.FromFile = (json, parent, offset) =>
 	json.components.forEach(c =>
 	{
 	    c.args.Parent = entity;
-	    entity.addComponent(Component.FromFile(c));
+	    entity.AddComponent(Component.FromFile(c));
 	});
-	json.children.forEach(c => Entity.FromFile(c, entity, offset));
+	json.entities.forEach(c => Entity.FromFile(c, entity, offset));
 	if(window.Editor) { EDITOR.render(); }
 	return entity;
     }
