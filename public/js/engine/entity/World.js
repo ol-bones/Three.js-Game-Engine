@@ -1,13 +1,16 @@
 "use strict";
 
 // Dependencies
+// @Comms@
 // @Entity@
 // @Game@
 
-class World
+class World extends mix(BaseObject).with(Comms)
 {
     constructor()
     {
+	super();
+
 	this.m_EntityCount = 0;
 		this.m_Entities = [];
 	this.m_FlatEntities = [];
@@ -121,6 +124,7 @@ class World
 	    }
 	}
 
+	this.ProcessInboundCommsQueue();
 	this.m_PhysicsWorld.step(1/30);
 	//this.m_DebugRenderer.update(); // only use this if shit is really weird
 
@@ -128,6 +132,8 @@ class World
 		GAME.m_AssetCache.Update();
 		GAME.m_AssetCache._AssetLoader.Update();
     }
+
+    saywhat() { console.log("world says what"); }
 
     render()
     {

@@ -81,10 +81,10 @@ class WASDPlayerControlComponent extends mix(Component).with()
 			}
 		});
 
-		this.onInitialised();
+		this.OnInitialised();
     }
 
-    onInitialised()
+    OnInitialised()
     {
 	this.m_Arrow = new THREE.ArrowHelper(new THREE.Vector3(0,0,0), new THREE.Vector3(0,1,0), 2.5, 0xFF0000);
 	GAME.m_World.m_Scene.add(this.m_Arrow);
@@ -120,9 +120,15 @@ e.m_Components.PhysicsComponent).map(e => e.m_Components.RenderComponent.m_Mesh)
 		   this.m_Arrow.setLength(this.m_Arrow.position.distanceTo(intersects[0].point));
 
 		    let force = (this.m_TargetPosition.clone().sub(this.m_Parent.m_Position.clone())).multiplyScalar(100);
-	
-		    this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.velocity = new
-CANNON.Vec3(force.x,this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.velocity.y,force.z);
+
+		    this.m_Parent.SendComms
+		    (
+			{ ID: 33, Component: "PhysicsComponent" },
+			[ force.x, force.y, force.z ],
+			"ApplyForce",
+			0
+		    );
+
 		   this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.y = (intersects[0].point.y + 50);
 		}
     }

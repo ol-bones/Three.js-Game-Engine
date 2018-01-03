@@ -58,7 +58,7 @@ class AssetCache
     {
 	if(this.m_Assets.find(x => x.name === assetRequest.name))
 	{
-	    assetRequest.onError();
+	    assetRequest.OnError();
 	}
 	else
 	{
@@ -70,7 +70,7 @@ class AssetCache
 		asset: assetRequest.m_Asset
 	    });
 
-	    assetRequest.onCached();
+	    assetRequest.OnCached();
 	}
     }
 

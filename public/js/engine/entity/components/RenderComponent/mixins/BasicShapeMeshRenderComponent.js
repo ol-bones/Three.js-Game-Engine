@@ -41,7 +41,7 @@ class BasicShapeMeshRenderComponent extends mix(RenderComponent).with()
 	mesh.rotateX(-Math.PI/2);
 
 	this.m_Mesh = mesh;
-	this.onInitialised();
+	this.OnInitialised();
     }
 
     Update()

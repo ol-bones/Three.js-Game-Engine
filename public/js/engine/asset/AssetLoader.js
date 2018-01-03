@@ -24,7 +24,7 @@ class AssetLoader
     {
 	if(this.Queued(assetRequest)) return;
 	this.m_DequeuedRequests.push(assetRequest);
-	assetRequest.onQueued();
+	assetRequest.OnQueued();
     }
 
     ProcessRequest(assetRequest)

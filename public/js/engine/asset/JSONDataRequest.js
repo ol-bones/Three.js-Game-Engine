@@ -14,7 +14,7 @@ class JSONDataRequest extends mix(AssetRequest).with()
     {
 	this.m_LoadState = LOADSTATE.INITIALISING;
 
-	this.onInitialised();
+	this.OnInitialised();
     }
 
     Download()
@@ -33,22 +33,22 @@ class JSONDataRequest extends mix(AssetRequest).with()
 		    {
 			xhr.overrideMimeType("application/json;charset=utf-8");
 		    }
-		    self.onDownloading();
+		    self.OnDownloading();
 		},
 		dataType: "json",
-		success: (data) => self.onFinished(data)
+		success: (data) => self.OnFinished(data)
 	    });
 
 	}
 	catch(Exception)
 	{
-	    this.onError();
+	    this.OnError();
 	}
     }
 
-    onFinished(json)
+    OnFinished(json)
     {
 	this.m_Asset = json;
-	super.onFinished();
+	super.OnFinished();
     }
 }

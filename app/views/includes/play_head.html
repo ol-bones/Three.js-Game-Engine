@@ -10,9 +10,6 @@
 	{for client in viewGlobals.clientJSFiles}
 	    <script crossorigin="anonymous" src={>client.path}></script>
 	{/for}
-	{for component in viewGlobals.componentTypes}
-	    <script>Component.Types.push({>component});</script>
-	{/for}
 
 	{if User.canedit}
 	    {if nav_edit}

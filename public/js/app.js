@@ -10,12 +10,19 @@ var GAME = window.Game;
 window.whtml = {};
 var WHTML = window.whtml;
 
-$.holdReady( true );
+$.holdReady(true);
 $.ajax("/whiskerTemplates").done(xhr =>
 {
     xhr.forEach(json => WHTML[json.name] = json.contents);
-    $.holdReady( false );
+}).then(() =>
+{
+    $.ajax("/componentTypes").done(xhr =>
+    {
+	xhr.forEach(type => Component.Types.push(eval(type)));
+	$.holdReady(false);
+    });
 });
+
 
 $(document).ready(function ()
 {

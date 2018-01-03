@@ -145,14 +145,12 @@ var viewGlobals = {};
 viewGlobals.editorJSFiles = clientJSFiles.filter(js => js.path.includes("/editor/"));
 viewGlobals.clientJSFiles = clientJSFiles.filter(js => !js.path.includes("/editor/"));
 viewGlobals.externalJSFiles = externalJSFiles;
-viewGlobals.componentTypes = componentTypes;
-viewGlobals.whiskerTemplates = whiskerTemplates.map(file => file.name);
+
+app.componentTypes = componentTypes;
+app.whiskerTemplates = whiskerTemplates.map(file => file.name);
+
 console.log("[INFO] -- Opening route endpoints");
-
 // Bootstrap routes
-
-app.whiskerTemplates = whiskerTemplates;
-
 require('./config/passport')(passport);
 require('./config/express')(app, passport);
 require('./config/routes')(app, passport, viewGlobals);
