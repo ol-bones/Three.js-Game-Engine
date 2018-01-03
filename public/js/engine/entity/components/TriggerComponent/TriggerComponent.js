@@ -22,7 +22,7 @@ class TriggerComponent extends mix(Component).with()
 	this.m_IsInitialised = true;
     }
 
-    onTrigger(evt)
+    OnTrigger(evt)
     {
 	evt.body.m_ParentEntity.SetPosition(50, 100, -50);
     }

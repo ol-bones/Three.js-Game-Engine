@@ -12,6 +12,8 @@ class PhysicsComponent extends mix(Component).with()
 
 	this.m_Name = "PhysicsComponent";
 
+	this.m_Force = new CANNON.Vec3(0,0,0);
+
 	this.m_PhysicsBody = {};
 	this.m_BodySettings = args.BodySettings || {};
     }
@@ -48,7 +50,20 @@ class PhysicsComponent extends mix(Component).with()
 	let triggerComponent = this.m_Parent.m_Components.TriggerComponent;
 	if(triggerComponent)
 	{
-	    this.m_PhysicsBody.addEventListener("collide", c => triggerComponent.onTrigger(c));
+	    this.m_PhysicsBody.addEventListener("collide", c =>
+	    {
+		this.m_Parent.SendComms
+		(
+		    {
+			ID: this.m_Parent.m_ID,
+			Reference: this.m_Parent,
+			Component: "TriggerComponent"
+		    },
+		    [ c ],
+		    "OnTrigger",
+		    0
+		);
+	    });
 	}
 
 	this.m_PhysicsBody.m_ParentEntity = this.m_Parent;
@@ -56,6 +71,18 @@ class PhysicsComponent extends mix(Component).with()
 
 	this.m_BodySettings.world.add(this.m_PhysicsBody);
 	this.m_IsInitialised = true;
+    }
+
+    SetVelocity(x,y,z)
+    {
+	this.m_PhysicsBody.velocity = new CANNON.Vec3(x,y,z);
+    }
+
+    ApplyForce(x,y,z)
+    {
+	this.m_PhysicsBody.force.x += x;
+	this.m_PhysicsBody.force.y += y;
+	this.m_PhysicsBody.force.z += z;
     }
 
     Update()

@@ -2,11 +2,12 @@
 
 // Dependencies
 // @BaseObject@
+// @Comms@
 // @Movable@
 // @Clickable@
 // @Savable@
 
-class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
+class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 {
     constructor(x,y,z)
     {
@@ -23,6 +24,8 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 
 	this.m_Position = new THREE.Vector3(x,y,z);
     }
+
+    saywhat() { console.log(this.m_ID + " says what"); }
 
     Initialise()
     {
@@ -156,6 +159,7 @@ class Entity extends mix(BaseObject).with(Movable, Clickable, Savable)
 		    this.m_Position.x, this.m_Position.y, this.m_Position.z
 		);
 	    }
+	    this.ProcessInboundCommsQueue();
 	    this.m_Entities.forEach(e => e.Update());
 	}
 	else
