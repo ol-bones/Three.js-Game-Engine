@@ -15,6 +15,11 @@ class Component
 	this.m_IsInitialised = false;
     }
 
+    LoadAssets()
+    {
+
+    }
+
     Initialise()
     {
     }

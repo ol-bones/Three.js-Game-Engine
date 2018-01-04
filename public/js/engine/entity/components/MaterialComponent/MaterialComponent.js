@@ -18,6 +18,13 @@ class MaterialComponent extends mix(Component).with()
 	this._Fade = 0;
     }
 
+    LoadAssets()
+    {
+	super.LoadAssets();
+
+	
+    }
+
     Initialise()
     {
 	super.Initialise();
