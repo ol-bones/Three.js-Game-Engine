@@ -47,31 +47,13 @@ class PhysicsComponent extends mix(Component).with()
 	this.m_PhysicsBody.position.set(this.m_BodySettings.pos[0], this.m_BodySettings.pos[1],
 	this.m_BodySettings.pos[2]);
 
-	let triggerComponent = this.m_Parent.m_Components.TriggerComponent;
-	if(triggerComponent)
-	{
-	    this.m_PhysicsBody.addEventListener("collide", c =>
-	    {
-		this.m_Parent.SendComms
-		(
-		    {
-			ID: this.m_Parent.m_ID,
-			Reference: this.m_Parent,
-			Component: "TriggerComponent"
-		    },
-		    [ c ],
-		    "OnTrigger",
-		    0
-		);
-	    });
-	}
-
 	this.m_PhysicsBody.m_ParentEntity = this.m_Parent;
-	this.m_PhysicsBody.collisionResponse = (triggerComponent) ? !triggerComponent.m_IsHolographic : true;
+	this.m_PhysicsBody.collisionResponse = true;
 
 	this.m_BodySettings.world.add(this.m_PhysicsBody);
-	this.m_IsInitialised = true;
-    }
+
+	this.OnInitialised();
+     }
 
     SetVelocity(x,y,z)
     {
