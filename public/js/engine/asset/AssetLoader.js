@@ -37,6 +37,9 @@ class AssetLoader
 	    case LOADSTATE.INITIALISED:
 		assetRequest.Download();
 	    break;
+	    case LOADSTATE.PROCESS:
+		assetRequest.Process();
+	    break;
 	    case LOADSTATE.FINISHED:
 		GAME.m_AssetCache.RequestCache(assetRequest);
 	    break;
@@ -50,7 +53,7 @@ class AssetLoader
 	this.m_DequeuedRequests = [];
 
 	// Begin request download
-	this.m_AssetRequestQueue.forEach(x => this.ProcessRequest(x));
+	this.m_AssetRequestQueue.forEach(x => {try{this.ProcessRequest(x);}catch(e){}});
 
 	// Get rid of errored or completed requests
 	this.m_AssetDisposalQueue = this.m_AssetRequestQueue.filter(x => x.ShouldDispose());

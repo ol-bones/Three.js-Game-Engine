@@ -21,8 +21,7 @@ class BasicBoxMeshRenderComponent extends mix(RenderComponent).with()
 	);
 	geoBox.center();
 
-	var mshBox = new THREE.Mesh(geoBox,
-this.m_Parent.m_Components.MaterialComponent.m_Material);
+	var mshBox = new THREE.Mesh(geoBox, material("check"));
 
 	this.m_Mesh = mshBox;
 	this.OnInitialised();

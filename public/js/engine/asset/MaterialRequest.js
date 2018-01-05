@@ -8,6 +8,8 @@ class MaterialRequest extends mix(AssetRequest).with()
     constructor(uri)
     {
 	super(uri);
+
+	this.m_Data = null;
     }
 
     Initialise()
@@ -36,7 +38,7 @@ class MaterialRequest extends mix(AssetRequest).with()
 		    self.OnDownloading();
 		},
 		dataType: "json",
-		success: (data) => self.OnFinished(data),
+		success: (data) => self.OnComplete(data),
 		error: (req, status, err) => this.OnError(err)
 	    });
 	}
@@ -46,27 +48,39 @@ class MaterialRequest extends mix(AssetRequest).with()
 	}
     }
 
-    OnFinished(json)
+    OnComplete(data)
     {
-	ParseMaterialData(json);
-	this.m_Asset = json;
+	super.OnComplete();
+	this.m_Data = data;
+	this.m_LoadState = LOADSTATE.PROCESS;
+    }
+
+    OnFinished(material)
+    {
+	this.m_Asset = material;
 	super.OnFinished();
     }
 
-    ParseMaterialData(json)
+    Process()
     {
 	let material;
-	switch(json.type)
+	switch(this.m_Data.type)
 	{
 	    case "THREE.MeshPhongMaterial":
-		//material = new THREE.MeshPhongMaterial(
-		  //  color: json.color 
+		material = new THREE.MeshPhongMaterial(
+		{
+		    color: this.m_Data.type,
+		    map: texture(this.m_Data.texture),
+		    transparent: true,
+		    opacity: 1
+		});
 		break;
 	    default:
 
 		break;
 	}
-	debugger;
+
+	this.OnFinished(material);
     }
 }
 

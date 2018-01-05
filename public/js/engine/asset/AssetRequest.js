@@ -50,6 +50,11 @@ class AssetRequest
 	console.log(this.m_Progress);
     }
 
+    OnComplete()
+    {
+	this.m_LoadState = LOADSTATE.COMPLETE;
+    }
+
     OnFinished()
     {
 	this.m_LoadState = LOADSTATE.FINISHED;
