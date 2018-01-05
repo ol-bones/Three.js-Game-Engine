@@ -1,0 +1,17 @@
+{if EntityHasChildren}
+    <li class="file">
+	<label style="padding-left:0!important;" for="{>EntityString}">
+	    {>EntityString}
+	</label>
+	<input onclick="EDITOR.SelectEntity({>EntityID});"
+	       type="checkbox"
+	       id="{>EntityString}">
+	<ol>{>EntityChildren}</ol>
+    </li>
+{else}
+    <li class="file">
+	<span onclick="EDITOR.SelectEntity({>EntityID});">
+	    {>EntityString}
+	</span>
+    </li>
+{/if}

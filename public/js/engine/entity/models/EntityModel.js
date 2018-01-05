@@ -23,22 +23,30 @@ object.m_Components[c].DataModel().ToJSON()) || [];
 
     ToHTML()
     {
-	let html_for = "Entity[" + this.ID + "]";
+	let EntityString = "Entity[" + this.ID + "]";
 
 	if(this.ENTITIES.length > 0)
 	{
 	    let entities_html = "";
 	    this._object.m_Entities.forEach(e => { entities_html += (e.DataModel().ToHTML()); });
-
-	    return "<li class=\"file\"><label stlye=\"padding-left:0!important;\"for=\"" + html_for + "\">"
-		    + html_for + "</label><input onclick=\"EDITOR.SelectEntity(" + this.ID
-		    + ");\" type=\"checkbox\" id=\"" + html_for + "\"/><ol>"
-		    + entities_html + "</ol></li>";
+	    let w = whiskers.render(WHTML["entity_tree_list_view"],
+	    {
+		EntityHasChildren: true,
+		EntityString: EntityString,
+		EntityID: this.ID,
+		EntityChildren: entities_html
+	    });
+	    return w;
 	}
 	else
 	{
-	    return "<li class=\""
-		    + "file" + "\"><span onclick=\"EDITOR.SelectEntity("+this.ID+");\">" + html_for + "</span></li>";
+	    return whiskers.render(WHTML["entity_tree_list_view"],
+	    {
+		EntityHasChildren: false,
+		EntityString: EntityString,
+		EntityID: this.ID,
+		EntityChildren: ""
+	    });
 	}
     }
 }

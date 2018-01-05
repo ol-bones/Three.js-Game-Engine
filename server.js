@@ -146,7 +146,7 @@ viewGlobals.clientJSFiles = clientJSFiles.filter(js => !js.path.includes("/edito
 viewGlobals.externalJSFiles = externalJSFiles;
 
 app.componentTypes = componentTypes;
-app.whiskerTemplates = whiskerTemplates.map(file => file.name);
+app.whiskerTemplates = whiskerTemplates;
 
 console.log("[INFO] -- Opening route endpoints");
 // Bootstrap routes
