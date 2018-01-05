@@ -22,20 +22,21 @@ class MaterialComponent extends mix(Component).with()
     {
 	super.LoadAssets();
 
-	
+
     }
 
     Initialise()
     {
 	super.Initialise();
 
-	let mat_texture = texture(this.m_Texture);
-	if(!mat_texture.isTexture) { return; }
+	let mat_texture = {};
+	//texture(this.m_Texture, mat_texture);
+	//let test_material = material("check");
 
 	this.m_Material = new THREE.MeshPhongMaterial(
 	{
 	    color: 0x00FF00,
-	    map: mat_texture,
+	    map: texture(this.m_Texture),
 	    transparent: true,
 	    opacity: 0
 	});

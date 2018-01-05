@@ -2,3 +2,4 @@ node_modules/
 *.swp
 *.swo
 *.swn
+/public/js/libs/three.min.js

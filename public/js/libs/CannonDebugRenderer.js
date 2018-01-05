@@ -1,5 +1,8 @@
 "use strict";
 
+// Dependencies
+// @three.min.js@
+
 /* global CANNON,THREE,Detector */
 
 /**

@@ -60,10 +60,10 @@ class AssetRequest
 	this.m_LoadState = LOADSTATE.CACHED;
     }
 
-    OnError()
+    OnError(error)
     {
 	this.m_LoadState = LOADSTATE.ERROR;
-	console.error("ASSET LOAD ERROR: [" + this.m_FileName + "]");
+	console.error("ASSET LOAD ERROR: [" + this.m_FileName + "]" + "[" + (error || "?") + "]");
     }
 
     ShouldDispose()

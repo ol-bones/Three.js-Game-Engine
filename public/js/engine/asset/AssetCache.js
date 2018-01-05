@@ -29,14 +29,16 @@ class AssetCache
 		case "json":
 		    request = new JSONDataRequest(assetURI);
 		    break;
+		case "material":
+		    request = new MaterialRequest(assetURI);
+		    break;
 		default:
 		    return false;
 	    }
 
 	    this._AssetLoader.Enqueue(request);
-	    return request;
 	}
-	return false;
+	return null;
     }
 
     FindAsset(assetURI)

@@ -110,8 +110,10 @@ class World extends mix(BaseObject).with(Comms)
     {
 	if(!this.first)
 	{
+	    try
+	    {
 	    let data = json("http://sarian.world/data/world/0.json");
-	    if(data.constructor.name !== "JSONDataRequest")
+	    if(Object.keys(data).length > 0)
 	    {
 		this.first = true;
 		for(let y = 0; y < 1; y++)
@@ -122,6 +124,7 @@ class World extends mix(BaseObject).with(Comms)
 		    }
 		}
 	    }
+	    }catch(e){}
 	}
 
 	this.ProcessInboundCommsQueue();

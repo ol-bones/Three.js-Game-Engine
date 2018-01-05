@@ -3,7 +3,7 @@
 // Dependencies
 // @AssetRequest@
 
-class JSONDataRequest extends mix(AssetRequest).with()
+class MaterialRequest extends mix(AssetRequest).with()
 {
     constructor(uri)
     {
@@ -25,11 +25,11 @@ class JSONDataRequest extends mix(AssetRequest).with()
 	    $.ajax(
 	    {
 		type: "GET",
-		url: this.m_URI,
+		url: "http://sarian.world/materials/" + this.m_URI + ".json",
 		async: true,
 		beforeSend: (xhr) =>
 		{
-		    if (xhr && xhr.overrideMimeType)
+		    if(xhr && xhr.overrideMimeType)
 		    {
 			xhr.overrideMimeType("application/json;charset=utf-8");
 		    }
@@ -48,7 +48,33 @@ class JSONDataRequest extends mix(AssetRequest).with()
 
     OnFinished(json)
     {
+	ParseMaterialData(json);
 	this.m_Asset = json;
 	super.OnFinished();
     }
+
+    ParseMaterialData(json)
+    {
+	let material;
+	switch(json.type)
+	{
+	    case "THREE.MeshPhongMaterial":
+		//material = new THREE.MeshPhongMaterial(
+		  //  color: json.color 
+		break;
+	    default:
+
+		break;
+	}
+	debugger;
+    }
 }
+
+
+
+
+
+
+
+
+
