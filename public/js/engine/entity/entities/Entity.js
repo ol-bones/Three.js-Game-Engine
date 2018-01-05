@@ -61,7 +61,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 		||
 		this.PreviousComponent(key).m_IsInitialised);
 	    })
-	    .forEach((key) => this.m_Components[key].Initialise());
+	    .forEach((key) => {try{this.m_Components[key].Initialise();}catch(e){}});
     }
 
     IsInitialised() { return this.__IsInitialised; }

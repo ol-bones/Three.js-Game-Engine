@@ -1,5 +1,8 @@
 "use strict";
 
+// Dependencies
+// @three.min.js@
+
 /**
  * @author Mugen87 / https://github.com/Mugen87
  */

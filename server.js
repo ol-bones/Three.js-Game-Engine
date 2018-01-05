@@ -79,7 +79,7 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	let fileString = fs.readFileSync(file).toString();
 	let dependencyStrings = [];
 
-	if(!file.includes("/libs/"))
+	if(fileName !== "whiskers")
 	{
 	    let re = /@(.*)@/g;
 	    dependencyStrings = (fileString.match(re));
@@ -114,9 +114,8 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 
     clientJSFiles.forEach(file =>
     {
-	if(file.path.includes("/lib")) { libs.push(file); return; }
 	if(file.path.includes("/views")) { whiskerTemplates.push(file); return; }
-	if(!file.dependencies) { graph.push([file]); return; }
+	if(!file.dependencies || file.name === "whiskers") { graph.push([file]); return; }
 
 	file.dependencies.forEach(d => graph.push([file, clientJSFiles.find(f => f.name === d)]));
     });

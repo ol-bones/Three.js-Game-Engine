@@ -36,9 +36,9 @@ class JSONDataRequest extends mix(AssetRequest).with()
 		    self.OnDownloading();
 		},
 		dataType: "json",
-		success: (data) => self.OnFinished(data)
+		success: (data) => self.OnFinished(data),
+		error: (req, status, err) => this.OnError(err)
 	    });
-
 	}
 	catch(Exception)
 	{

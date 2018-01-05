@@ -36,7 +36,7 @@ class BasicShapeMeshRenderComponent extends mix(RenderComponent).with()
 	let shape = new THREE.Shape(this.m_Points);
 	let geometry = new THREE.ShapeBufferGeometry(shape);
 	geometry.center();
-	let mesh = new THREE.Mesh(geometry, this.m_Parent.m_Components.MaterialComponent.m_Material);
+	let mesh = new THREE.Mesh(geometry, material("check"));
 
 	mesh.rotateX(-Math.PI/2);
 
