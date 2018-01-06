@@ -23,7 +23,7 @@ object.m_Components[c].DataModel().ToJSON()) || [];
 
     ToHTML()
     {
-	let EntityString = "Entity[" + this.ID + "]";
+	let EntityInfo = this.GetDisplayInfo();
 
 	if(this.ENTITIES.length > 0)
 	{
@@ -33,8 +33,9 @@ object.m_Components[c].DataModel().ToJSON()) || [];
 	    return whiskers.render(WHTML["entity_tree_list_view"],
 	    {
 		EntityHasChildren: true,
-		EntityString: EntityString,
+		EntityString: EntityInfo.name,
 		EntityID: this.ID,
+		EntityIcon: EntityInfo.icon,
 		EntityChildren: entities_html
 	    });
 	}
@@ -43,10 +44,21 @@ object.m_Components[c].DataModel().ToJSON()) || [];
 	    return whiskers.render(WHTML["entity_tree_list_view"],
 	    {
 		EntityHasChildren: false,
-		EntityString: EntityString,
+		EntityString: EntityInfo.name,
 		EntityID: this.ID,
+		EntityIcon: EntityInfo.icon,
 		EntityChildren: ""
 	    });
 	}
+    }
+
+    GetDisplayInfo()
+    {
+	if(this.COMPONENTS.find(c => c.name === "WorldPieceComponent"))
+	{
+	    return {name: "WorldPiece", icon:"glyphicon-globe"};
+	}
+
+	return {name: "Entity", icon:"glyphicon-cog"};
     }
 }

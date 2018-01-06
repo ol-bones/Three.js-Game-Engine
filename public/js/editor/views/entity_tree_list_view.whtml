@@ -1,6 +1,6 @@
 {if EntityHasChildren}
     <li class="file">
-	<div class="entity-icon glyphicon glyphicon-cog"></div>
+	<div class="entity-icon glyphicon {>EntityIcon}"></div>
 	<label for="{>EntityString}">
 	    {>EntityString}
 	</label>
@@ -11,7 +11,7 @@
     </li>
 {else}
     <li class="file">
-	<div class="entity-icon glyphicon glyphicon-cog"></div>
+	<div class="entity-icon glyphicon {>EntityIcon}"></div>
 	<span onclick="EDITOR.SelectEntity({>EntityID});">
 	    {>EntityString}
 	</span>
