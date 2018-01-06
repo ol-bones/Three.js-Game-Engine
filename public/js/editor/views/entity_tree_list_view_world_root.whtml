@@ -1,0 +1,10 @@
+<li class="file">
+    <div class="entity-icon glyphicon glyphicon-globe"></div>
+    <label for="WorldObject">
+	World
+    </label>
+    <input onclick="EDITOR.SelectWorld();"
+	   type="checkbox"
+	   id="WorldObject">
+    <ol>{>WorldEntities}</ol>
+</li>

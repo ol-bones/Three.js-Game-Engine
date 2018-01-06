@@ -29,14 +29,14 @@ object.m_Components[c].DataModel().ToJSON()) || [];
 	{
 	    let entities_html = "";
 	    this._object.m_Entities.forEach(e => { entities_html += (e.DataModel().ToHTML()); });
-	    let w = whiskers.render(WHTML["entity_tree_list_view"],
+
+	    return whiskers.render(WHTML["entity_tree_list_view"],
 	    {
 		EntityHasChildren: true,
 		EntityString: EntityString,
 		EntityID: this.ID,
 		EntityChildren: entities_html
 	    });
-	    return w;
 	}
 	else
 	{
