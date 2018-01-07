@@ -5,8 +5,8 @@ class EntityModel
     constructor(object)
     {
 	this._object = object;
-
-	this.ID = object.m_ID || -1;
+debugger;
+	this.ID = object.m_ID.toString();
 	this.POS = {x:object.m_Position.x, y:object.m_Position.y, z:object.m_Position.z} || {};
 
 	this.PARENT = object.m_Parent ? object.m_Parent.m_ID : -1;
@@ -54,11 +54,20 @@ object.m_Components[c].DataModel().ToJSON()) || [];
 
     GetDisplayInfo()
     {
-	if(this.COMPONENTS.find(c => c.name === "WorldPieceComponent"))
+	if(this.HasComponent("WorldPieceComponent"))
 	{
-	    return {name: "WorldPiece", icon:"glyphicon-globe"};
+	    return {name: "WorldPiece", icon: "glyphicon-globe"};
 	}
-
+	if(this.HasComponent("WASDPlayerControlComponent"))
+	{
+	    return {name: "LocalPlayer", icon: "glyphicon-user"};
+	}
+	if(this.HasComponent("TriggerComponent"))
+	{
+	    return {name: "Trigger", icon: "glyphicon-text-width"};
+	}
 	return {name: "Entity", icon:"glyphicon-cog"};
     }
+
+    HasComponent(name) { return this.COMPONENTS.find(c => c.name === name); }
 }

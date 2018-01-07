@@ -3,8 +3,7 @@
     <label for="WorldObject">
 	World
     </label>
-    <input onclick="EDITOR.SelectWorld();"
-	   type="checkbox"
+    <input type="checkbox"
 	   id="WorldObject">
     <ol>{>WorldEntities}</ol>
 </li>
