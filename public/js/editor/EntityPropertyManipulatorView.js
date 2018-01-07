@@ -25,8 +25,11 @@ class EntityPropertyManipulatorView
     FillMaterialEditor(ref_Entity)
     {
 	let texture_src = ref_Entity.m_Components.RenderComponent.m_Mesh.material.map.image.src;
+
+	let name_start_index = texture_src.lastIndexOf("/")+1;
+	let texture_name = texture_src.substring(name_start_index, texture_src.length);
 	$("#material-editor-texture-view")[0].src = texture_src;
-	$("#material-editor-texture-name")[0].innerHTML = texture_src;
+	$("#material-editor-texture-name").html(texture_name);
     }
 
     fillproperties(entity_model)
