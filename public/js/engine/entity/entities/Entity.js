@@ -178,6 +178,8 @@ Entity._idCount = 0;
 
 Entity._idGenerator = () => Entity._idCount++;
 
+Entity.FindByID = (id) => entities().find(e => e.m_ID === id);
+
 Entity.FromFile = (json, parent, offset) =>
 {
     let entity = new Entity(json.pos.x + offset.x, json.pos.y + offset.y, json.pos.z + offset.z);

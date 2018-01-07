@@ -123,7 +123,7 @@ data-target="#editNavbar">
 	</div>
     </div>
 
-    <div class="" style="height:100%;">
+    <div class="" style="height:100%;display:flex;">
 	<div class="editor-left-pane">
 	    <div class="" style="height:100%;background-color:#222;">
 		<div class=""
@@ -174,6 +174,23 @@ onclick="$('#editor-component-modal').modal();">
 		</div>
 	    </div>
 	</div>
+	    <div class="editor-right-pane">
+		<div class="entity-tools-view">
+		    <div class="material-editor-tool-view">
+			<div class="texture-panel">
+			    <button class="btn btn-default texture-panel"
+					   onclick="$('#texture-select-modal').modal()">
+				<img src="/textures/check.png"
+				     class="img-thumbnail texture-panel"
+				     id="material-editor-texture-view">
+			    </button>
+			    <div class="texture-name" id="material-editor-texture-name">
+				/textures/check.png
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
     </div>
 </div>
 
@@ -206,7 +223,30 @@ data-dismiss="modal"><span style="color:red;" class="glyphicon glyphicon-remove"
 </div>
 
 
+<div class="modal fade" id="texture-select-modal" role="dialog">
+    <div class="modal-dialog">
+	<div class="modal-content">
+	    <div class="modal-header" style="padding-top:50px;">
+		<button type="button"
+			class="close" data-dismiss="modal" stlye="color:#fff;">
+			&times;
+		</button>
+		<h4>Texture Browser</h4>
+		<div class="modal-body">
+		    uhhhhh....
 
+		</div>
+		<div class="modal-footer">
+		    <button type="submit"
+			    class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+			<span style="color:red;" class="glyphicon glyphicon-remove"></span> 
+			Cancel
+		    </button>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
 
 
 

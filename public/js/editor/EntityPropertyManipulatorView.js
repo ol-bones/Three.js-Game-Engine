@@ -14,10 +14,19 @@ class EntityPropertyManipulatorView
 
     onEntitySelect(entity_model)
     {
+	let ref_Entity = Entity.FindByID(parseInt(entity_model.id));
 	this.m_SelectedEntityModel = entity_model;
 
+	this.FillMaterialEditor(ref_Entity);
 	this.fillproperties(entity_model);
 	this.fillcomponents(entity_model.components);
+    }
+
+    FillMaterialEditor(ref_Entity)
+    {
+	let texture_src = ref_Entity.m_Components.RenderComponent.m_Mesh.material.map.image.src;
+	$("#material-editor-texture-view")[0].src = texture_src;
+	$("#material-editor-texture-name")[0].innerHTML = texture_src;
     }
 
     fillproperties(entity_model)

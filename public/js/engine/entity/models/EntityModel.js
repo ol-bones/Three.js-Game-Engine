@@ -5,7 +5,6 @@ class EntityModel
     constructor(object)
     {
 	this._object = object;
-debugger;
 	this.ID = object.m_ID.toString();
 	this.POS = {x:object.m_Position.x, y:object.m_Position.y, z:object.m_Position.z} || {};
 
