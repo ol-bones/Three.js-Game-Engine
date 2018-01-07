@@ -299,14 +299,13 @@ ol.tree
     li.file
     {
     }
-	li.file label:before, li.file span:before
-	{
-	    font-family: "Glyphicons Halflings";
-	    content: "\e019";
-	    color: #4C4C4C;
-	    text-decoration: none;
-	}
-	
+
+.entity-icon {
+    padding-left:0 !important;
+    float:left;
+    margin-top:1%;
+}
+
 	li.file a[href *= '.pdf']   { background: url(document.png) 0 0 no-repeat; }
 	li.file a[href *= '.html']  { background: url(document.png) 0 0 no-repeat; }
 	li.file a[href $= '.css']   { background: url(document.png) 0 0 no-repeat; }
@@ -337,6 +336,7 @@ ol.tree
 	content: "\e118";
 	cursor: pointer;
 	display: block;
+	margin-left:6%;
     }
 
     li input:checked + ol
@@ -349,8 +349,6 @@ ol.tree
     }
 	li input:checked + ol > li { display: block; margin: 0 0 0.125em;  /* 2px */ }
 	li input:checked + ol > li:last-child { margin: 0 0 0.063em; /* 1px */ }
-
-
 
 
 
