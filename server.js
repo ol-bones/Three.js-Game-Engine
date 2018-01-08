@@ -175,6 +175,8 @@ var viewGlobals = {};
 viewGlobals.editorJSFiles = clientJSFiles.filter(js => js.path.includes("/editor/"));
 viewGlobals.clientJSFiles = clientJSFiles.filter(js => !js.path.includes("/editor/"));
 viewGlobals.externalJSFiles = externalJSFiles;
+viewGlobals.navbardropdowns = JSON.parse(fs.readFileSync(__dirname +
+"/app/views/editor/toolbar/NavbarDropdowns.json", "utf8"));
 
 app.componentTypes = componentTypes;
 app.whiskerTemplates = whiskerTemplates;

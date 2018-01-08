@@ -1,3 +1,13 @@
+# Public Demo
+
+http://sarian.world/
+
+Username: guest@guest.com
+
+Password: guest
+
+Above link is dev build, may contain WIP features
+
 # Installation & Use
 
 Download and install: git, node, mongodb
