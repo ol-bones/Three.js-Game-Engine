@@ -54,6 +54,15 @@ $(document).ready(function ()
     GAME.initialise();
 });
 
+$(window).on("resize", () =>
+{
+    GAME.m_World.m_Camera.aspect = window.innerWidth / window.innerHeight;
+    GAME.m_World.m_Camera.updateProjectionMatrix();
+
+    GAME.m_World.m_Renderer.setSize( window.innerWidth, window.innerHeight );
+
+});
+
 $(document).on("mobileinit", function()
 {
     $.mobile.autoInitializePage = false;
