@@ -14,18 +14,30 @@ class EntityPropertyManipulatorView
 
     onEntitySelect(entity_model)
     {
-	let ref_Entity = Entity.FindByID(parseInt(entity_model.id));
-	this.m_SelectedEntityModel = entity_model;
+	try
+	{
+	    let ref_Entity = Entity.FindByID(parseInt(entity_model.id));
+	    this.m_SelectedEntityModel = entity_model;
 
-	this.FillMaterialEditor(ref_Entity);
-	this.fillproperties(entity_model);
-	this.fillcomponents(entity_model.components);
+	    this.FillMaterialEditor(ref_Entity);
+	    this.fillproperties(entity_model);
+	    this.fillcomponents(entity_model.components);
+	}
+	catch(Exception) {}
     }
 
-    FillMaterialEditor(ref_Entity)
+    FillMaterialEditor(ref)
     {
-	let texture_src = ref_Entity.m_Components.RenderComponent.m_Mesh.material.map.image.src;
-
+	let texture_src;
+	if(ref.constructor.name === "String")
+	{
+	    texture_src = "/textures/" + ref;
+	}
+	else if(ref.constructor.name === "Entity")
+	{
+	    texture_src = ref.m_Components.RenderComponent.m_Mesh.material.map.image.src;
+	}
+	else { return; }
 	let name_start_index = texture_src.lastIndexOf("/")+1;
 	let texture_name = texture_src.substring(name_start_index, texture_src.length);
 	$("#material-editor-texture-view")[0].src = texture_src;

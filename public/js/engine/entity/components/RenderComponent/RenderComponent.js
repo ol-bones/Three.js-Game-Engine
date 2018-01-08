@@ -29,6 +29,17 @@ this.m_Parent.m_Position.z);
 	this.m_IsInitialised = true;
     }
 
+    SetTexture(name)
+    {
+	try
+	{
+	    this.m_Mesh.material.map = texture(name);
+	    this.m_Mesh.material.map.needsUpdate = true;
+	    this.m_Mesh.material.needsUpdate = true;
+	}
+	catch(Exception) { setTimeout(() => this.SetTexture(name), 100); }
+    }
+
     SetPosition(x,y,z)
     {
 	this.m_Mesh.position.set(x,y,z);

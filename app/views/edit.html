@@ -179,13 +179,13 @@ onclick="$('#editor-component-modal').modal();">
 		    <div class="material-editor-tool-view">
 			<div class="texture-panel">
 			    <button class="btn btn-default texture-panel"
-					   onclick="$('#texture-select-modal').modal()">
-				<img src="/textures/check.png"
+					   onclick="EDITOR.OpenTextureBrowser()">
+				<img src="/textures/private/check.png"
 				     class="img-thumbnail texture-panel"
 				     id="material-editor-texture-view">
 			    </button>
 			    <div class="texture-name" id="material-editor-texture-name">
-				/textures/check.png
+				check.png
 			    </div>
 			</div>
 		    </div>
@@ -233,14 +233,18 @@ data-dismiss="modal"><span style="color:red;" class="glyphicon glyphicon-remove"
 		</button>
 		<h4>Texture Browser</h4>
 		<div class="modal-body">
-		    uhhhhh....
-
+		    {>texturebrowser}
 		</div>
 		<div class="modal-footer">
 		    <button type="submit"
 			    class="btn btn-danger btn-default pull-left" data-dismiss="modal">
-			<span style="color:red;" class="glyphicon glyphicon-remove"></span> 
+			<span style="color:red;" class="glyphicon glyphicon-remove"></span>
 			Cancel
+		    </button>
+		    <button type="submit" class="btn btn-default btn-success" data-dismiss="modal"
+			onclick="EDITOR.ApplyTexture();">
+			<span style="color:green;" class="glyphicon glyphicon-ok"></span>
+			    Apply
 		    </button>
 		</div>
 	    </div>

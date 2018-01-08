@@ -1,5 +1,5 @@
 {
     "type": "THREE.MeshPhongMaterial",
-    "texture": "check.png",
+    "texture": "/private/check.png",
     "color": "0x00FF00"
 }

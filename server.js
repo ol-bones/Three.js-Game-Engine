@@ -55,12 +55,19 @@ let externalJSFiles = [];
 let componentTypes = [];
 let whiskerTemplates = glob.sync(join(__dirname, "public/js/**/*.whtml"));
 
+let textures = []
+let texturespng = glob.sync(join(__dirname, "public/textures/**/*.png"));
+let texturesjpg = glob.sync(join(__dirname, "public/textures/**/*.jpg"));
+
 // client js
 clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
     .concat(whiskerTemplates)
+    .concat(texturespng)
+    .concat(texturesjpg)
     .map((file) =>
     {
 	whiskerTemplates = [];
+	textures = [];
 
 	let extensionIndex = 0;
 	if(file.search(".js") > -1)
@@ -75,6 +82,17 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	    console.log("INDEX: " + extensionIndex);
 	}
 
+	if(file.search(".png") > -1)
+	{
+	    extensionIndex = file.lastIndexOf(".png");
+	}
+
+	if(file.search(".jpg") > -1)
+	{
+	    extensionIndex = file.lastIndexOf(".jpg");
+	}
+
+	let extension = file.substring(extensionIndex, file.length);
 	let fileName = file.substring(file.lastIndexOf("/")+1, extensionIndex);
 	let fileString = fs.readFileSync(file).toString();
 	let dependencyStrings = [];
@@ -102,6 +120,7 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	let parsed =
 	{
 	    name: fileName,
+	    ext: extension,
 	    path: file.replace(__dirname + "/public", ""),
 	    contents: fileString,
 	    dependencies: dependencyStrings
@@ -114,6 +133,18 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 
     clientJSFiles.forEach(file =>
     {
+	if(file.path.includes("/textures"))
+	{
+	    textures.push(
+	    {
+		name: file.name,
+		ext: file.ext,
+		path: file.path.replace("textures/","")
+	    });
+
+	    return;
+	}
+
 	if(file.path.includes("/views")) { whiskerTemplates.push(file); return; }
 	if(!file.dependencies || file.name === "whiskers") { graph.push([file]); return; }
 
@@ -147,6 +178,7 @@ viewGlobals.externalJSFiles = externalJSFiles;
 
 app.componentTypes = componentTypes;
 app.whiskerTemplates = whiskerTemplates;
+app.textures = textures;
 
 console.log("[INFO] -- Opening route endpoints");
 // Bootstrap routes

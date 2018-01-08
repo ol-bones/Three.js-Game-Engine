@@ -63,24 +63,33 @@ class MaterialRequest extends mix(AssetRequest).with()
 
     Process()
     {
-	let material;
-	switch(this.m_Data.type)
+	try
 	{
-	    case "THREE.MeshPhongMaterial":
-		material = new THREE.MeshPhongMaterial(
-		{
-		    color: this.m_Data.type,
-		    map: texture(this.m_Data.texture),
-		    transparent: true,
-		    opacity: 1
-		});
-		break;
-	    default:
+	    let material;
+	    switch(this.m_Data.type)
+	    {
+		case "THREE.MeshPhongMaterial":
+		    material = new THREE.MeshPhongMaterial(
+		    {
+			color: new THREE.Color(1,0,0),
+			map: texture(this.m_Data.texture),
+			transparent: true,
+			opacity: 1
+		    });
 
-		break;
+		    material.map.needsUpdate = true;
+		    material.needsUpdate = true;
+		    break;
+		default:
+
+		    break;
+	    }
+
+	    this.OnFinished(material);
 	}
-
-	this.OnFinished(material);
+	catch(Exception)
+	{
+	}
     }
 }
 

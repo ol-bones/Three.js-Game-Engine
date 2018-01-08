@@ -16,7 +16,8 @@ class AssetCache
     {
 	if(this.AssetExists(assetURI))
 	{
-	    return this.FindAsset(assetURI).asset;
+	    let asset = this.FindAsset(assetURI).asset;
+	    try { return asset.clone(); asset.needsUpdate = true;} catch(e) { return asset; }
 	}
 	else
 	{
@@ -82,3 +83,5 @@ class AssetCache
 	this.m_AddQueue = [];
     }
 }
+
+AssetCache.TextureList = [];

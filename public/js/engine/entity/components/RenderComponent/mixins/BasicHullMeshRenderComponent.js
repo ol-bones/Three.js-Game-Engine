@@ -31,6 +31,8 @@ class BasicHullMeshRenderComponent extends mix(RenderComponent).with()
 	geometry.center();
 
 	var mesh = new THREE.Mesh(geometry, material("check"));
+	mesh.material.needsUpdate = true;
+	mesh.material.map.needsUpdate = true;
 
 	this.m_Mesh = mesh;
 	this.OnInitialised();

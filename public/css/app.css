@@ -338,6 +338,11 @@ button.error:focus {
     background-color: #111;
 }
 
+.texture-browser {
+    height:500px;
+    overflow-y: scroll;
+}
+
 ol.tree
 {
     padding: 0 0 0 30px;

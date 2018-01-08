@@ -19,6 +19,12 @@ $.ajax("/whiskerTemplates").done(xhr =>
     $.ajax("/componentTypes").done(xhr =>
     {
 	xhr.forEach(type => Component.Types.push(eval(type)));
+    });
+}).then(() =>
+{
+    $.ajax("/texturelist").done(xhr =>
+    {
+	xhr.forEach(json => AssetCache.TextureList.push(json));
 	$.holdReady(false);
     });
 });

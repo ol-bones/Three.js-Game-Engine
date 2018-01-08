@@ -1,5 +1,5 @@
 {
     "type": "THREE.MeshPhongMaterial",
-    "texture": "swirl.jpg",
+    "texture": "/private/swirl.jpg",
     "color": "0xFFFFFF"
 }
