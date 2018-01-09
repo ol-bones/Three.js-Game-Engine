@@ -108,8 +108,10 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 
     RemoveComponent(component)
     {
-	if(typeof component === "string")
+	if(typeof component === "string" && this.m_Components[component])
 	{
+	    this.m_Components[component].Remove();
+	    this.m_Components[component] = {};
 	    delete this.m_Components[component];
 	    return true;
 	}

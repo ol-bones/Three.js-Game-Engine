@@ -3,40 +3,40 @@
 	"Name": "File",
 	"MenuItems":
 	[
-	    {"TabIndex": 0, "Name": "Open", "Function": "EDITOR.OpenModal();"},
-	    {"TabIndex": 1, "Name": "Save", "Function": "EDITOR.Save();"},
-	    {"TabIndex": 2, "Name": "Save As", "Function": "EDITOR.SaveAsModal();"},
-	    {"TabIndex": 3, "Name": "Settings", "Function": "EDITOR.SettingsModal();"}
+	    {"TabIndex": 0, "Name": "Open", "Function": "EDITOR.OpenModal(event);"},
+	    {"TabIndex": 1, "Name": "Save", "Function": "EDITOR.Save(event);"},
+	    {"TabIndex": 2, "Name": "Save As", "Function": "EDITOR.SaveAsModal(event);"},
+	    {"TabIndex": 3, "Name": "Settings", "Function": "EDITOR.SettingsModal(event);"}
 	]
     },
     {
 	"Name": "Edit",
 	"MenuItems":
 	[
-	    {"TabIndex": 0, "Name": "Import", "Function": "EDITOR.ImportEntityModal();"},
-	    {"TabIndex": 1, "Name": "New", "Function": "EDITOR.EntityCreateModal();"},
-	    {"TabIndex": 2, "Name": "Copy", "Function": "EDITOR.CopySelectedEntity();"},
-	    {"TabIndex": 3, "Name": "Paste", "Function": "EDITOR.PasteEntity();"}
+	    {"TabIndex": 0, "Name": "Import", "Function": "EDITOR.ImportEntityModal(event);"},
+	    {"TabIndex": 1, "Name": "New", "Function": "EDITOR.EntityCreateModal(event);"},
+	    {"TabIndex": 2, "Name": "Copy", "Function": "EDITOR.CopySelectedEntity(event);"},
+	    {"TabIndex": 3, "Name": "Paste", "Function": "EDITOR.PasteEntity(event);"}
 	]
     },
     {
 	"Name": "View",
 	"MenuItems":
 	[
-	    {"TabIndex": 0, "Name": "Create", "Function": "EDITOR.ToggleCreationPane();"},
-	    {"TabIndex": 1, "Name": "Properties", "Function": "EDITOR.TogglePropertiesPane();"},
-	    {"TabIndex": 2, "Name": "Manipulate", "Function": "EDITOR.ToggleManipulationPane();"},
-	    {"TabIndex": 3, "Name": "Preset", "Function": "EDITOR.TogglePresetPane();"},
-	    {"TabIndex": 4, "Name": "Navbar", "Function": "EDITOR.ToggleNavBar();"}
+	    {"TabIndex": 0, "Name": "Create", "Function": "EDITOR.ToggleCreationPane(event);"},
+	    {"TabIndex": 1, "Name": "Properties", "Function": "EDITOR.TogglePropertiesPane(event);"},
+	    {"TabIndex": 2, "Name": "Manipulate", "Function": "EDITOR.ToggleManipulationPane(event);"},
+	    {"TabIndex": 3, "Name": "Preset", "Function": "EDITOR.TogglePresetPane(event);"},
+	    {"TabIndex": 4, "Name": "Navbar", "Function": "EDITOR.ToggleNavBar(event);"}
 	]
     },
     {
 	"Name": "Debug",
 	"MenuItems":
 	[
-	    {"TabIndex": 0, "Name": "Edit Mode", "Function": "EDITOR.ToggleEditMode();"},
-	    {"TabIndex": 1, "Name": "Play Mode", "Function": "EDITOR.TogglePlayMode();"},
-	    {"TabIndex": 2, "Name": "Debug Renderer", "Function": "EDITOR.ToggleDebugRenderer();"}
+	    {"TabIndex": 0, "Name": "Edit Mode", "Function": "EDITOR.ToggleEditMode(event);"},
+	    {"TabIndex": 1, "Name": "Play Mode", "Function": "EDITOR.TogglePlayMode(event);"},
+	    {"TabIndex": 2, "Name": "Debug Renderer", "Function": "EDITOR.ToggleDebugRenderer(event);"}
 	]
     }
 ]

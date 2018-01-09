@@ -9,6 +9,8 @@ class BasicShapeMeshRenderComponent extends mix(RenderComponent).with()
     {
 	super(args);
 
+	this.m_Debuggable = false;
+
 	var points = [];
 
 	points[0] = new THREE.Vector2(0, 0);

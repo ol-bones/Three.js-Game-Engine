@@ -17,6 +17,8 @@ class Editor
 
 	this.m_EntityTreeViewView = new EntityTreeView();
 	this.m_EntityManipulator = new EntityPropertyManipulatorView();
+
+	this.m_DebugRendererToggled = false;
     }
 
     render()
@@ -91,6 +93,43 @@ Math.round(container[0].scrollHeight, 10))
 	{
 	    ImageTiles: texture_tiles
 	}));
+    }
+
+    NavMenuItemToggle(e) { $(e.srcElement).toggleClass("menu-toggled"); }
+
+    ToggleEditMode(e)
+    {
+	this.NavMenuItemToggle(e);
+    }
+
+    TogglePlayMode(e)
+    {
+	this.NavMenuItemToggle(e);
+    }
+
+    ToggleDebugRenderer(e)
+    {
+	this.NavMenuItemToggle(e);
+
+	if(this.m_DebugRendererToggled)
+	{
+	    entities().forEach(e => e.RemoveComponent("DebugComponent"));
+	    this.m_DebugRendererToggled = false;
+	}
+	else
+	{
+	    entities().forEach(e =>
+	    {
+		if(e.m_Components.RenderComponent && e.m_Components.RenderComponent.m_Debuggable)
+		{
+		    try
+		    {
+			e.AddComponent(new DebugComponent({Parent: e}));
+		    } catch(Exception) {}
+		}
+	    });
+	    this.m_DebugRendererToggled = true;
+	}
     }
 }
 
