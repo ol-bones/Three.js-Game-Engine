@@ -15,6 +15,7 @@ class World extends mix(BaseObject).with(Comms)
 	this.m_Entities = [];
 	this.m_FlatEntities = [];
 	this.m_Scene = {};
+	this.m_EditorScene = {};
 
 	this.m_Camera = {};
 
@@ -35,6 +36,7 @@ class World extends mix(BaseObject).with(Comms)
 	this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
 	this.m_PhysicsWorld.solver.iterations = 1;
 	this.m_Scene = new THREE.Scene();
+	this.m_EditorScene = new THREE.Scene();
 //	this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
 
 
@@ -77,7 +79,6 @@ class World extends mix(BaseObject).with(Comms)
 	this.LoadWorld();
 
 	requestAnimationFrame(this.render.bind(this));
-	setInterval(this.Update.bind(this), 1000/30);
     }
 
     LoadWorld()
@@ -100,14 +101,16 @@ class World extends mix(BaseObject).with(Comms)
 	//this.m_DebugRenderer.update(); // only use this if shit is really weird
 
 	this.m_Entities.forEach(e => e.Update());
-	GAME.m_AssetCache.Update();
-	GAME.m_AssetCache._AssetLoader.Update();
     }
 
+    // clean this eventually
     render()
     {
+	this.m_Renderer.autoClear = false;
 	this.m_Controls.update();
 	this.m_Renderer.render(this.m_Scene, this.m_Camera);
+	this.m_Renderer.clearDepth();
+	this.m_Renderer.render(this.m_EditorScene, this.m_Camera);
 	requestAnimationFrame(this.render.bind(this));
     }
 }

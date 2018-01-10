@@ -22,6 +22,18 @@ class EntityPropertyManipulatorView
 	    this.FillMaterialEditor(ref_Entity);
 	    this.fillproperties(entity_model);
 	    this.fillcomponents(entity_model.components);
+
+	    if(ref_Entity.m_Components.RenderComponent
+	    && !ref_Entity.m_Components.PositionEditComponent
+	    && EDITOR.m_EditModeToggled)
+	    {
+		if(EDITOR.m_ref_LastSelectedEntity
+		&& EDITOR.m_ref_LastSelectedEntity.m_Components.PositionEditComponent)
+		{
+		    EDITOR.m_ref_LastSelectedEntity.RemoveComponent("PositionEditComponent");
+		}
+		ref_Entity.AddComponent(new PositionEditComponent({Parent: ref_Entity}));
+	    }
 	}
 	catch(Exception) {}
     }

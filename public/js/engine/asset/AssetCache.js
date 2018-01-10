@@ -79,6 +79,7 @@ class AssetCache
 
     Update()
     {
+	this._AssetLoader.Update();
 	this.m_AddQueue.forEach(x => this.Cache(x));
 	this.m_AddQueue = [];
     }

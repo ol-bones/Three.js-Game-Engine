@@ -10,15 +10,20 @@ class Editor
 {
     constructor()
     {
+	this.m_UpdateIntervalID = null;
+
 	this.m_SelectedTexture = "";
 	this.m_TextureBrowserIndex = 0;
 
+	this.m_LastEntitySelectTime = 0;
+	this.m_ref_LastSelectedEntity = null;
 	this.m_ref_SelectedEntity = null;
 
 	this.m_EntityTreeViewView = new EntityTreeView();
 	this.m_EntityManipulator = new EntityPropertyManipulatorView();
 
 	this.m_DebugRendererToggled = false;
+	this.m_EditModeToggled = false;
     }
 
     render()
@@ -28,11 +33,17 @@ class Editor
 
     SelectEntity(id)
     {
-	let entity = entities().find(e => e.m_ID === id);
-	if(entity)
+	if((Date.now() - this.m_LastEntitySelectTime) > 750)
 	{
-	    this.m_ref_SelectedEntity = entity;
-	    this.m_EntityManipulator.onEntitySelect(entity.GetSavableData());
+	    let entity = entities().find(e => e.m_ID === id);
+	    if(entity)
+	    {
+		this.m_ref_LastSelectedEntity = this.m_ref_SelectedEntity;
+		this.m_ref_SelectedEntity = entity;
+		this.m_EntityManipulator.onEntitySelect(entity.GetSavableData());
+	    }
+	    console.log(Date.now() - this.m_LastEntitySelectTime);
+	    this.m_LastEntitySelectTime = Date.now();
 	}
     }
 
@@ -100,11 +111,26 @@ Math.round(container[0].scrollHeight, 10))
     ToggleEditMode(e)
     {
 	this.NavMenuItemToggle(e);
-    }
 
-    TogglePlayMode(e)
-    {
-	this.NavMenuItemToggle(e);
+	if(this.m_EditModeToggled)
+	{
+	    this.m_EditModeToggled = false;
+	    if(this.m_ref_SelectedEntity
+	    && this.m_ref_SelectedEntity.m_Components.PositionEditComponent)
+	    {
+		this.m_ref_SelectedEntity.RemoveComponent("PositionEditComponent");
+	    }
+	    clearInterval(this.m_UpdateIntervalID);
+	    delete this.m_ref_SelectedEntity;
+	    delete this.m_Ref_LastSelectedEntity;
+	    GAME.BeginUpdateLoop();
+	}
+	else
+	{
+	    this.m_EditModeToggled = true;
+	    clearInterval(GAME.m_UpdateIntervalID);
+	    this.m_UpdateIntervalID = setInterval(this.UpdateWorldEditMode.bind(this), 1000/30);
+	}
     }
 
     ToggleDebugRenderer(e)
@@ -130,6 +156,12 @@ Math.round(container[0].scrollHeight, 10))
 	    });
 	    this.m_DebugRendererToggled = true;
 	}
+    }
+
+    UpdateWorldEditMode()
+    {
+	GAME.m_World.m_Entities.forEach(e => e.Update());
+	GAME.m_AssetCache.Update();
     }
 }
 
