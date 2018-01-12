@@ -12,6 +12,8 @@ class Editor
     {
 	this.m_UpdateIntervalID = null;
 
+	this.m_SelectedTool = null;
+
 	this.m_SelectedTexture = "";
 	this.m_TextureBrowserIndex = 0;
 
@@ -29,6 +31,21 @@ class Editor
     render()
     {
 	this.m_EntityTreeViewView.render();
+    }
+
+    SelectPositionEditTool()
+    {
+	this.m_SelectedTool = "PositionEditComponent";
+    }
+
+    SelectScaleEditTool()
+    {
+	this.m_SelectedTool = "ScaleEditComponent";
+    }
+
+    SelectRotateEditTool()
+    {
+	this.m_SelectedTool = "RotateEditComponent";
     }
 
     SelectEntity(id)
@@ -116,9 +133,9 @@ Math.round(container[0].scrollHeight, 10))
 	{
 	    this.m_EditModeToggled = false;
 	    if(this.m_ref_SelectedEntity
-	    && this.m_ref_SelectedEntity.m_Components.PositionEditComponent)
+	    && this.m_ref_SelectedEntity.m_Components[this.m_SelectedTool])
 	    {
-		this.m_ref_SelectedEntity.RemoveComponent("PositionEditComponent");
+		this.m_ref_SelectedEntity.RemoveComponent(this.m_SelectedTool);
 	    }
 	    clearInterval(this.m_UpdateIntervalID);
 	    delete this.m_ref_SelectedEntity;

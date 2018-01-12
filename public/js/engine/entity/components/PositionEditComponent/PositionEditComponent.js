@@ -41,40 +41,11 @@ class PositionEditComponent extends mix(Component).with()
 	let parent_mesh = this.m_Parent.m_Components.RenderComponent.m_Mesh;
 	this.m_Draggables.push(parent_mesh);
 
-	parent_mesh.touchstart = () =>
-	{
-	    parent_mesh.event_phase = 1;
-	    GAME.m_World.m_Controls.enabled = false;
-	}
+	parent_mesh.touchstart = () => this.TouchStartEvent(parent_mesh);
 
-	parent_mesh.touchend = () =>
-	{
-	    GAME.m_World.m_Controls.enabled = true;
-	    if(parent_mesh.event_phase === 2)
-	    {
-		EDITOR.m_LastEntitySelectTime = Date.now();
-	    }
-	}
-	parent_mesh.touchdrag = (p) =>
-	{
-	    parent_mesh.event_phase = 2;
-	    this.m_Parent.SetPosition(p.x,p.y,p.z);
-	    this.m_AxisHelpers.forEach(m =>
-	    {
-		if(m.handle_offset)
-		{
-		    m.position.set(
-			m.handle_offset.x + this.m_Parent.m_Position.x,
-			m.handle_offset.y + this.m_Parent.m_Position.y,
-			m.handle_offset.z + this.m_Parent.m_Position.z
-		    );
-		}
-		else
-		{
-		    m.position.set(p.x,p.y,p.z);
-		}
-	    });
-	}
+	parent_mesh.touchend = () => this.TouchEndEvent(parent_mesh);
+	parent_mesh.touchdrag = (p) => this.MeshTouchDragEvent(parent_mesh, p);
+
 	let YU = new THREE.Vector3(0,1,0);
 	let YD = new THREE.Vector3(0, -1, 0);
 	let XU = new THREE.Vector3(1, 0, 0);
@@ -109,6 +80,74 @@ class PositionEditComponent extends mix(Component).with()
 	return pos;
     }
 
+    TouchStartEvent(mesh)
+    {
+	mesh.event_phase = 1;
+	mesh.drags = [];
+	GAME.m_World.m_Controls.enabled = false;
+    }
+
+    TouchEndEvent(mesh)
+    {
+	GAME.m_World.m_Controls.enabled = true;
+	if(mesh.event_phase === 2)
+	{
+	    EDITOR.m_LastEntitySelectTime = Date.now();
+	}
+    }
+
+    MeshTouchDragEvent(mesh, p)
+    {
+	mesh.event_phase = 2;
+	this.m_Parent.SetPosition(p.x,p.y,p.z);
+	this.m_AxisHelpers.forEach(m =>
+	{
+	    if(m.handle_offset)
+	    {
+		m.position.set(
+		    m.handle_offset.x + this.m_Parent.m_Position.x,
+		    m.handle_offset.y + this.m_Parent.m_Position.y,
+		    m.handle_offset.z + this.m_Parent.m_Position.z
+		);
+	    }
+	    else
+	    {
+		m.position.set(p.x,p.y,p.z);
+	    }
+	});
+    }
+
+    ArrowTouchDragEvent(mesh, t, x, y, dir, axis)
+    {
+	mesh.event_phase = 2;
+	let m = new THREE.Vector2(x,y);
+	let opp_head = this.m_Draggables.find(
+	    head => head !== mesh && head.axis === axis
+	);
+
+	let opp_w2sm = this.W2S(opp_head);
+	let opp_w2sm2d = new THREE.Vector2(opp_w2sm.x, opp_w2sm.y);
+
+	let w2sm = this.W2S(mesh);
+	let w2sm2d = new THREE.Vector2(w2sm.x, w2sm.y);
+
+	let axis_normal_dir = new THREE.Vector2();
+	axis_normal_dir.subVectors(w2sm2d, opp_w2sm2d).normalize();
+
+	let mouse_normal_dir = new THREE.Vector2();
+	mouse_normal_dir.subVectors(w2sm2d, m).normalize();
+	mouse_normal_dir.multiplyScalar(dir[axis]);
+
+	let m_dist = new THREE.Vector2();
+	m_dist.subVectors(w2sm2d, m)
+	m_dist = m_dist.length();
+
+	let dot = axis_normal_dir.dot(mouse_normal_dir);
+	let change = ((dot * m_dist) * 0.1 );
+
+	this.AdjustPosition(change, axis);
+    }
+
     CreateArrowHeadSphere(dir)
     {
 	let axis = Object.keys(dir).find(c => dir[c] !== 0);
@@ -125,50 +164,9 @@ class PositionEditComponent extends mix(Component).with()
 	mesh.m_ParentEntity = this.m_Parent;
 	mesh.axis = axis;
 	mesh.drags = [];
-	mesh.touchstart = () =>
-	{
-	    mesh.event_phase = 1;
-	    mesh.drags = [];
-	    GAME.m_World.m_Controls.enabled = false;
-	}
-	mesh.touchend = () =>
-	{
-	    GAME.m_World.m_Controls.enabled = true;
-	    if(mesh.event_phase === 2)
-	    {
-		EDITOR.m_LastEntitySelectTime = Date.now();
-	    }
-	}
-	mesh.touchdrag = (t,x,y) =>
-	{
-	    mesh.event_phase = 2;
-	    let m = new THREE.Vector2(x,y);
-	    let opp_head = this.m_Draggables.find(
-		head => head !== mesh && head.axis === axis
-	    );
-
-	    let opp_w2sm = this.W2S(opp_head);
-	    let opp_w2sm2d = new THREE.Vector2(opp_w2sm.x, opp_w2sm.y);
-
-	    let w2sm = this.W2S(mesh);
-	    let w2sm2d = new THREE.Vector2(w2sm.x, w2sm.y);
-
-	    let axis_normal_dir = new THREE.Vector2();
-	    axis_normal_dir.subVectors(w2sm2d, opp_w2sm2d).normalize();
-
-	    let mouse_normal_dir = new THREE.Vector2();
-	    mouse_normal_dir.subVectors(w2sm2d, m).normalize();
-	    mouse_normal_dir.multiplyScalar(dir[axis]);
-
-	    let m_dist = new THREE.Vector2();
-	    m_dist.subVectors(w2sm2d, m)
-	    m_dist = m_dist.length();
-
-	    let dot = axis_normal_dir.dot(mouse_normal_dir);
-	    let change = ((dot * m_dist) * 0.1 );
-
-	    this.AdjustPosition(change, axis);
-	}
+	mesh.touchstart = () => this.TouchStartEvent(mesh);
+	mesh.touchend = () => this.TouchEndEvent(mesh);
+	mesh.touchdrag = (t,x,y) => this.ArrowTouchDragEvent(mesh, t, x, y, dir, axis);
 
 	GAME.m_World.m_EditorScene.add(mesh);
 	this.m_Draggables.push(mesh);

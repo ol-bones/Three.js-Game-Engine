@@ -24,15 +24,16 @@ class EntityPropertyManipulatorView
 	    this.fillcomponents(entity_model.components);
 
 	    if(ref_Entity.m_Components.RenderComponent
-	    && !ref_Entity.m_Components.PositionEditComponent
+	    && !ref_Entity.m_Components[EDITOR.m_SelectedTool]
 	    && EDITOR.m_EditModeToggled)
 	    {
 		if(EDITOR.m_ref_LastSelectedEntity
-		&& EDITOR.m_ref_LastSelectedEntity.m_Components.PositionEditComponent)
+		&& EDITOR.m_ref_LastSelectedEntity.m_Components[EDITOR.m_SelectedTool])
 		{
-		    EDITOR.m_ref_LastSelectedEntity.RemoveComponent("PositionEditComponent");
+		    EDITOR.m_ref_LastSelectedEntity.RemoveComponent(EDITOR.m_SelectedTool);
 		}
-		ref_Entity.AddComponent(new PositionEditComponent({Parent: ref_Entity}));
+		let ToolType = (Component._TypeFromName({"name":EDITOR.m_SelectedTool}));
+		ref_Entity.AddComponent(new ToolType({Parent: ref_Entity}));
 	    }
 	}
 	catch(Exception) {}
