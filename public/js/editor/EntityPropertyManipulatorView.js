@@ -27,10 +27,21 @@ class EntityPropertyManipulatorView
 	    && !ref_Entity.m_Components[EDITOR.m_SelectedTool]
 	    && EDITOR.m_EditModeToggled)
 	    {
-		if(EDITOR.m_ref_LastSelectedEntity
-		&& EDITOR.m_ref_LastSelectedEntity.m_Components[EDITOR.m_SelectedTool])
+		if(EDITOR.m_ref_LastSelectedEntity)
 		{
-		    EDITOR.m_ref_LastSelectedEntity.RemoveComponent(EDITOR.m_SelectedTool);
+		    let lastComponents = EDITOR.m_ref_LastSelectedEntity.m_Components;
+		    if(EDITOR.m_ref_LastSelectedEntity !== ref_Entity)
+		    {
+			console.log(lastComponents);
+			let edit_components = Object.keys(lastComponents)
+			    .filter(c => lastComponents[c].m_Name.includes("EditComponent"))
+			    .map(c => lastComponents[c].m_Name)
+
+			if(edit_components.length > 0)
+			{
+			    edit_components.forEach(c => EDITOR.m_ref_LastSelectedEntity.RemoveComponent(c));
+			}
+		    }
 		}
 		let ToolType = (Component._TypeFromName({"name":EDITOR.m_SelectedTool}));
 		ref_Entity.AddComponent(new ToolType({Parent: ref_Entity}));

@@ -51,6 +51,11 @@ this.m_Parent.m_Position.z);
 	}
     }
 
+    SetScale(x,y,z)
+    {
+	this.m_Mesh.scale.set(x,y,z);
+    }
+
     Update()
     {
     }
