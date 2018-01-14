@@ -152,11 +152,12 @@ class PositionEditComponent extends mix(Component).with()
     {
 	let axis = Object.keys(dir).find(c => dir[c] !== 0);
 	let geo = new THREE.SphereGeometry(10, 32, 32);
-	let mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({color:0xff0000}));
+	let mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({color:0x000000}));
 	mesh.material.visible = false;
 	let length = dir.y > 0 ? 45 : -45;
 	let pos = new THREE.Vector3(0, length, 0);
 	pos.applyAxisAngle(dir, Math.PI/2);
+	pos.applyAxisAngle(new THREE.Vector3(0,1,0), Math.PI/2);
 	pos.add(this.m_Parent.m_Position);
 	mesh.handle_offset = pos.clone().sub(this.m_Parent.m_Position);
 	mesh.position.set(pos.x,pos.y,pos.z);
@@ -196,12 +197,12 @@ class PositionEditComponent extends mix(Component).with()
     {
 	switch(axis)
 	{
-	    case "z":
+	    case "x":
 		this.m_AxisHelpers.forEach(mesh =>
-		    mesh.position.x -= diff
+		    mesh.position.x += diff
 		);
 		this.m_Parent.SetPositionX(
-		    this.m_Parent.m_Position.x - diff
+		    this.m_Parent.m_Position.x + diff
 		);
 		break;
 	    case "y":
@@ -212,7 +213,7 @@ class PositionEditComponent extends mix(Component).with()
 		    this.m_Parent.m_Position.y - diff
 		);
 		break;
-	    case "x":
+	    case "z":
 		this.m_AxisHelpers.forEach(mesh =>
 		    mesh.position.z += diff
 		);

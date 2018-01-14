@@ -139,17 +139,11 @@ class ScaleEditComponent extends mix(Component).with()
 
 	let m_dist = new THREE.Vector2();
 	m_dist.subVectors(w2sm2d, m)
-	m_dist = m_dist.length();
+	m_dist = m_dist.length()*0.05;
 
 	let dot = axis_normal_dir.dot(mouse_normal_dir);
-	let change = ((dot) * 0.05 );
-	console.log(change);
-	if(mesh.last_scale_change !== null
-	&& mesh.last_scale_change !== change)
-	{
-	    this.AdjustScale(change, axis);
-	}
-	mesh.last_scale_change = change;
+	let change = ((dot * m_dist) * 0.1 );
+	this.AdjustScale(change, axis);
     }
 
     CreateArrowHeadSphere(dir, color)
@@ -175,26 +169,38 @@ class ScaleEditComponent extends mix(Component).with()
 
 	GAME.m_World.m_EditorScene.add(mesh);
 	this.m_Draggables.push(mesh);
+	return mesh;
     }
 
     CreateArrow(dir, color)
     {
-	let arrow = new THREE.ArrowHelper
-	(
-	    dir,
-	    this.m_Parent.m_Position,
-	    50,
-	    color,
-	    0.2 * 50,
-	    (0.2 * 30)
-	);
-	arrow.line.material.linewidth = 3;
-	arrow.m_ParentEntity = this.m_Parent;
-	GAME.m_World.m_EditorScene.add(arrow);
-	this.m_Draggables.push(arrow);
-	this.CreateArrowHeadSphere(dir, color);
+	let parent_mesh = this.m_Parent.m_Components.RenderComponent.m_Mesh;
+	let parent_pos = parent_mesh.position;
+	let line_mat = new THREE.LineDashedMaterial(
+	{
+	    color:color,
+	    linewidth: 3,
+	    dashSize: 3,
+	    gapSize: 3
+	});
+	let line_geom = new THREE.Geometry();
 
-	return arrow;
+	let length = dir.y > 0 ? 45 : -45;
+	let pos = new THREE.Vector3(0, length, 0);
+	pos.applyAxisAngle(dir, Math.PI/2);
+	pos.applyAxisAngle(new THREE.Vector3(0,1,0), Math.PI/2);
+	line_geom.vertices.push(new THREE.Vector3(0,0,0), pos);
+
+	let line = new THREE.Line(line_geom, line_mat);
+	line.position.set(parent_pos.x, parent_pos.y, parent_pos.z);
+	line.geometry.computeLineDistances();
+	line.m_ParentEntity = this.m_Parent;
+	GAME.m_World.m_EditorScene.add(line);
+	this.m_Draggables.push(line);
+	let head = this.CreateArrowHeadSphere(dir, color);
+	head.line = line;
+
+	return line;
     }
 
     AdjustScale(diff,axis)
@@ -202,28 +208,82 @@ class ScaleEditComponent extends mix(Component).with()
 	switch(axis)
 	{
 	    case "x":
-		this.m_AxisHelpers.forEach(mesh =>
-		    mesh.position.x -= diff
-		);
+		if(this.m_Parent.m_Scale.x - diff <= 0) break;
 		this.m_Parent.SetScaleX(
 		    this.m_Parent.m_Scale.x - diff
 		);
+		this.m_AxisHelpers.forEach(mesh =>
+		{
+		    if(mesh.axis === axis)
+		    {
+			let scale_x = this.m_Parent.m_Scale.x;
+			let offset = ((mesh.geometry.parameters.width));
+			if(mesh.handle_offset.x > 0)
+			{
+			    mesh.handle_offset.x = (offset * scale_x) + (10*scale_x);
+			}
+			else
+			{
+			    mesh.handle_offset.x = (-offset * scale_x) - (10*scale_x);
+			}
+			mesh.position.x = mesh.handle_offset.x + this.m_Parent.m_Position.x;
+			mesh.line.geometry.dynamic = true;
+			mesh.line.geometry.vertices[1].x = mesh.handle_offset.x;
+			mesh.line.geometry.verticesNeedUpdate = true;
+		    }
+		});
 		break;
 	    case "y":
-		this.m_AxisHelpers.forEach(mesh =>
-		    mesh.position.y -= diff
-		);
+		if(this.m_Parent.m_Scale.y - diff <= 0) break;
 		this.m_Parent.SetScaleY(
 		    this.m_Parent.m_Scale.y - diff
 		);
+		this.m_AxisHelpers.forEach(mesh =>
+		{
+		    if(mesh.axis === axis)
+		    {
+			let scale_y = this.m_Parent.m_Scale.y;
+			let offset = ((mesh.geometry.parameters.width));
+			if(mesh.handle_offset.y > 0)
+			{
+			    mesh.handle_offset.y = (offset * scale_y) + (10*scale_y);
+			}
+			else
+			{
+			    mesh.handle_offset.y = (-offset * scale_y) - (10*scale_y);
+			}
+			mesh.position.y = mesh.handle_offset.y + this.m_Parent.m_Position.y;
+			mesh.line.geometry.dynamic = true;
+			mesh.line.geometry.vertices[1].y = mesh.handle_offset.y;
+			mesh.line.geometry.verticesNeedUpdate = true;
+		    }
+		});
 		break;
 	    case "z":
-		this.m_AxisHelpers.forEach(mesh =>
-		    mesh.position.z -= diff
-		);
+		if(this.m_Parent.m_Scale.z - diff <= 0) break;
 		this.m_Parent.SetScaleZ(
 		    this.m_Parent.m_Scale.z - diff
 		);
+		this.m_AxisHelpers.forEach(mesh =>
+		{
+		    if(mesh.axis === axis)
+		    {
+			let scale_z = this.m_Parent.m_Scale.z;
+			let offset = ((mesh.geometry.parameters.width));
+			if(mesh.handle_offset.z > 0)
+			{
+			    mesh.handle_offset.z = (offset * scale_z) + (10*scale_z);
+			}
+			else
+			{
+			    mesh.handle_offset.z = (-offset * scale_z) - (10*scale_z);
+			}
+			mesh.position.z = mesh.handle_offset.z + this.m_Parent.m_Position.z;
+			mesh.line.geometry.dynamic = true;
+			mesh.line.geometry.vertices[1].z = mesh.handle_offset.z;
+			mesh.line.geometry.verticesNeedUpdate = true;
+		    }
+		});
 		break;
 	    default: return;
 	}
@@ -249,17 +309,7 @@ class ScaleEditComponent extends mix(Component).with()
 
 	    if(mesh.line)
 	    {
-		mesh.line.material.dispose();
-		mesh.line.geometry.dispose();
-		delete mesh.line.material;
-		delete mesh.line.geometry;
-	    }
-	    if(mesh.cone)
-	    {
-		mesh.cone.material.dispose();
-		mesh.cone.geometry.dispose();
-		delete mesh.cone.material;
-		delete mesh.cone.geometry;
+		delete mesh.line;
 	    }
 	    if(mesh.material)
 	    {
