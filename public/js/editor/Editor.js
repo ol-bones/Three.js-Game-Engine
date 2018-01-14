@@ -33,19 +33,63 @@ class Editor
 	this.m_EntityTreeViewView.render();
     }
 
+    ClearEditComponents(entity)
+    {
+	Object.keys(entity.m_Components)
+	    .filter(c => entity.m_Components[c].m_Name.includes("EditComponent"))
+	    .map(c => entity.m_Components[c].m_Name)
+	    .forEach(c => entity.RemoveComponent(c));
+    }
+
     SelectPositionEditTool()
     {
-	this.m_SelectedTool = "PositionEditComponent";
+	if(this.m_EditModeToggled && this.m_SelectedTool !== null
+	&& this.m_ref_SelectedEntity && this.m_ref_SelectedEntity.m_Components)
+	{
+	    this.ClearEditComponents(this.m_ref_SelectedEntity);
+	    this.m_SelectedTool = "PositionEditComponent";
+	    let ToolType = (Component._TypeFromName({"name":this.m_SelectedTool}));
+	    this.m_ref_SelectedEntity.AddComponent(new ToolType({Parent:
+this.m_ref_SelectedEntity}));
+	}
+	else
+	{
+	    this.m_SelectedTool = "PositionEditComponent";
+	}
     }
 
     SelectScaleEditTool()
     {
-	this.m_SelectedTool = "ScaleEditComponent";
+	if(this.m_EditModeToggled && this.m_SelectedTool !== null
+	&& this.m_ref_SelectedEntity && this.m_ref_SelectedEntity.m_Components)
+	{
+	    this.ClearEditComponents(this.m_ref_SelectedEntity);
+	    this.m_SelectedTool = "ScaleEditComponent";
+	    let ToolType = (Component._TypeFromName({"name":this.m_SelectedTool}));
+	    this.m_ref_SelectedEntity.AddComponent(new ToolType({Parent:
+this.m_ref_SelectedEntity}));
+	}
+	else
+	{
+	    this.m_SelectedTool = "ScaleEditComponent";
+	}
     }
 
     SelectRotateEditTool()
     {
-	this.m_SelectedTool = "RotateEditComponent";
+	if(this.m_EditModeToggled && this.m_SelectedTool !== null
+	&& this.m_ref_SelectedEntity && this.m_ref_SelectedEntity.m_Components)
+	{
+	    this.ClearEditComponents(this.m_ref_SelectedEntity);
+	    this.m_SelectedTool = "RotateEditComponent";
+	    let ToolType = (Component._TypeFromName({"name":this.m_SelectedTool}));
+	    this.m_ref_SelectedEntity.AddComponent(new ToolType({Parent:
+this.m_ref_SelectedEntity}));
+	}
+	else
+	{
+	    this.m_SelectedTool = "RotateEditComponent";
+	}
     }
 
     SelectEntity(id)
