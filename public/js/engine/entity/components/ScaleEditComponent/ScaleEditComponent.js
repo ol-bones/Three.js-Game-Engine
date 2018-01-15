@@ -99,20 +99,20 @@ class ScaleEditComponent extends mix(Component).with()
     MeshTouchDragEvent(mesh, p)
     {
 	mesh.event_phase = 2;
-	//this.m_Parent.SetPosition(p.x,p.y,p.z);
+	this.m_Parent.SetPosition(p.x,p.y,p.z);
 	this.m_AxisHelpers.forEach(m =>
 	{
 	    if(m.handle_offset)
 	    {
-	//	m.position.set(
-	//	    m.handle_offset.x + this.m_Parent.m_Position.x,
-	//	    m.handle_offset.y + this.m_Parent.m_Position.y,
-	//	    m.handle_offset.z + this.m_Parent.m_Position.z
-	//	);
+		m.position.set(
+		    m.handle_offset.x + this.m_Parent.m_Position.x,
+		    m.handle_offset.y + this.m_Parent.m_Position.y,
+		    m.handle_offset.z + this.m_Parent.m_Position.z
+		);
 	    }
 	    else
 	    {
-	//	m.position.set(p.x,p.y,p.z);
+		m.position.set(p.x,p.y,p.z);
 	    }
 	});
     }
