@@ -22,6 +22,30 @@ class EntityPropertyManipulatorView
 	    this.FillMaterialEditor(ref_Entity);
 	    this.fillproperties(entity_model);
 	    this.fillcomponents(entity_model.components);
+
+	    if(ref_Entity.m_Components.RenderComponent
+	    && !ref_Entity.m_Components[EDITOR.m_SelectedTool]
+	    && EDITOR.m_EditModeToggled)
+	    {
+		if(EDITOR.m_ref_LastSelectedEntity)
+		{
+		    let lastComponents = EDITOR.m_ref_LastSelectedEntity.m_Components;
+		    if(EDITOR.m_ref_LastSelectedEntity !== ref_Entity)
+		    {
+			console.log(lastComponents);
+			let edit_components = Object.keys(lastComponents)
+			    .filter(c => lastComponents[c].m_Name.includes("EditComponent"))
+			    .map(c => lastComponents[c].m_Name)
+
+			if(edit_components.length > 0)
+			{
+			    edit_components.forEach(c => EDITOR.m_ref_LastSelectedEntity.RemoveComponent(c));
+			}
+		    }
+		}
+		let ToolType = (Component._TypeFromName({"name":EDITOR.m_SelectedTool}));
+		ref_Entity.AddComponent(new ToolType({Parent: ref_Entity}));
+	    }
 	}
 	catch(Exception) {}
     }

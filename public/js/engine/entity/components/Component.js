@@ -34,6 +34,11 @@ class Component
     Update()
     {
     }
+
+    Remove()
+    {
+
+    }
 }
 
 Component.Types = [];

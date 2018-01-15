@@ -23,6 +23,7 @@ class Mouse
 
 	this.m_Canvas.addEventListener("mousemove", this._onMouseMove.bind(this), false);
 	this.m_Canvas.addEventListener("click", this._onMouseClick.bind(this), false);
+	$(this.m_Canvas).on("tap", this._onMouseClick.bind(this));
     }
 
     _onMouseMove(evt)
@@ -76,6 +77,11 @@ class Mouse
 	if(evt.target.tagName === "CANVAS")
 	{
 	    evt.preventDefault();
+	    if(THREE.OrbitControls.curDragging)
+	    {
+		setTimeout(()=>THREE.OrbitControls.curDragging = false, 50);
+		return;
+	    }
 
 	    if(evt && this.m_CurrentHoveredObject)
 	    {

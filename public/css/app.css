@@ -269,7 +269,13 @@ button.error:focus {
 .dropdown-menu>li>a:hover { color:#000000 !important;font-weight:bold; }
 .dropdown-menu>li>a { color:#9d9d9d !important; }
 
-
+.menu-toggled:after {
+    font-family: "Glyphicons Halflings";
+    content: "\e013";
+    position:absolute;
+    padding-right:5%;
+    right:0;
+}
 
 /**
  *  Editor Styles

@@ -23,6 +23,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 	this.__IsInitialised = false;
 
 	this.m_Position = new THREE.Vector3(x,y,z);
+	this.m_Scale = new THREE.Vector3(1,1,1);
     }
 
     saywhat() { console.log(this.m_ID + " says what"); }
@@ -108,8 +109,10 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 
     RemoveComponent(component)
     {
-	if(typeof component === "string")
+	if(typeof component === "string" && this.m_Components[component])
 	{
+	    this.m_Components[component].Remove();
+	    this.m_Components[component] = {};
 	    delete this.m_Components[component];
 	    return true;
 	}
@@ -146,6 +149,19 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
     SetPositionX(x) { this.SetPosition(x, this.m_Position.y, this.m_Position.z); }
     SetPositionY(y) { this.SetPosition(this.m_Position.x, y, this.m_Position.z); }
     SetPositionZ(z) { this.SetPosition(this.m_Position.x, this.m_Position.y, z); }
+
+    SetScale(x,y,z)
+    {
+	this.m_Scale.set(x,y,z);
+	if(this.m_Components.RenderComponent)
+	{
+	    this.m_Components.RenderComponent.SetScale(x,y,z);
+	}
+    }
+
+    SetScaleX(x) { this.SetScale(x, this.m_Scale.y, this.m_Scale.z); }
+    SetScaleY(y) { this.SetScale(this.m_Scale.x, y, this.m_Scale.z); }
+    SetScaleZ(z) { this.SetScale(this.m_Scale.x, this.m_Scale.y, z); }
 
     Update()
     {

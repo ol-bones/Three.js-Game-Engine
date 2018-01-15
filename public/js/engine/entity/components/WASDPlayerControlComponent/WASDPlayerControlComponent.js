@@ -121,13 +121,16 @@ e.m_Components.PhysicsComponent).map(e => e.m_Components.RenderComponent.m_Mesh)
 
 		    let force = (this.m_TargetPosition.clone().sub(this.m_Parent.m_Position.clone())).multiplyScalar(100);
 
-		    this.m_Parent.SendComms
-		    (
-			{ ID: 33, Component: "PhysicsComponent" },
-			[ force.x, force.y, force.z ],
-			"ApplyForce",
-			0
-		    );
+		    if(Math.abs(force.x + force.y + force.z) > 0)
+		    {
+			this.m_Parent.SendComms
+			(
+			    { ID: 32, Component: "PhysicsComponent" },
+			    [ force.x, force.y, force.z ],
+			    "ApplyForce",
+			    0
+			);
+		    }
 
 		   this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.y = (intersects[0].point.y + 50);
 		}

@@ -420,7 +420,6 @@ THREE.OrbitControls = function ( object, domElement ) {
 	function handleMouseDownRotate( event ) {
 
 		//console.log( 'handleMouseDownRotate' );
-
 		rotateStart.set( event.clientX, event.clientY );
 
 	}
@@ -442,9 +441,8 @@ THREE.OrbitControls = function ( object, domElement ) {
 	}
 
 	function handleMouseMoveRotate( event ) {
-
+		THREE.OrbitControls.curDragging = true;
 		//console.log( 'handleMouseMoveRotate' );
-
 		rotateEnd.set( event.clientX, event.clientY );
 		rotateDelta.subVectors( rotateEnd, rotateStart );
 
