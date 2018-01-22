@@ -55,19 +55,24 @@ let externalJSFiles = [];
 let componentTypes = [];
 let whiskerTemplates = glob.sync(join(__dirname, "public/js/**/*.whtml"));
 
-let textures = []
+let geom_models = [];
+let textures = [];
 let texturespng = glob.sync(join(__dirname, "public/textures/**/*.png"));
 let texturesjpg = glob.sync(join(__dirname, "public/textures/**/*.jpg"));
+
+let modelsobj = glob.sync(join(__dirname, "public/models/**/*.obj"));
 
 // client js
 clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
     .concat(whiskerTemplates)
     .concat(texturespng)
     .concat(texturesjpg)
+    .concat(modelsobj)
     .map((file) =>
     {
 	whiskerTemplates = [];
 	textures = [];
+	geom_models = [];
 
 	let extensionIndex = 0;
 	if(file.search(".js") > -1)
@@ -90,6 +95,11 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	if(file.search(".jpg") > -1)
 	{
 	    extensionIndex = file.lastIndexOf(".jpg");
+	}
+
+	if(file.search(".obj") > -1)
+	{
+	    extensionIndex = file.lastIndexOf(".obj");
 	}
 
 	let extension = file.substring(extensionIndex, file.length);
@@ -144,6 +154,17 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 
 	    return;
 	}
+	if(file.path.includes("/models") && !file.path.includes("/js/"))
+	{
+	    geom_models.push(
+	    {
+		name: file.name,
+		ext: file.ext,
+		path: file.path
+	    });
+
+	    return;
+	}
 
 	if(file.path.includes("/views")) { whiskerTemplates.push(file); return; }
 	if(!file.dependencies || file.name === "whiskers") { graph.push([file]); return; }
@@ -170,6 +191,7 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 
 externalJSFiles = JSON.parse(fs.readFileSync(__dirname + '/public/js/config/external_cdn_libs.json', 'utf8'));
 
+let client_config = JSON.parse(fs.readFileSync(__dirname + "/public/js/config/config.json", "utf8"));
 
 var viewGlobals = {};
 viewGlobals.editorJSFiles = clientJSFiles.filter(js => js.path.includes("/editor/"));
@@ -181,6 +203,8 @@ viewGlobals.navbardropdowns = JSON.parse(fs.readFileSync(__dirname +
 app.componentTypes = componentTypes;
 app.whiskerTemplates = whiskerTemplates;
 app.textures = textures;
+app.models = geom_models;
+app.client_config = client_config;
 
 console.log("[INFO] -- Opening route endpoints");
 // Bootstrap routes

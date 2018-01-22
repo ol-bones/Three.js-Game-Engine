@@ -3,7 +3,7 @@
 // Dependencies
 // @AssetRequest@
 
-class TextureRequest extends mix(AssetRequest).with()
+class OBJRequest extends mix(AssetRequest).with()
 {
     constructor(uri)
     {
@@ -14,13 +14,11 @@ class TextureRequest extends mix(AssetRequest).with()
     {
 	this.m_LoadState = LOADSTATE.INITIALISING;
 
-	THREE.ImageUtils.crossOrigin = "";
-	THREE.TextureLoader.prototype.crossOrigin = "";
-	this.m_Loader = new THREE.TextureLoader();
+	this.m_Loader = new THREE.OBJLoader();
 
-	this.m_Loader.setPath(`http://${CONFIG.host}/textures`);
-	this.m_Loader.setCrossOrigin("");
-	this.m_Loader.crossOrigin = "";
+	this.m_Loader.setPath(`http://${CONFIG.host}/models/`);
+	//this.m_Loader.setCrossOrigin("");
+	//this.m_Loader.crossOrigin = "";
 
 	// TODO: Use .setWithCredentials with a server generated request key/token/idk
 	//	    - This should be issued by the web server.js
@@ -50,9 +48,9 @@ class TextureRequest extends mix(AssetRequest).with()
 	}
     }
 
-    OnFinished(texture)
+    OnFinished(obj)
     {
-	this.m_Asset = texture;
+	this.m_Asset = obj;
 	super.OnFinished();
     }
 }

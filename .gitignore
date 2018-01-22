@@ -4,4 +4,5 @@ node_modules/
 *.swn
 /public/js/libs/three.min.js
 /public/textures/*
+/public/models/*
 *~

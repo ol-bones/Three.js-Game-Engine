@@ -85,7 +85,7 @@ class World extends mix(BaseObject).with(Comms)
     {
 	try
 	{
-	    let data =json("http://sarian.world/data/world/0.json");
+	    let data =json(`http://${CONFIG.host}/data/world/0.json`);
 	    Entity.FromFile(data, null, new THREE.Vector3(0,0,0));
 	}
 	catch(Exception)

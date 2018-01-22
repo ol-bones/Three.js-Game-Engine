@@ -7,6 +7,9 @@
 window.Game = {};
 var GAME = window.Game;
 
+window.Config = [];
+var CONFIG = window.Config;
+
 window.whtml = {};
 var WHTML = window.whtml;
 
@@ -25,6 +28,19 @@ $.ajax("/whiskerTemplates").done(xhr =>
     $.ajax("/texturelist").done(xhr =>
     {
 	xhr.forEach(json => AssetCache.TextureList.push(json));
+    });
+}).then(() =>
+{
+    $.ajax("/config").done(xhr =>
+    {
+	Object.keys(xhr).map(key => [key, xhr[key]])
+	    .forEach(json => CONFIG[json[0]] = json[1]);
+    });
+}).then(() =>
+{
+    $.ajax("/modellist").done(xhr =>
+    {
+	xhr.forEach(json => AssetCache.ModelList.push(json));
 	$.holdReady(false);
     });
 });

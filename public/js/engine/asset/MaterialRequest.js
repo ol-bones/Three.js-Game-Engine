@@ -27,7 +27,7 @@ class MaterialRequest extends mix(AssetRequest).with()
 	    $.ajax(
 	    {
 		type: "GET",
-		url: "http://sarian.world/materials/" + this.m_URI + ".json",
+		url: `http://${CONFIG.host}/materials/` + this.m_URI + ".json",
 		async: true,
 		beforeSend: (xhr) =>
 		{

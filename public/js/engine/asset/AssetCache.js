@@ -33,6 +33,9 @@ class AssetCache
 		case "material":
 		    request = new MaterialRequest(assetURI);
 		    break;
+		case "model":
+		    request = new OBJRequest(assetURI);
+		    break;
 		default:
 		    return false;
 	    }
@@ -86,3 +89,4 @@ class AssetCache
 }
 
 AssetCache.TextureList = [];
+AssetCache.ModelList = [];

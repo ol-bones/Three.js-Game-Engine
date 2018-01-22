@@ -88,6 +88,8 @@ module.exports = function (app, passport, viewGlobals)
     app.get("/componentTypes", (req,res) => res.json(app.componentTypes));
     app.get("/whiskerTemplates", (req,res) => res.json(app.whiskerTemplates));
     app.get("/texturelist", (req,res) => res.json(app.textures));
+    app.get("/modellist", (req,res) => res.json(app.models));
+    app.get("/config", (req,res) => res.json(app.client_config));
 
     /**
     * Error handling
