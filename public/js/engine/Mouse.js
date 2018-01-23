@@ -55,7 +55,7 @@ class Mouse
 	    {
 		if(entity.m_Renderable && entity.m_Components.RenderComponent.m_Mesh)
 		{
-		    entity.m_Components.RenderComponent.m_Mesh.material.color.setHex(0xFFFFFF);
+		    //entity.m_Components.RenderComponent.m_Mesh.material.color.setHex(0xFFFFFF);
 		}
 	    });
 
@@ -64,7 +64,7 @@ class Mouse
 		this.m_LastHoveredObject = null;
 	    }
 	    this.m_CurrentHoveredObject = intersects[0].object;
-	    intersects[0].object.material.color.setHex(0xFF0000);
+	    //intersects[0].object.material.color.setHex(0xFF0000);
 	}
 	else
 	{

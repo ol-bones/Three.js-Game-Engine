@@ -71,7 +71,7 @@ class MaterialRequest extends mix(AssetRequest).with()
 		case "THREE.MeshPhongMaterial":
 		    material = new THREE.MeshPhongMaterial(
 		    {
-			color: new THREE.Color(1,0,0),
+			color: new THREE.Color(1,1,1),
 			map: texture(this.m_Data.texture),
 			transparent: true,
 			opacity: 1

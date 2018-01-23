@@ -14,7 +14,7 @@ class OBJRenderComponent extends mix(RenderComponent).with()
     {
 	super.Initialise();
 
-	this.m_Mesh = model("Directors Chair.obj");
+	this.m_Mesh = model(this.m_Args.model);
 
 	this.OnInitialised();
     }
