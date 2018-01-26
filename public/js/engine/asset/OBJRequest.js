@@ -34,12 +34,11 @@ class OBJRequest extends mix(AssetRequest).with()
 	{
 	    this.m_Loader.load
 	    (
-		this.m_URI,
+		this.m_FileName + "/" + this.m_URI,
 		this.OnFinished.bind(this),
 		this.OnProgress.bind(this),
 		this.OnError.bind(this)
 	    );
-
 	    this.OnDownloading();
 	}
 	catch(Exception)

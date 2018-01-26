@@ -223,6 +223,7 @@ Math.round(container[0].scrollHeight, 10))
     {
 	GAME.m_World.m_Entities.forEach(e => e.Update());
 	GAME.m_AssetCache.Update();
+	GAME.m_World.m_DebugRenderer.update();
     }
 }
 
@@ -232,4 +233,5 @@ let EDITOR = window.Editor;
 $(document).ready(() =>
 {
     EDITOR = new Editor();
+    EDITOR.ToggleEditMode($($($("#Debug").children(0).prevObject[0].nextElementSibling).children()[0]).children(0)[0]);
 });

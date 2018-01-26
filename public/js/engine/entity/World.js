@@ -37,7 +37,7 @@ class World extends mix(BaseObject).with(Comms)
 	this.m_PhysicsWorld.solver.iterations = 1;
 	this.m_Scene = new THREE.Scene();
 	this.m_EditorScene = new THREE.Scene();
-//	this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
+	this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
 
 
 	this.m_Camera = new THREE.PerspectiveCamera(
@@ -98,7 +98,7 @@ class World extends mix(BaseObject).with(Comms)
     {
 	this.ProcessInboundCommsQueue();
 	this.m_PhysicsWorld.step(1/30);
-	//this.m_DebugRenderer.update(); // only use this if shit is really weird
+	this.m_DebugRenderer.update(); // only use this if shit is really weird
 
 	this.m_Entities.forEach(e => e.Update());
     }
