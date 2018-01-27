@@ -35,6 +35,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 
     OnInitialised()
     {
+	if(entities().includes(this)) return;
 	entities().push(this);
     }
 

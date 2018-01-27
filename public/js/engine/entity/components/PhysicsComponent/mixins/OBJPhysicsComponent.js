@@ -58,6 +58,34 @@ class OBJPhysicsComponent extends mix(PhysicsComponent).with()
 		    );
 		}
 	    }
+	    if(phys_data.type === 2)
+	    {
+		this.m_PhysicsBody.addShape(
+		    new CANNON.Cylinder(
+			phys_data.scale.rt,
+			phys_data.scale.rb,
+			phys_data.scale.h,
+			phys_data.scale.s
+		    ),
+		    new CANNON.Vec3(
+			...Object.keys(phys_data.pos).map(
+			    dir => phys_data.pos[dir])
+		    )
+		);
+		if(phys_data.rot)
+		{
+		    this.m_PhysicsBody.shapeOrientations[
+			this.m_PhysicsBody.shapeOrientations.length-1
+		    ].setFromAxisAngle(
+			new CANNON.Vec3(
+			    ...Object.keys(phys_data.rot.axis).map(
+				axis => phys_data.rot.axis[axis]
+			    )
+			),
+			phys_data.rot.r
+		    );
+		}
+	    }
 	});
 
 	super.Initialise();

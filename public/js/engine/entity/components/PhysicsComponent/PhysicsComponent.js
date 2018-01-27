@@ -22,7 +22,6 @@ class PhysicsComponent extends mix(Component).with()
     {
 	super.Initialise();
 
-	this.m_BodySettings.world = GAME.m_World.m_PhysicsWorld;
 
 	this.m_PhysicsBody.position.set(
 	    this.m_Parent.m_Position.x,
@@ -33,7 +32,7 @@ class PhysicsComponent extends mix(Component).with()
 	this.m_PhysicsBody.m_ParentEntity = this.m_Parent;
 	this.m_PhysicsBody.collisionResponse = true;
 
-	this.m_BodySettings.world.add(this.m_PhysicsBody);
+	GAME.m_World.m_PhysicsWorld.add(this.m_PhysicsBody);
 
 	this.OnInitialised();
      }
