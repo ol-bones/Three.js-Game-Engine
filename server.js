@@ -78,13 +78,11 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	if(file.search(".js") > -1)
 	{
 	    extensionIndex = file.lastIndexOf(".js")
-	    console.log("INDEX: " + extensionIndex);
 	}
 
 	if(file.search(".whtml") > -1)
 	{
 	    extensionIndex = file.lastIndexOf(".whtml");
-	    console.log("INDEX: " + extensionIndex);
 	}
 
 	if(file.search(".png") > -1)

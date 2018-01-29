@@ -1,6 +1,6 @@
 // Dependencies
-// @Game@
+// @Engine@
 // @World@
 
-window.entities = () => GAME.m_World.m_FlatEntities;
+window.entities = () => ENGINE.m_World.m_FlatEntities;
 let entities = window.entities;

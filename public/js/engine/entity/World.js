@@ -3,7 +3,6 @@
 // Dependencies
 // @Comms@
 // @Entity@
-// @Game@
 
 class World extends mix(BaseObject).with(Comms)
 {
@@ -26,9 +25,9 @@ class World extends mix(BaseObject).with(Comms)
 	this.m_Renderer = {};
     }
 
-    initialise()
+    Initialise()
     {
-	console.log(GAME);
+	console.log(ENGINE);
 	this.m_Entities = [];
 
 	this.m_PhysicsWorld = new CANNON.World();
@@ -76,29 +75,14 @@ class World extends mix(BaseObject).with(Comms)
 
 	document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
 
-	this.LoadWorld();
-
 	requestAnimationFrame(this.render.bind(this));
-    }
-
-    LoadWorld()
-    {
-	try
-	{
-	    let data =json(`http://${CONFIG.host}/data/world/0.json`);
-	    Entity.FromFile(data, null, new THREE.Vector3(0,0,0));
-	}
-	catch(Exception)
-	{
-	    setTimeout(this.LoadWorld.bind(this), 50);
-	}
     }
 
     Update()
     {
 	this.ProcessInboundCommsQueue();
 	this.m_PhysicsWorld.step(1/30);
-	this.m_DebugRenderer.update(); // only use this if shit is really weird
+//	this.m_DebugRenderer.update(); // only use this if shit is really weird
 
 	this.m_Entities.forEach(e => e.Update());
     }

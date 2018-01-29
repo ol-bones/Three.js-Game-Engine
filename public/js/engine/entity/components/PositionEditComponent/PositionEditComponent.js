@@ -33,8 +33,8 @@ class PositionEditComponent extends mix(Component).with()
 
 	this.m_DragControls =  new THREE.DragControls(
 	    this.m_Draggables,
-	    GAME.m_World.m_Camera,
-	    GAME.m_World.m_Renderer.domElement
+	    ENGINE.m_World.m_Camera,
+	    ENGINE.m_World.m_Renderer.domElement
 	);
 	this.m_DragControls.enabled = true;
 
@@ -67,13 +67,13 @@ class PositionEditComponent extends mix(Component).with()
 
     W2S(obj)
     {
-	let rect = GAME.m_World.m_Renderer.domElement.getBoundingClientRect();
+	let rect = ENGINE.m_World.m_Renderer.domElement.getBoundingClientRect();
 	let width = rect.width;
 	let height = rect.height + 50;
 
 
 	var pos = obj.position.clone();
-	pos.project(GAME.m_World.m_Camera);
+	pos.project(ENGINE.m_World.m_Camera);
 	pos.x = ( pos.x * (width/2) ) + (width/2);
 	pos.y = - ( pos.y * (height/2) ) + (height/2);
 
@@ -84,12 +84,12 @@ class PositionEditComponent extends mix(Component).with()
     {
 	mesh.event_phase = 1;
 	mesh.drags = [];
-	GAME.m_World.m_Controls.enabled = false;
+	ENGINE.m_World.m_Controls.enabled = false;
     }
 
     TouchEndEvent(mesh)
     {
-	GAME.m_World.m_Controls.enabled = true;
+	ENGINE.m_World.m_Controls.enabled = true;
 	if(mesh.event_phase === 2)
 	{
 	    EDITOR.m_LastEntitySelectTime = Date.now();
@@ -169,7 +169,7 @@ class PositionEditComponent extends mix(Component).with()
 	mesh.touchend = () => this.TouchEndEvent(mesh);
 	mesh.touchdrag = (t,x,y) => this.ArrowTouchDragEvent(mesh, t, x, y, dir, axis);
 
-	GAME.m_World.m_EditorScene.add(mesh);
+	ENGINE.m_World.m_EditorScene.add(mesh);
 	this.m_Draggables.push(mesh);
     }
 
@@ -186,7 +186,7 @@ class PositionEditComponent extends mix(Component).with()
 	);
 	arrow.line.material.linewidth = 3;
 	arrow.m_ParentEntity = this.m_Parent;
-	GAME.m_World.m_EditorScene.add(arrow);
+	ENGINE.m_World.m_EditorScene.add(arrow);
 	this.m_Draggables.push(arrow);
 	this.CreateArrowHeadSphere(dir);
 
@@ -241,7 +241,7 @@ class PositionEditComponent extends mix(Component).with()
 
 	this.m_AxisHelpers.forEach(mesh =>
 	{
-	    GAME.m_World.m_EditorScene.remove(mesh);
+	    ENGINE.m_World.m_EditorScene.remove(mesh);
 
 	    if(mesh.line)
 	    {

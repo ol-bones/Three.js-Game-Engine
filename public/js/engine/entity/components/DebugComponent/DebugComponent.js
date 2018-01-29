@@ -53,13 +53,13 @@ class DebugComponent extends mix(Component).with()
 		0x0000ff
 	    );
 
-	    GAME.m_World.m_Scene.add(this.m_Mesh);
-	    GAME.m_World.m_Scene.add(this.m_MeshBoundingBox);
+	    ENGINE.m_World.m_Scene.add(this.m_Mesh);
+	    ENGINE.m_World.m_Scene.add(this.m_MeshBoundingBox);
 
 	}
 
 	this.m_Axis = new THREE.AxisHelper(50);
-	GAME.m_World.m_Scene.add(this.m_Axis);
+	ENGINE.m_World.m_Scene.add(this.m_Axis);
 
 	this.m_IsInitialised = true;
     }
@@ -101,7 +101,7 @@ class DebugComponent extends mix(Component).with()
 
 	this.m_Parent.m_Components.RenderComponent.m_Mesh.material.opacity = 1;
 
-	GAME.m_World.m_Scene.remove(this.m_Axis);
+	ENGINE.m_World.m_Scene.remove(this.m_Axis);
 	this.m_Axis.material.dispose();
 	this.m_Axis.geometry.dispose();
 	delete this.m_Axis.material;
@@ -110,14 +110,14 @@ class DebugComponent extends mix(Component).with()
 
 	if(this.m_Mesh)
 	{
-	    GAME.m_World.m_Scene.remove(this.m_Mesh);
-	    this.m_Mesh.material.dispose();
-	    this.m_Mesh.geometry.dispose();
+	    ENGINE.m_World.m_Scene.remove(this.m_Mesh);
+	    try{this.m_Mesh.material.dispose()}catch(e){}
+	    try{this.m_Mesh.geometry.dispose()}catch(e){}
 	    delete this.m_Mesh.material;
 	    delete this.m_Mesh.geometry;
 	    delete this.m_Mesh;
 
-	    GAME.m_World.m_Scene.remove(this.m_MeshBoundingBox);
+	    ENGINE.m_World.m_Scene.remove(this.m_MeshBoundingBox);
 	    this.m_MeshBoundingBox.material.dispose();
 	    this.m_MeshBoundingBox.geometry.dispose();
 	    delete this.m_MeshBoundingBox.material;

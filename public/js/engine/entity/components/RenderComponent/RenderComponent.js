@@ -27,7 +27,7 @@ class RenderComponent extends mix(Component).with()
 	this.SetPosition(this.m_Parent.m_Position.x, this.m_Parent.m_Position.y,
 this.m_Parent.m_Position.z);
 	this.m_Mesh.m_ParentEntity = this.m_Parent || null;
-	GAME.m_World.m_Scene.add(this.m_Mesh);
+	ENGINE.m_World.m_Scene.add(this.m_Mesh);
 	this.m_IsInitialised = true;
     }
 

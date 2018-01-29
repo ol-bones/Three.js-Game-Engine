@@ -1,5 +1,5 @@
 // Dependencies
-// @Game@
+// @Engine@
 // @World@
 // @Entity@
 // @Component@
@@ -15,7 +15,7 @@ class EntityTreeView
     {
 	this.m_TreeViewElement.empty();
 	let ents_html = [];
-	GAME.m_World.m_Entities.forEach(e =>
+	ENGINE.m_World.m_Entities.forEach(e =>
 	{
 	    ents_html.push(e.DataModel().ToHTML());
 	});

@@ -1,11 +1,10 @@
 "use strict";
 
 // Dependencies
-// @Game@
-// @World@
+// @Engine@
 
-window.Game = {};
-var GAME = window.Game;
+window.Engine = {};
+var ENGINE = window.Engine;
 
 window.Config = [];
 var CONFIG = window.Config;
@@ -13,7 +12,6 @@ var CONFIG = window.Config;
 window.whtml = {};
 var WHTML = window.whtml;
 
-$.holdReady(true);
 $.ajax("/whiskerTemplates").done(xhr =>
 {
     xhr.forEach(json => WHTML[json.name] = json.contents);
@@ -22,60 +20,39 @@ $.ajax("/whiskerTemplates").done(xhr =>
     $.ajax("/componentTypes").done(xhr =>
     {
 	xhr.forEach(type => Component.Types.push(eval(type)));
-    });
-}).then(() =>
+    })
+.then(() =>
 {
     $.ajax("/texturelist").done(xhr =>
     {
 	xhr.forEach(json => AssetCache.TextureList.push(json));
-    });
-}).then(() =>
+    })
+.then(() =>
 {
     $.ajax("/config").done(xhr =>
     {
 	Object.keys(xhr).map(key => [key, xhr[key]])
 	    .forEach(json => CONFIG[json[0]] = json[1]);
-    });
-}).then(() =>
+    })
+.then(() =>
 {
     $.ajax("/modellist").done(xhr =>
     {
 	xhr.forEach(json => AssetCache.ModelList.push(json));
-	$.holdReady(false);
-    });
-});
-
-
-$(document).ready(function ()
+    })
+.then(() =>
 {
-    $("#fullscreen-button").on("click", function()
-    {
-        $('.navbar').hide();
-        var el = document.documentElement,
-        rfs = el.requestFullscreen
-            || el.webkitRequestFullScreen
-            || el.mozRequestFullScreen
-            || el.msRequestFullscreen;
-
-        rfs.call(el);
-
-        // wait for DOM update from hide()^
-        setTimeout(function()
-        {
-            $(".game-content").css({"top":"0%", "position": "absolute"});
-        }, 100);
-    });
-
-    GAME = new Game();
-    GAME.initialise();
-});
+    ENGINE = new Engine();
+    new (eval(CONFIG.EntryClass))();
+    ENGINE.Initialise();
+})})})})});
 
 $(window).on("resize", () =>
 {
-    GAME.m_World.m_Camera.aspect = window.innerWidth / window.innerHeight;
-    GAME.m_World.m_Camera.updateProjectionMatrix();
+    ENGINE.m_World.m_Camera.aspect = window.innerWidth / window.innerHeight;
+    ENGINE.m_World.m_Camera.updateProjectionMatrix();
 
-    GAME.m_World.m_Renderer.setSize( window.innerWidth, window.innerHeight );
+    ENGINE.m_World.m_Renderer.setSize( window.innerWidth, window.innerHeight );
 
 });
 

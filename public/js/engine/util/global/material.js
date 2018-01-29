@@ -1,6 +1,6 @@
 // Dependencies
-// @Game@
+// @Engine@
 // @World@
 
-window.material = (uri) => window.GAME.m_AssetCache.GetAsset(uri, "material");
+window.material = (uri) => window.ENGINE.m_AssetCache.GetAsset(uri, "material");
 let material = window.material;

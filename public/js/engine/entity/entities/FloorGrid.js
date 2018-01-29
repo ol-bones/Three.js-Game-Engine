@@ -33,7 +33,7 @@ class FloorGrid extends Entity
 		e.addComponent(new PathFindingNodeComponent({Parent: e, NodeID: count}));
 		e.addComponent(new DebugComponent({Parent: e}));
 
-		e.m_ClickFunctions.push((e)=>{GAME.m_World.m_LocalPlayer.m_Components.GRIDPlayerControlComponent.Activate(e)});
+		e.m_ClickFunctions.push((e)=>{ENGINE.m_World.m_LocalPlayer.m_Components.GRIDPlayerControlComponent.Activate(e)});
 
 		count++;
 		e.Initialise();

@@ -206,7 +206,7 @@ Entity.FromFile = (json, parent, offset) =>
     }
     catch(e)
     {
-	GAME.m_World.m_Entities.push(entity);
+	ENGINE.m_World.m_Entities.push(entity);
     }
     finally
     {

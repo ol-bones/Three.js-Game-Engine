@@ -87,7 +87,7 @@ class WASDPlayerControlComponent extends mix(Component).with()
     OnInitialised()
     {
 	this.m_Arrow = new THREE.ArrowHelper(new THREE.Vector3(0,0,0), new THREE.Vector3(0,1,0), 2.5, 0xFF0000);
-	GAME.m_World.m_Scene.add(this.m_Arrow);
+	ENGINE.m_World.m_Scene.add(this.m_Arrow);
 	this.m_IsInitialised = true;
     }
 

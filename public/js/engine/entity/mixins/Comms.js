@@ -56,7 +56,7 @@ let Comms = (Entity) => class extends Entity
     GetDestination(id)
     {
 	let destination = entities().find(e => e.m_ID === id);
-	return destination || GAME.m_World;
+	return destination || ENGINE.m_World;
     }
 
     SendMessageTransportObject(MTO, destinationReference)

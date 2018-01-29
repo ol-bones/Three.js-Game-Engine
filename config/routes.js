@@ -10,6 +10,7 @@ const play = require('../app/controllers/play');
 const admin = require('../app/controllers/admin');
 const no_beta = require('../app/controllers/no_beta');
 const edit = require('../app/controllers/edit');
+const entity_create = require('../app/controllers/entity_create');
 
 const auth = require('./middlewares/authorization');
 
@@ -62,6 +63,7 @@ module.exports = function (app, passport, viewGlobals)
     app.get('/no_beta_access', auth.requiresLogin, no_beta.no);
     app.get('/play', auth.requiresLogin, play.play);
     app.get('/edit', auth.requiresLogin, edit.editor);
+    app.get('/entcreate', auth.requiresLogin, entity_create.entity_create);
 
     // user routes
     app.get('/login', users.login);
@@ -82,14 +84,14 @@ module.exports = function (app, passport, viewGlobals)
     app.get('/admin', auth.requiresLogin, admin.main);
     app.post('/admin/updateuser', auth.requiresLogin, admin.updateuser);
 
-    app.get("/recordings/", (req,res) => res.send("kek"));
-    app.get("/a2billing/admin/Public/index.php", (req,res) => res.send("kek"));
+    app.get(/php/, (req,res) => res.send("database password: hunter2"));
 
     app.get("/componentTypes", (req,res) => res.json(app.componentTypes));
     app.get("/whiskerTemplates", (req,res) => res.json(app.whiskerTemplates));
     app.get("/texturelist", (req,res) => res.json(app.textures));
     app.get("/modellist", (req,res) => res.json(app.models));
     app.get("/config", (req,res) => res.json(app.client_config));
+    
 
     /**
     * Error handling

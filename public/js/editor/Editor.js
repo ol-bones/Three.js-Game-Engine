@@ -1,5 +1,5 @@
 // Dependencies
-// @Game@
+// @Engine@
 // @World@
 // @Entity@
 // @Component@
@@ -26,6 +26,31 @@ class Editor
 
 	this.m_DebugRendererToggled = false;
 	this.m_EditModeToggled = false;
+
+	ENGINE.OnInitialised = () => this.Initialise();
+    }
+
+    Initialise()
+    {
+	EDITOR = this;
+	this.LoadWorld();
+    }
+
+    LoadWorld()
+    {
+	try
+	{
+	let data = json(`http://${CONFIG.host}/data/world/0.json`);
+	Entity.FromFile(
+	    data,
+	    null,
+	    new THREE.Vector3(0,0,0)
+	);
+	}
+	catch(Exception)
+	{
+	    setTimeout(this.LoadWorld.bind(this), 50);
+	}
     }
 
     render()
@@ -181,16 +206,16 @@ Math.round(container[0].scrollHeight, 10))
 	    {
 		this.m_ref_SelectedEntity.RemoveComponent(this.m_SelectedTool);
 	    }
-	    clearInterval(this.m_UpdateIntervalID);
 	    delete this.m_ref_SelectedEntity;
 	    delete this.m_Ref_LastSelectedEntity;
-	    GAME.BeginUpdateLoop();
+	    ENGINE.StopUpdating(ENGINE.m_World, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
+	    ENGINE.BeginUpdating(ENGINE.m_World, ENGINE.m_World.Update);
 	}
 	else
 	{
 	    this.m_EditModeToggled = true;
-	    clearInterval(GAME.m_UpdateIntervalID);
-	    this.m_UpdateIntervalID = setInterval(this.UpdateWorldEditMode.bind(this), 1000/30);
+	    ENGINE.StopUpdating(ENGINE.m_World, ENGINE.m_World.Update);
+	    ENGINE.BeginUpdating(ENGINE.m_World, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
 	}
     }
 
@@ -201,13 +226,16 @@ Math.round(container[0].scrollHeight, 10))
 	if(this.m_DebugRendererToggled)
 	{
 	    entities().forEach(e => e.RemoveComponent("DebugComponent"));
+	    ENGINE.m_World.m_DebugRenderer._material.visible = false;
+	    ENGINE.StopUpdating(ENGINE.m_World.m_DebugRenderer, ENGINE.m_World.m_DebugRenderer.update);
 	    this.m_DebugRendererToggled = false;
 	}
 	else
 	{
 	    entities().forEach(e =>
 	    {
-		if(e.m_Components.RenderComponent && e.m_Components.RenderComponent.m_Debuggable)
+		if(e.m_Components.RenderComponent && e.m_Components.RenderComponent.m_Debuggable
+		&& e.m_Components.RenderComponent.constructor.name !== "OBJRenderComponent")
 		{
 		    try
 		    {
@@ -215,23 +243,12 @@ Math.round(container[0].scrollHeight, 10))
 		    } catch(Exception) {}
 		}
 	    });
+	    ENGINE.m_World.m_DebugRenderer._material.visible = true;
+	    ENGINE.BeginUpdating(ENGINE.m_World.m_DebugRenderer, ENGINE.m_World.m_DebugRenderer.update);
 	    this.m_DebugRendererToggled = true;
 	}
-    }
-
-    UpdateWorldEditMode()
-    {
-	GAME.m_World.m_Entities.forEach(e => e.Update());
-	GAME.m_AssetCache.Update();
-	GAME.m_World.m_DebugRenderer.update();
     }
 }
 
 window.Editor = {};
 let EDITOR = window.Editor;
-
-$(document).ready(() =>
-{
-    EDITOR = new Editor();
-    EDITOR.ToggleEditMode($($($("#Debug").children(0).prevObject[0].nextElementSibling).children()[0]).children(0)[0]);
-});

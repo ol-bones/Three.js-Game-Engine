@@ -1,9 +1,14 @@
 <div class="game-canvas">
 {if User}
-{if User.canedit}
-{if nav_edit}
-{>editor}
-{/if}{/if}{/if}
+    {if User.canedit}
+	{if nav_edit}
+	    {>editor}
+	{/if}
+	{if nav_entcreate}
+	    {>editor}
+	{/if}
+    {/if}
+{/if}
 </div>
 
 

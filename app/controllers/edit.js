@@ -31,6 +31,7 @@ exports.editor = function (req, res)
 	},
 	nav_edit: true,
 	User: req.user,
+	EntryClass: "Editor",
 	navbardropdowns: req.viewGlobals.navbardropdowns,
 	viewGlobals: req.viewGlobals
     });

@@ -53,7 +53,7 @@ class GRIDPlayerControlComponent extends mix(Component).with()
 	this.m_Ray.ray.origin.set(ply_position.x, ply_position.y, ply_position.z);
 	this.m_Ray.ray.direction = new THREE.Vector3(0,-1,0);
 
-	var intersects = this.m_Ray.intersectObjects(GAME.m_World.m_Entities.find((n) => n.Path).m_Children.map((e) => e.m_Components.RenderComponent.m_Mesh));
+	var intersects = this.m_Ray.intersectObjects(ENGINE.m_World.m_Entities.find((n) => n.Path).m_Children.map((e) => e.m_Components.RenderComponent.m_Mesh));
 
 	if(intersects.length > 0)
 	{

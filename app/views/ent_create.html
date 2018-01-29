@@ -1,0 +1,147 @@
+<div class="container" style="pointer-events:none;position:absolute;width:100%;height:100%;padding:0;">
+    <div class="nav navbar-inverse row" style="pointer-events:all;">
+	<div class="container-fluid">
+	    <div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse"
+data-target="#editNavbar">
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		    <span class="icon-bar"></span>
+		</button>
+	    </div>
+	</div>
+	<div class="collapse navbar-collapse" id="#editNavbar">
+	    <ul class="nav navbar-nav">
+		{for dropdown in viewGlobals.navbardropdowns}
+		    <li class="dropdown">
+			<button class="editor-nav-btn"
+				type="button"
+				id="{>dropdown.Name}">
+			    {dropdown.Name}
+			</button>
+			<ul class="dropdown-menu editor-nav-drpdn"
+			    role="menu"
+			    aria-labelledby="{>dropdown.Name}">
+			    {for item in dropdown.MenuItems}
+				<li role="presentation">
+				    <a role="menuitem"
+				       tabindex="{item.TabIndex}"
+				       href="#"
+				       onclick="{item.Function}">
+				    {item.Name}
+				    </a>
+				</li>
+			    {/for}
+			</ul>
+		    </li>
+		{/for}
+	    </ul>
+	</div>
+    </div>
+
+    <div class="" style="height:100%;display:flex;">
+	<div class="editor-left-pane">
+	    <div class="" style="height:100%;background-color:#222;">
+		<div class=""
+style="height:50%;overflow:scroll;margin-right:2.5%;margin-bottom:2.5%;background-color:#111;">
+		</div>
+		<div class=""
+style="height:50%;margin-left:0px;overflow:hidden;margin-right:2.5%;background-color:#111;">
+		    <div class="container entity-manipulator-window" style="width:100%;">
+		    </div>
+		</div>
+	    </div>
+	    <div class="editor-bottom-pane">
+		<div class="bottom-options">
+		    <button class="btn btn-default glyphicon glyphicon-move"
+			    onclick="EDITOR.SelectPositionEditTool()">
+		    </button>
+		    <button class="btn btn-default glyphicon glyphicon-fullscreen"
+			    onclick="EDITOR.SelectScaleEditTool()">
+		    </button>
+		    <button class="btn btn-default glyphicon glyphicon-refresh"
+			    onclick="EDITOR.SelectRotateEditTool()">
+		    </button>
+		</div>
+	    </div>
+	</div>
+	    <div class="editor-right-pane">
+		<div class="entity-tools-view">
+		    <div class="material-editor-tool-view">
+			<div class="texture-panel">
+			    <button class="btn btn-default texture-panel"
+					   onclick="EDITOR.OpenTextureBrowser()">
+				<img src="/textures/private/check.png"
+				     class="img-thumbnail texture-panel"
+				     id="material-editor-texture-view">
+			    </button>
+			    <div class="texture-name" id="material-editor-texture-name">
+				check.png
+			    </div>
+			</div>
+		    </div>
+		</div>
+	    </div>
+    </div>
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="editor-component-modal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding-top:50px;">
+          <button type="button" class="close" data-dismiss="modal" style="color:#fff;">&times;</button>
+          <h4>
+	    <div id="editor-component-modal-entity-name">Entity</div>
+	    Components
+	  </h4>
+	    <ul class="nav nav-tabs" id="component-modal-tabs" style="border:0;">
+	    </ul>
+        </div>
+        <div class="modal-body">
+	    <div class="tab-content" id="component-modal-content">
+	    </div>
+	 </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left"
+data-dismiss="modal"><span style="color:red;" class="glyphicon glyphicon-remove"></span> Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="texture-select-modal" role="dialog">
+    <div class="modal-dialog">
+	<div class="modal-content">
+	    <div class="modal-header" style="padding-top:50px;">
+		<button type="button"
+			class="close" data-dismiss="modal" stlye="color:#fff;">
+			&times;
+		</button>
+		<h4>Texture Browser</h4>
+		<div class="modal-body">
+		    {>texturebrowser}
+		</div>
+		<div class="modal-footer">
+		    <button type="submit"
+			    class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+			<span style="color:red;" class="glyphicon glyphicon-remove"></span>
+			Cancel
+		    </button>
+		    <button type="submit" class="btn btn-default btn-success" data-dismiss="modal"
+			onclick="EDITOR.ApplyTexture();">
+			<span style="color:green;" class="glyphicon glyphicon-ok"></span>
+			    Apply
+		    </button>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+
+
+

@@ -4,39 +4,32 @@ class Game
 {
     constructor()
     {
-	this.m_Debug = true;
-	this.m_UpdateIntervalID = null;
+	ENGINE.OnInitialised = () => this.Initialise();
     }
 
-    initialise()
+    Initialise()
     {
-	console.log("Debugging: " + (this.m_Debug ? "enabled" : "disabled" ));
-
-	this.m_AssetCache = new AssetCache();
-
-	this.m_World = new World();
-	this.m_World.initialise();
-	this.m_Mouse = new Mouse();
-
-	this.BeginUpdateLoop();
+	this.LoadWorld();
     }
 
-    BeginUpdateLoop()
+    LoadWorld()
     {
-	this.m_UpdateIntervalID = setInterval(this.Update.bind(this), 1000/30);
+	try
+	{
+	    let data = json(`http://${CONFIG.host}/data/world/0.json`)
+	    Entity.FromFile(
+		data,
+		null,
+		new THREE.Vector3(0,0,0)
+	    );
+	}
+	catch(Exception)
+	{
+	    setTimeout(this.LoadWorld.bind(this), 50);
+	}
     }
 
     Update()
     {
-	this.m_AssetCache.Update();
-	this.m_World.Update();
-    }
-
-    log(str)
-    {
-	if (this.m_Debug)
-	{
-	    console.log(str);
-	}
     }
 }

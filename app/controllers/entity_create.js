@@ -14,7 +14,7 @@ const request = require('request');
 
 const assign = Object.assign;
 
-exports.play = function (req, res)
+exports.entity_create = function (req, res)
 {
     res.render('layouts/default.html',
     {
@@ -22,13 +22,17 @@ exports.play = function (req, res)
 	{
 	    head: "includes/play_head.html",
 	    header: "includes/header.html",
+	    entitytreeview: "editor/entitytreeview.html",
+	    texturebrowser: "editor/texture_browser.html",
+	    editor: "ent_create.html",
 	    content: "play.html",
 	    footer: "includes/footer.html",
 	    foot: "includes/foot.html"
 	},
-	nav_play: true,
+	nav_entcreate: true,
 	User: req.user,
-	EntryClass: "Game",
+	EntryClass: "EntityCreate",
+	navbardropdowns: req.viewGlobals.navbardropdowns,
 	viewGlobals: req.viewGlobals
     });
 };

@@ -41,7 +41,7 @@ class AssetLoader
 		assetRequest.Process();
 	    break;
 	    case LOADSTATE.FINISHED:
-		GAME.m_AssetCache.RequestCache(assetRequest);
+		ENGINE.m_AssetCache.RequestCache(assetRequest);
 	    break;
 	}
     }

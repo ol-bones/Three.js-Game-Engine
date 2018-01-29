@@ -1,7 +1,7 @@
 "use strict";
 
 // Dependencies
-// @Game@
+// @Engine@
 
 class Mouse
 {
@@ -36,7 +36,7 @@ class Mouse
 	this.m_ScreenPosition.x = ( evt.clientX / width  ) * 2 - 1;
 	this.m_ScreenPosition.y = -( evt.layerY / height ) * 2 + 1;
 
-	this.m_Ray.setFromCamera(this.m_ScreenPosition, GAME.m_World.m_Camera);
+	this.m_Ray.setFromCamera(this.m_ScreenPosition, ENGINE.m_World.m_Camera);
 
 
 	let intersects = this.m_Ray.intersectObjects(entities().filter(e =>

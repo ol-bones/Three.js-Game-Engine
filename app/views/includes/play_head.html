@@ -17,6 +17,14 @@
 		    <script crossorigin="anonymous" src={>editor.path}></script>
 		{/for}
 	    {/if}
+	    {if nav_entcreate}
+		{for editor in viewGlobals.editorJSFiles}
+		    <script crossorigin="anonymous" src={>editor.path}></script>
+		{/for}
+	    {/if}
 	{/if}
+	<script>
+	    CONFIG.EntryClass = {>EntryClass};
+	</script>
     {/if}
 </head>

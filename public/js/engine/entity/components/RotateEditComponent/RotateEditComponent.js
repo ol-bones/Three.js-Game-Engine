@@ -30,8 +30,8 @@ class RotateEditComponent extends mix(Component).with()
 
 	this.m_DragControls =  new THREE.DragControls(
 	    this.m_Draggables,
-	    GAME.m_World.m_Camera,
-	    GAME.m_World.m_Renderer.domElement
+	    ENGINE.m_World.m_Camera,
+	    ENGINE.m_World.m_Renderer.domElement
 	);
 	this.m_DragControls.enabled = true;
 
@@ -58,13 +58,13 @@ class RotateEditComponent extends mix(Component).with()
 
     W2S(obj)
     {
-	let rect = GAME.m_World.m_Renderer.domElement.getBoundingClientRect();
+	let rect = ENGINE.m_World.m_Renderer.domElement.getBoundingClientRect();
 	let width = rect.width;
 	let height = rect.height + 50;
 
 
 	var pos = obj.position.clone();
-	pos.project(GAME.m_World.m_Camera);
+	pos.project(ENGINE.m_World.m_Camera);
 	pos.x = ( pos.x * (width/2) ) + (width/2);
 	pos.y = - ( pos.y * (height/2) ) + (height/2);
 
@@ -75,14 +75,14 @@ class RotateEditComponent extends mix(Component).with()
     {
 	mesh.event_phase = 1;
 	mesh.drags = [];
-	GAME.m_World.m_Controls.enabled = false;
+	ENGINE.m_World.m_Controls.enabled = false;
 	this.m_Draggables.filter(m => m.axis && m !== mesh)
 			 .forEach(m => m.material.visible = false);
     }
 
     TouchEndEvent(mesh)
     {
-	GAME.m_World.m_Controls.enabled = true;
+	ENGINE.m_World.m_Controls.enabled = true;
 	this.m_Draggables.filter(m => m.axis && m !== mesh)
 			 .forEach(m => m.material.visible = true);
 
@@ -183,7 +183,7 @@ class RotateEditComponent extends mix(Component).with()
 	mesh.touchdrag = (t,x,y) => this.ArrowTouchDragEvent(mesh, t, x, y, dir, axis);
 
 
-	GAME.m_World.m_EditorScene.add(mesh);
+	ENGINE.m_World.m_EditorScene.add(mesh);
 	this.m_Draggables.push(mesh);
 
 	return mesh;
@@ -222,7 +222,7 @@ class RotateEditComponent extends mix(Component).with()
 
 	this.m_AxisHelpers.forEach(mesh =>
 	{
-	    GAME.m_World.m_EditorScene.remove(mesh);
+	    ENGINE.m_World.m_EditorScene.remove(mesh);
 
 	    if(mesh.material)
 	    {
