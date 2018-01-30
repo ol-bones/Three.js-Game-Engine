@@ -37,11 +37,15 @@ class OBJPhysicsComponent extends mix(PhysicsComponent).with()
 		this.m_PhysicsBody.addShape(
 		    new CANNON.Box(new CANNON.Vec3(
 			...Object.keys(phys_data.scale).map(
-			    dir => phys_data.scale[dir])
+			    dir => phys_data.scale[dir]
+				 * this.m_Parent.m_Scale[dir]
+			)
 		    )),
 		    new CANNON.Vec3(
 			...Object.keys(phys_data.pos).map(
-			    dir => phys_data.pos[dir])
+			    dir => phys_data.pos[dir]
+				 * this.m_Parent.m_Scale[dir]
+			)
 		    )
 		);
 		if(phys_data.rot)
@@ -62,14 +66,16 @@ class OBJPhysicsComponent extends mix(PhysicsComponent).with()
 	    {
 		this.m_PhysicsBody.addShape(
 		    new CANNON.Cylinder(
-			phys_data.scale.rt,
-			phys_data.scale.rb,
-			phys_data.scale.h,
+			phys_data.scale.rt * this.m_Parent.m_Scale.x,
+			phys_data.scale.rb * this.m_Parent.m_Scale.x,
+			phys_data.scale.h * this.m_Parent.m_Scale.y,
 			phys_data.scale.s
 		    ),
 		    new CANNON.Vec3(
 			...Object.keys(phys_data.pos).map(
-			    dir => phys_data.pos[dir])
+			    dir => phys_data.pos[dir]
+				 * this.m_Parent.m_Scale[dir]
+			)
 		    )
 		);
 		if(phys_data.rot)
@@ -89,5 +95,10 @@ class OBJPhysicsComponent extends mix(PhysicsComponent).with()
 	});
 
 	super.Initialise();
+    }
+
+    Remove()
+    {
+	ENGINE.m_World.m_PhysicsWorld.remove(this.m_PhysicsBody);
     }
 }

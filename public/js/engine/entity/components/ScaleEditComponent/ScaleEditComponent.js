@@ -146,14 +146,13 @@ class ScaleEditComponent extends mix(Component).with()
 	this.AdjustScale(change, axis);
     }
 
-    CreateArrowHeadSphere(dir, color)
+    CreateArrowHeadSphere(dir, color, size)
     {
 	let axis = Object.keys(dir).find(c => dir[c] !== 0);
 	let geo = new THREE.BoxGeometry(10, 10, 10);
 	let mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({color:color}));
 	mesh.material.visible = true;
-	let length = dir.y > 0 ? 45 : -45;
-	let pos = new THREE.Vector3(0, length, 0);
+	let pos = new THREE.Vector3(0, size, 0);
 	pos.applyAxisAngle(dir, Math.PI/2);
 	pos.applyAxisAngle(new THREE.Vector3(0,1,0), Math.PI/2);
 	pos.add(this.m_Parent.m_Position);
@@ -185,7 +184,9 @@ class ScaleEditComponent extends mix(Component).with()
 	});
 	let line_geom = new THREE.Geometry();
 
-	let length = dir.y > 0 ? 45 : -45;
+	let axis = Object.keys(dir).find(c => dir[c] !== 0);
+	let size = Math.max(this.m_Parent.m_Components.RenderComponent.GetSize3()[axis], 50);
+	let length = dir.y > 0 ? size : -size;
 	let pos = new THREE.Vector3(0, length, 0);
 	pos.applyAxisAngle(dir, Math.PI/2);
 	pos.applyAxisAngle(new THREE.Vector3(0,1,0), Math.PI/2);
@@ -197,7 +198,7 @@ class ScaleEditComponent extends mix(Component).with()
 	line.m_ParentEntity = this.m_Parent;
 	ENGINE.m_World.m_EditorScene.add(line);
 	this.m_Draggables.push(line);
-	let head = this.CreateArrowHeadSphere(dir, color);
+	let head = this.CreateArrowHeadSphere(dir, color, length);
 	head.line = line;
 
 	return line;

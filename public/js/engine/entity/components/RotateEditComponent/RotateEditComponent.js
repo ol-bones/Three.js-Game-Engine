@@ -101,7 +101,7 @@ class RotateEditComponent extends mix(Component).with()
 
     // This isn't quite 100% user friendly but I can't be bothered
     // to do the maths because it doesn't really make much difference
-    // so who cares. Some times it rotates the opposite way to the drag.
+    // so who cares. Some times it rotates the opposite way to the drag. The fix is to make ref points on the toruses, can't be bothered.
     ArrowTouchDragEvent(mesh, t, x, y, dir, axis)
     {
 	mesh.event_phase = 2;
@@ -118,7 +118,7 @@ class RotateEditComponent extends mix(Component).with()
     CreateArrow(dir, color)
     {
 	let parent = this.m_Parent.m_Components.RenderComponent;
-	let boundingRadius = parent.m_Mesh.geometry.boundingSphere.radius;
+	let boundingRadius = parent.GetSizeRadius();
 
 	let geometry = new THREE.TorusGeometry(
 	    2*boundingRadius,
@@ -191,19 +191,32 @@ class RotateEditComponent extends mix(Component).with()
 
     AdjustRotation(diff,axis)
     {
+	let body = this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody;
+	let axis_ang = body.quaternion.toAxisAngle();
+	let newQuat = new CANNON.Quaternion();
 	switch(axis)
 	{
 	    case "x":
-		this.m_Parent.m_Components.RenderComponent.m_Mesh.rotateX(diff*0.05);
+		newQuat.setFromAxisAngle(
+		    new CANNON.Vec3(1,0,0),
+		    (diff*0.05)
+		);
 		break;
 	    case "y":
-		this.m_Parent.m_Components.RenderComponent.m_Mesh.rotateY(diff*0.05);
+		newQuat.setFromAxisAngle(
+		    new CANNON.Vec3(0,1,0),
+		    (diff*0.05)
+		);
 		break;
 	    case "z":
-		this.m_Parent.m_Components.RenderComponent.m_Mesh.rotateZ(diff*0.05);
+		newQuat.setFromAxisAngle(
+		    new CANNON.Vec3(0,0,1),
+		    (diff*0.05)
+		);
 		break;
 	    default: return;
 	}
+	body.quaternion = body.quaternion.mult(newQuat);
     }
 
     Update()

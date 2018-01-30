@@ -26,6 +26,7 @@ class BasicBoxMeshRenderComponent extends mix(RenderComponent).with()
 	mshBox.material.map.needsUpdate = true;
 
 	this.m_Mesh = mshBox;
+	this.m_Meshes = mshBox;
 	this.OnInitialised();
     }
 

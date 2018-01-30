@@ -39,8 +39,10 @@ class Mouse
 	this.m_Ray.setFromCamera(this.m_ScreenPosition, ENGINE.m_World.m_Camera);
 
 
-	let intersects = this.m_Ray.intersectObjects(entities().filter(e =>
-	e.m_Renderable).map(e => e.m_Components.RenderComponent.m_Mesh));
+	let intersects = this.m_Ray.intersectObjects(_.flatten(entities()
+	    .filter(e => e.m_Renderable)
+	    .map(e => e.m_Components.RenderComponent.m_Meshes))
+	);
 
 	if(intersects.length > 0)
 	{
@@ -55,7 +57,7 @@ class Mouse
 	    {
 		if(entity.m_Renderable && entity.m_Components.RenderComponent.m_Mesh)
 		{
-		    //entity.m_Components.RenderComponent.m_Mesh.material.color.setHex(0xFFFFFF);
+		    entity.m_Components.RenderComponent.SetColor("#FFFFFF");
 		}
 	    });
 
@@ -64,7 +66,7 @@ class Mouse
 		this.m_LastHoveredObject = null;
 	    }
 	    this.m_CurrentHoveredObject = intersects[0].object;
-	    //intersects[0].object.material.color.setHex(0xFF0000);
+	    intersects[0].object.m_ParentEntity.m_Components.RenderComponent.SetColor("#FF0000");
 	}
 	else
 	{

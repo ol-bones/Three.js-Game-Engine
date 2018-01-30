@@ -28,6 +28,7 @@ class BasicHullMeshRenderComponent extends mix(RenderComponent).with()
 	mesh.material.map.needsUpdate = true;
 
 	this.m_Mesh = mesh;
+	this.m_Meshes = mesh;
 	this.OnInitialised();
     }
 

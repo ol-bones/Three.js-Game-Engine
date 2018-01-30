@@ -158,6 +158,11 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 	{
 	    this.m_Components.RenderComponent.SetScale(x,y,z);
 	}
+	if(this.m_Components.PhysicsComponent)
+	{
+	    this.m_Components.PhysicsComponent.Remove();
+	    this.m_Components.PhysicsComponent.Initialise();
+	}
     }
 
     SetScaleX(x) { this.SetScale(x, this.m_Scale.y, this.m_Scale.z); }

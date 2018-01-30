@@ -19,7 +19,7 @@ class EntityPropertyManipulatorView
 	    let ref_Entity = Entity.FindByID(parseInt(entity_model.id));
 	    this.m_SelectedEntityModel = entity_model;
 
-	    this.FillMaterialEditor(ref_Entity);
+	    try{this.FillMaterialEditor(ref_Entity)}catch(e){};
 	    this.fillproperties(entity_model);
 	    this.fillcomponents(entity_model.components);
 

@@ -31,6 +31,26 @@ this.m_Parent.m_Position.z);
 	this.m_IsInitialised = true;
     }
 
+    GetSize3()
+    {
+	let box = new THREE.Box3().setFromObject(
+	    this.m_Mesh
+	);
+	return new THREE.Vector3(
+	    Math.abs(box.max.x - box.min.x),
+	    Math.abs(box.max.y - box.min.y),
+	    Math.abs(box.max.z - box.min.z)
+	);
+    }
+
+    GetSizeRadius()
+    {
+	let box = new THREE.Box3().setFromObject(
+	    this.m_Mesh
+	);
+	return box.min.distanceTo(box.max);
+    }
+
     SetTexture(name)
     {
 	try
@@ -40,6 +60,11 @@ this.m_Parent.m_Position.z);
 	    this.m_Mesh.material.needsUpdate = true;
 	}
 	catch(Exception) { setTimeout(() => this.SetTexture(name), 100); }
+    }
+
+    SetColor(c)
+    {
+	this.m_Mesh.material.color.set(c);
     }
 
     SetPosition(x,y,z)

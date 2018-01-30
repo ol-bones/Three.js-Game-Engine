@@ -148,13 +148,13 @@ class PositionEditComponent extends mix(Component).with()
 	this.AdjustPosition(change, axis);
     }
 
-    CreateArrowHeadSphere(dir)
+    CreateArrowHeadSphere(dir, size)
     {
 	let axis = Object.keys(dir).find(c => dir[c] !== 0);
 	let geo = new THREE.SphereGeometry(10, 32, 32);
-	let mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({color:0x000000}));
-	mesh.material.visible = false;
-	let length = dir.y > 0 ? 45 : -45;
+	let mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({color:0x00FF00}));
+	mesh.material.visible = true;
+	let length = dir.y > 0 ? size : -size;
 	let pos = new THREE.Vector3(0, length, 0);
 	pos.applyAxisAngle(dir, Math.PI/2);
 	pos.applyAxisAngle(new THREE.Vector3(0,1,0), Math.PI/2);
@@ -175,11 +175,13 @@ class PositionEditComponent extends mix(Component).with()
 
     CreateArrow(dir, color)
     {
+	let axis = Object.keys(dir).find(c => dir[c] !== 0);
+	let size = Math.max(this.m_Parent.m_Components.RenderComponent.GetSize3()[axis], 50);
 	let arrow = new THREE.ArrowHelper
 	(
 	    dir,
 	    this.m_Parent.m_Position,
-	    50,
+	    size,
 	    color,
 	    0.2 * 50,
 	    (0.2 * 30)
@@ -188,7 +190,7 @@ class PositionEditComponent extends mix(Component).with()
 	arrow.m_ParentEntity = this.m_Parent;
 	ENGINE.m_World.m_EditorScene.add(arrow);
 	this.m_Draggables.push(arrow);
-	this.CreateArrowHeadSphere(dir);
+	this.CreateArrowHeadSphere(dir, size);
 
 	return arrow;
     }
