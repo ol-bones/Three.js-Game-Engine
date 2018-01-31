@@ -25,14 +25,14 @@ let EditNavBarControl = (Main) => class extends Main
 	    }
 	    delete this.m_ref_SelectedEntity;
 	    delete this.m_Ref_LastSelectedEntity;
-	    ENGINE.StopUpdating(ENGINE.m_World, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
-	    ENGINE.BeginUpdating(ENGINE.m_World, ENGINE.m_World.Update);
+	    ENGINE.StopUpdating(2, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
+	    ENGINE.BeginUpdating(1, () => ENGINE.m_World.Update());
 	}
 	else
 	{
 	    this.m_EditModeToggled = true;
-	    ENGINE.StopUpdating(ENGINE.m_World, ENGINE.m_World.Update);
-	    ENGINE.BeginUpdating(ENGINE.m_World, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
+	    ENGINE.StopUpdating(1, () => ENGINE.m_World.Update());
+	    ENGINE.BeginUpdating(2, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
 	}
     }
 
@@ -44,7 +44,7 @@ let EditNavBarControl = (Main) => class extends Main
 	{
 	    entities().forEach(e => e.RemoveComponent("DebugComponent"));
 	    ENGINE.m_World.m_DebugRenderer._material.visible = false;
-	    ENGINE.StopUpdating(ENGINE.m_World.m_DebugRenderer, ENGINE.m_World.m_DebugRenderer.update);
+	    ENGINE.StopUpdating(3, () => ENGINE.m_World.m_DebugRenderer.update());
 	    this.m_DebugRendererToggled = false;
 	}
 	else
@@ -61,7 +61,7 @@ let EditNavBarControl = (Main) => class extends Main
 		}
 	    });
 	    ENGINE.m_World.m_DebugRenderer._material.visible = true;
-	    ENGINE.BeginUpdating(ENGINE.m_World.m_DebugRenderer, ENGINE.m_World.m_DebugRenderer.update);
+	    ENGINE.BeginUpdating(3, () => ENGINE.m_World.m_DebugRenderer.update());
 	    this.m_DebugRendererToggled = true;
 	}
     }

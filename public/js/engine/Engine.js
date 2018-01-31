@@ -13,6 +13,7 @@ class Engine extends mix(BaseObject).with()
 	super();
 
 	this.m_UpdateIntervalID = null;
+	this.m_UpdateArray = [];
 
 	this.m_AssetCache = null;
 	this.m_World = null;
@@ -30,22 +31,19 @@ class Engine extends mix(BaseObject).with()
 	this.m_World.Initialise();
 	this.m_Mouse = new Mouse();
 
-	this.m_UpdateArray =
-	[
-	    {ref: ENGINE.m_AssetCache, x: ENGINE.m_AssetCache.Update},
-	    {ref: ENGINE.m_World,      x: ENGINE.m_World.Update}
-	];
+	this.BeginUpdating(0, () => ENGINE.m_AssetCache.Update());
+	this.BeginUpdating(1, () => ENGINE.m_World.Update());
 
 	this.m_UpdateIntervalID = setInterval(this.Update.bind(this), 1000/30);
 	this.OnInitialised();
 	this.m_Initialised = true;
     }
 
-    BeginUpdating(obj, func)
+    BeginUpdating(num, func)
     {
 	this.m_UpdateArray.push(
 	{
-	    ref: obj,
+	    ref: num,
 	    x: func
 	});
     }
@@ -55,7 +53,7 @@ class Engine extends mix(BaseObject).with()
 	this.m_UpdateArray.splice(
 	    this.m_UpdateArray.indexOf(
 		this.m_UpdateArray.find(f =>
-		    f.ref === obj && f.x === func
+		    f.ref === obj
 		)
 	    ), 1
 	);
@@ -63,7 +61,7 @@ class Engine extends mix(BaseObject).with()
 
     Update()
     {
-	this.m_UpdateArray.forEach(f => f.x.call(f.ref));
+	this.m_UpdateArray.forEach(f => f.x());
     }
 }
 
