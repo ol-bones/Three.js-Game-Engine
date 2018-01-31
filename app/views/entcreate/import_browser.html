@@ -1,0 +1,34 @@
+<div class="import-browser container-fluid" id="import-browser-container">
+    <ul class="nav nav-tabs">
+	<li class="active">
+	    <a data-toggle="tab" href="#obj-models">OBJ Models</a>
+	</li>
+	<li>
+	    <a data-toggle="tab" href="#phys-models">Phys Models</a>
+	</li>
+    </ul>
+    <div class="tab-content">
+	<div id="obj-models" class="tab-pane fade in active">
+	    <h3>OBJ Models</h3>
+	    <ul class="list-group">
+		{for obj in viewGlobals.obj_models}
+		    <button type="button"
+			    class="list-group-item">
+			{obj.name}
+		    </button>
+		{/for}
+	    </ul>
+	</div>
+	<div id="phys-models" class="tab-pane fade">
+	    <h3>Phys Models</h3>
+	    <ul class="list-group">
+		{for phys in viewGlobals.phys_models}
+		    <button type="button"
+			    class="list-group-item">
+			{phys.name}
+		    </button>
+		{/for}
+	    </ul>
+	</div>
+    </div>
+</div>

@@ -48,17 +48,6 @@ class World extends mix(BaseObject).with(Comms)
 	this.m_Renderer.setSize(window.innerWidth, window.innerHeight);
 	this.m_Renderer.shadowMapEnabled = true;
 
-	// create the ground plane
-	var planeGeometry = new THREE.PlaneGeometry(60, 40, 1, 1);
-	var planeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
-	var plane = new THREE.Mesh(planeGeometry, planeMaterial);
-	plane.receiveShadow = true;
-
-	plane.rotation.x = -0.5 * Math.PI;
-	plane.position.x = 0;
-	plane.position.y = 0;
-	plane.position.z = 0;
-	this.m_Scene.add(plane);
 	this.m_Camera.position.x = -30;
 	this.m_Camera.position.y = 40;
 	this.m_Camera.position.z = 30;

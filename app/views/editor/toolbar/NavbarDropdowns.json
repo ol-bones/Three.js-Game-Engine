@@ -13,10 +13,10 @@
 	"Name": "Edit",
 	"MenuItems":
 	[
-	    {"TabIndex": 0, "Name": "Import", "Function": "EDITOR.ImportEntityModal(event);"},
-	    {"TabIndex": 1, "Name": "New", "Function": "EDITOR.EntityCreateModal(event);"},
-	    {"TabIndex": 2, "Name": "Copy", "Function": "EDITOR.CopySelectedEntity(event);"},
-	    {"TabIndex": 3, "Name": "Paste", "Function": "EDITOR.PasteEntity(event);"}
+	    {"TabIndex": 0, "Name": "Import", "Function": "EDITOR.ImportModal(event);"},
+	    {"TabIndex": 1, "Name": "New", "Function": "EDITOR.NewModal(event);"},
+	    {"TabIndex": 2, "Name": "Copy", "Function": "EDITOR.CopySelected(event);"},
+	    {"TabIndex": 3, "Name": "Paste", "Function": "EDITOR.Paste(event);"}
 	]
     },
     {

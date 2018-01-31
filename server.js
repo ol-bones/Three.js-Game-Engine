@@ -55,12 +55,14 @@ let externalJSFiles = [];
 let componentTypes = [];
 let whiskerTemplates = glob.sync(join(__dirname, "public/js/**/*.whtml"));
 
+let phys_models = [];
 let geom_models = [];
 let textures = [];
 let texturespng = glob.sync(join(__dirname, "public/textures/**/*.png"));
 let texturesjpg = glob.sync(join(__dirname, "public/textures/**/*.jpg"));
 
 let modelsobj = glob.sync(join(__dirname, "public/models/**/*.obj"));
+let modelsphys = glob.sync(join(__dirname, "public/models/**/*_phys.json"));
 
 // client js
 clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
@@ -68,6 +70,7 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
     .concat(texturespng)
     .concat(texturesjpg)
     .concat(modelsobj)
+    .concat(modelsphys)
     .map((file) =>
     {
 	whiskerTemplates = [];
@@ -98,6 +101,11 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	if(file.search(".obj") > -1)
 	{
 	    extensionIndex = file.lastIndexOf(".obj");
+	}
+
+	if(file.search("_phys.json") > -1)
+	{
+	    extensionIndex = file.lastIndexOf(".json");
 	}
 
 	let extension = file.substring(extensionIndex, file.length);
@@ -154,13 +162,24 @@ clientJSFiles = glob.sync(join(__dirname, "/public/js/**/*.js"))
 	}
 	if(file.path.includes("/models") && !file.path.includes("/js/"))
 	{
-	    geom_models.push(
+	    if(file.ext === ".obj")
 	    {
-		name: file.name,
-		ext: file.ext,
-		path: file.path
-	    });
-
+		geom_models.push(
+		{
+		    name: file.name,
+		    ext: file.ext,
+		    path: file.path
+		});
+	    }
+	    else if(file.name.includes("_phys"))
+	    {
+		phys_models.push(
+		{
+		    name: file.name,
+		    ext: file.ext,
+		    path: file.path
+		});
+	    }
 	    return;
 	}
 
@@ -197,6 +216,9 @@ viewGlobals.clientJSFiles = clientJSFiles.filter(js => !js.path.includes("/edito
 viewGlobals.externalJSFiles = externalJSFiles;
 viewGlobals.navbardropdowns = JSON.parse(fs.readFileSync(__dirname +
 "/app/views/editor/toolbar/NavbarDropdowns.json", "utf8"));
+
+viewGlobals.obj_models = geom_models;
+viewGlobals.phys_models = phys_models;
 
 app.componentTypes = componentTypes;
 app.whiskerTemplates = whiskerTemplates;

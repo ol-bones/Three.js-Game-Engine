@@ -23,7 +23,7 @@ exports.entity_create = function (req, res)
 	    head: "includes/play_head.html",
 	    header: "includes/header.html",
 	    entitytreeview: "editor/entitytreeview.html",
-	    texturebrowser: "editor/texture_browser.html",
+	    importbrowser: "entcreate/import_browser.html",
 	    editor: "ent_create.html",
 	    content: "play.html",
 	    footer: "includes/footer.html",

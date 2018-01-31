@@ -113,6 +113,36 @@ data-dismiss="modal"><span style="color:red;" class="glyphicon glyphicon-remove"
   </div>
 </div>
 
+<div class="modal fade" id="import-modal" role="dialog">
+    <div class="modal-dialog">
+	<div class="modal-content">
+	    <div class="modal-header" style="padding-top:50px;">
+		<button type="button"
+			class="close" data-dismiss="modal" stlye="color:#fff;">
+			&times;
+		</button>
+		<h4>Import</h4>
+		<div class="modal-body">
+		    {>importbrowser}
+		</div>
+		<div class="modal-footer">
+		    <button type="submit"
+			    class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+			<span style="color:red;" class="glyphicon glyphicon-remove"></span>
+			Cancel
+		    </button>
+		    <button type="submit" class="btn btn-default btn-success" data-dismiss="modal" onclick="console.log('done')">
+			<span style="color:green;" class="glyphicon glyphicon-ok"></span>
+			    Done
+		    </button>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+
+
+
 
 <div class="modal fade" id="texture-select-modal" role="dialog">
     <div class="modal-dialog">
