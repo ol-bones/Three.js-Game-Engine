@@ -81,7 +81,7 @@ this.m_ref_SelectedEntity}));
 	    {
 		this.m_ref_LastSelectedEntity = this.m_ref_SelectedEntity;
 		this.m_ref_SelectedEntity = entity;
-		this.m_EntityManipulator.onEntitySelect(entity.GetSavableData());
+		this.onEntitySelect(entity.GetSavableData());
 	    }
 	    console.log(Date.now() - this.m_LastEntitySelectTime);
 	    this.m_LastEntitySelectTime = Date.now();

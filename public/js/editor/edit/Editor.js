@@ -10,7 +10,7 @@
 
 class Editor extends mix(BaseObject).with(
     EditToolsControl, MaterialToolsControl, EditNavBarControl,
-    WorldLoader
+    EntityTreeView, EntityPropertyManipulatorView, WorldLoader
 )
 {
     constructor()
@@ -18,9 +18,6 @@ class Editor extends mix(BaseObject).with(
 	super();
 
 	this.m_UpdateIntervalID = null;
-
-	this.m_EntityTreeViewView = new EntityTreeView();
-	this.m_EntityManipulator = new EntityPropertyManipulatorView();
 
 	ENGINE.OnInitialised = () => this.Initialise();
     }
@@ -33,7 +30,7 @@ class Editor extends mix(BaseObject).with(
 
     render()
     {
-	this.m_EntityTreeViewView.render();
+	super.render();
     }
 }
 

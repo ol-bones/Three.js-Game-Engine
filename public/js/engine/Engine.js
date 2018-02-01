@@ -1,6 +1,7 @@
 "use strict";
 
 // Dependencies
+// @mixwith@
 // @BaseObject@
 // @Comms@
 // @Entity@

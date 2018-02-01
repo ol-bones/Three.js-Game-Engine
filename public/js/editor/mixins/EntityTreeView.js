@@ -1,13 +1,17 @@
+"use strict";
+
 // Dependencies
 // @Engine@
 // @World@
 // @Entity@
 // @Component@
 
-class EntityTreeView
+let EntityTreeView = (Main) => class extends Main
 {
     constructor()
     {
+	super();
+
 	this.m_TreeViewElement = $("#EntityTreeViewView");
     }
 

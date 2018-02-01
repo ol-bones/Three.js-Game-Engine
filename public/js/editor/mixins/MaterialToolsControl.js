@@ -21,7 +21,7 @@ let MaterialToolsControl = (Main) => class extends Main
 
 	setTimeout(() =>
 	{
-	    this.m_EntityManipulator.FillMaterialEditor(this.m_SelectedTexture);
+	    this.FillMaterialEditor(this.m_SelectedTexture);
 	}, 300);
     }
 

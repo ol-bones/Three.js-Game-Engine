@@ -153,7 +153,7 @@ class PositionEditComponent extends mix(Component).with()
 	let axis = Object.keys(dir).find(c => dir[c] !== 0);
 	let geo = new THREE.SphereGeometry(10, 32, 32);
 	let mesh = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({color:0x00FF00}));
-	mesh.material.visible = true;
+	mesh.material.visible = false;
 	let length = dir.y > 0 ? size : -size;
 	let pos = new THREE.Vector3(0, length, 0);
 	pos.applyAxisAngle(dir, Math.PI/2);

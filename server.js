@@ -1,12 +1,6 @@
 'use strict';
 console.log("[INFO] -- Server launching...");
 
-/*
- * nodejs-express-mongoose-demo
- * Copyright(c) 2013 Madhusudhan Srinivasa <madhums8@gmail.com>
- * MIT Licensed
- */
-
 /**
  * Module dependencies
  */

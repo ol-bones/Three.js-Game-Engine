@@ -1,13 +1,17 @@
+"use strict";
+
 // Dependencies
 // @Engine@
 // @World@
 // @Entity@
 // @Component@
 
-class EntityPropertyManipulatorView
+let EntityPropertyManipulatorView = (Main) => class extends Main
 {
     constructor()
     {
+	super();
+
 	this.m_SelectedEntityModel = {};
 	this.m_EntityManipulatorView = $("#entity-manipulator-view");
     }
