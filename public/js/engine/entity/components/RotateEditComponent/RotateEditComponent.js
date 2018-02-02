@@ -191,32 +191,28 @@ class RotateEditComponent extends mix(Component).with()
 
     AdjustRotation(diff,axis)
     {
-	let body = this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody;
-	let axis_ang = body.quaternion.toAxisAngle();
-	let newQuat = new CANNON.Quaternion();
-	switch(axis)
+	let body;
+	let newQuat;
+	let q_axis;
+	if(this.m_Parent.m_Components.PhysicsComponent)
 	{
-	    case "x":
-		newQuat.setFromAxisAngle(
-		    new CANNON.Vec3(1,0,0),
-		    (diff*0.05)
-		);
-		break;
-	    case "y":
-		newQuat.setFromAxisAngle(
-		    new CANNON.Vec3(0,1,0),
-		    (diff*0.05)
-		);
-		break;
-	    case "z":
-		newQuat.setFromAxisAngle(
-		    new CANNON.Vec3(0,0,1),
-		    (diff*0.05)
-		);
-		break;
-	    default: return;
+	    body = this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody;
+	    newQuat = new CANNON.Quaternion();
+	    q_axis = new CANNON.Vec3();
+	    q_axis[axis] = 1;
+	    newQuat.setFromAxisAngle(q_axis, (diff*0.05));
+	    body.quaternion = body.quaternion.mult(newQuat);
 	}
-	body.quaternion = body.quaternion.mult(newQuat);
+	else
+	{
+	    body = this.m_Parent.m_Components.RenderComponent.m_Mesh
+	    newQuat = new THREE.Quaternion();
+	    q_axis = new THREE.Vector3();
+	    q_axis[axis] = 1;
+	    newQuat.setFromAxisAngle(q_axis, (diff*0.05));
+	    body.quaternion.multiplyQuaternions(body.quaternion, newQuat);
+	}
+
     }
 
     Update()

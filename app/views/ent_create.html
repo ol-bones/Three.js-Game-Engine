@@ -42,8 +42,8 @@ data-target="#editNavbar">
     <div class="" style="height:100%;display:flex;">
 	<div class="editor-left-pane">
 	    <div class="" style="height:100%;background-color:#222;">
-		<div class=""
-style="height:50%;overflow:scroll;margin-right:2.5%;margin-bottom:2.5%;background-color:#111;">
+		<div class="" id="top-left-pane"
+style="height:50%;overflow:scroll;margin-right:2.5%;margin-bottom:2.5%;background-color:#222;">
 		</div>
 		<div class=""
 style="height:50%;margin-left:0px;overflow:hidden;margin-right:2.5%;background-color:#111;">
@@ -131,7 +131,7 @@ data-dismiss="modal"><span style="color:red;" class="glyphicon glyphicon-remove"
 			<span style="color:red;" class="glyphicon glyphicon-remove"></span>
 			Cancel
 		    </button>
-		    <button type="submit" class="btn btn-default btn-success" data-dismiss="modal" onclick="console.log('done')">
+		    <button type="submit" class="btn btn-default btn-success" data-dismiss="modal" onclick="EDITOR.ImportSelected()">
 			<span style="color:green;" class="glyphicon glyphicon-ok"></span>
 			    Done
 		    </button>

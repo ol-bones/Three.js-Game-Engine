@@ -519,11 +519,22 @@ ol.tree
 
 
 
+/*
+ *  Entity Creator accordion style
+ */
 
+.btn.ent-accordion {
+    border-radius: 0;
+    background:#222;
+    color:#FFF;
+    border-color:#222;
+    border:0;
+}
 
-
-
-
+.panel.ent-accordion {
+    border:0;
+    background:#111;
+}
 
 
 

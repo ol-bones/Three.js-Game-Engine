@@ -21,7 +21,16 @@ class OBJPhysicsComponent extends mix(PhysicsComponent).with()
 
     Initialise()
     {
-	let phys_model = json(this.m_Args.model.replace(".obj", "_phys.json"));
+	let name = this.m_Args.model;
+	let phys_model = null;
+	if(name.includes(".obj"))
+	{
+	    phys_model = json(name.replace(".obj", "_phys.json"));
+	}
+	else
+	{
+	    phys_model = json(name);
+	}
 	console.log(phys_model);
 
 	let kvp = Object.keys(phys_model)

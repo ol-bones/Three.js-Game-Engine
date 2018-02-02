@@ -22,6 +22,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 	this.m_Entities = [];
 
 	this.__IsInitialised = false;
+	this.__OnInitialised = () => null;
 
 	this.m_Position = new THREE.Vector3(x,y,z);
 	this.m_Scale = new THREE.Vector3(1,1,1);
@@ -36,6 +37,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 
     OnInitialised()
     {
+	this.__OnInitialised();
 	if(entities().includes(this)) return;
 	entities().push(this);
     }

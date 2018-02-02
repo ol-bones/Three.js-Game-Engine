@@ -13,7 +13,8 @@
 	    <ul class="list-group">
 		{for obj in viewGlobals.obj_models}
 		    <button type="button"
-			    class="list-group-item">
+			    class="list-group-item"
+       onclick="EDITOR._ImportSelected = '{obj.name}' + '{obj.ext}'">
 			{obj.name}
 		    </button>
 		{/for}
@@ -24,7 +25,8 @@
 	    <ul class="list-group">
 		{for phys in viewGlobals.phys_models}
 		    <button type="button"
-			    class="list-group-item">
+			    class="list-group-item"
+       onclick="EDITOR._ImportSelected = '{phys.path}'">
 			{phys.name}
 		    </button>
 		{/for}

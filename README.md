@@ -3,14 +3,15 @@
 http://sarian.world/
 
 Username: guest@guest.com
-
 Password: guest
-
-Above link is dev build, may contain WIP features
 
 # Installation & Use
 
-Download and install: git, node, mongodb
+Download and install: git, node, mongodb#
+
+Download and place models, physics models, textures and material in assets folder
+
+(.obj, _phys, .jpg and .jpg -- gitignored due to file sizes)
 
 > #### First Use
 >```
@@ -21,7 +22,7 @@ Download and install: git, node, mongodb
 >```
 
 ```
-> node server.js
+> sudo node server.js
 ```
 
 Go to: (ip):80
@@ -30,9 +31,20 @@ Registering an account restricts users from viewing the game page using the "Acc
 
 # Brief code description
 
-The client game code is contained in /public/js/
-main entry point for client code goes app.js -> Game.js -> World.js
-main entry point for server goes server.js -> everything else
+This is a game engine, and game development tool
+
+The server (server.js etc) controls serving the client as well as file management
+
+The client game code is contained in /public/js/, with some server-side rendering in /app/views/
+
+Client entry points:
+* Game and gameplay features start in Game.js
+* World editor starts in /editor/edit/Editor.js
+* Entity creator starts in /editor/entitycreate/EntityCreate.js
 
 https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system
 https://threejs.org/docs/#manual/introduction/Creating-a-scene
+
+Uses three.js webgl rendering, cannonjs physics, vanilla es6 js, component & mixin architecture
+
+Will support small and open worlds, currently singleplayer only

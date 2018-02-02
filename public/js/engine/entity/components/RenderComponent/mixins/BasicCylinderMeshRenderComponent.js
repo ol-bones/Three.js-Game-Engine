@@ -3,7 +3,7 @@
 // Dependencies
 // @RenderComponent@
 
-class BasicBoxMeshRenderComponent extends mix(RenderComponent).with()
+class BasicCylinderMeshRenderComponent extends mix(RenderComponent).with()
 {
     constructor(args)
     {
@@ -14,10 +14,11 @@ class BasicBoxMeshRenderComponent extends mix(RenderComponent).with()
     {
 	super.Initialise();
 
-	var geoBox = new THREE.BoxGeometry(
-	    this.m_Args.Scale ? this.m_Args.Scale.x : 25,
-	    this.m_Args.Scale ? this.m_Args.Scale.y : 25,
-	    this.m_Args.Scale ? this.m_Args.Scale.z : 25
+	var geoBox = new THREE.CylinderGeometry(
+	    this.m_Args.Scale ? this.m_Args.Scale.rt : 25,
+	    this.m_Args.Scale ? this.m_Args.Scale.rb : 25,
+	    this.m_Args.Scale ? this.m_Args.Scale.h : 25,
+	    this.m_Args.Scale ? this.m_Args.Scale.s : 8
 	);
 	geoBox.center();
 
