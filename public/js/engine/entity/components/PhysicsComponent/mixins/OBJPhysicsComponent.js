@@ -36,7 +36,7 @@ class OBJPhysicsComponent extends mix(PhysicsComponent).with()
 	let kvp = Object.keys(phys_model)
 	    .map(key => [key, phys_model[key]]);
 
-	this.m_PhysicsBody = new CANNON.Body({mass: 50});
+	this.m_PhysicsBody = new CANNON.Body({mass: 50, type: this.m_Args.Type});
 	kvp.forEach(physics_submodel =>
 	{
 	    let phys_name = physics_submodel[0];

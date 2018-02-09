@@ -137,6 +137,7 @@ class EntityCreate extends mix(BaseObject).with(
 	e.__physname = name;
 	e.__phystype = p.type;
 	e.__physscale = p.scale;
+	e.__postInitialised = false;
 
 	e.AddComponent(new BasicCylinderMeshRenderComponent({
 	    Parent: e,
@@ -145,10 +146,11 @@ class EntityCreate extends mix(BaseObject).with(
 
 	e.__OnInitialised = () =>
 	{
-	    if(!p.rot) return;
+	    if(!p.rot || e.__postInitialised) return;
 	    e.m_Components.RenderComponent.m_Mesh.quaternion.setFromAxisAngle(
 		new THREE.Vector3(p.rot.axis.x, p.rot.axis.y, p.rot.axis.z), p.rot.r-Math.PI/2
 	    );
+	    e.__postInitialised = true;
 	    setTimeout(_=>this.render(), 100);
 	};
 
@@ -161,6 +163,7 @@ class EntityCreate extends mix(BaseObject).with(
 	e.__physname = name;
 	e.__phystype = p.type;
 	e.__physscale = p.scale;
+	e.__postInitialised = false;
 
 	e.AddComponent(new BasicBoxMeshRenderComponent({
 	    Parent: e,
@@ -169,10 +172,11 @@ class EntityCreate extends mix(BaseObject).with(
 
 	e.__OnInitialised = () =>
 	{
-	    if(!p.rot) return;
+	    if(!p.rot || e.__postInitialised) return;
 	    e.m_Components.RenderComponent.m_Mesh.quaternion.setFromAxisAngle(
 		new THREE.Vector3(p.rot.axis.x, p.rot.axis.y, p.rot.axis.z), p.rot.r
 	    );
+	    e.__postInitialised = true;
 	    setTimeout(_=>this.render(), 100);
 	};
 
