@@ -22,10 +22,10 @@
 	    <ul class="list-group">
 		<li class="list-group-item">Count: {>PhysicsModel.Count}</li>
 	    </ul>
-	    <div class="panel-footer" style="background:#222;color:#FFF;border:0;">
+	    <div class="panel" style="background:#222;color:#FFF;border:0;">
 		<div class="btn btn-primary btn-block ent-accordion" data-toggle="collapse" href="#collapse3">
 		    <h4 class="panel-title">
-			Sub-Entities
+			Rigid Bodies
 		    </h4>
 		</div>
 		<div id="collapse3" class="panel-collapse collapse" style="border:0;">

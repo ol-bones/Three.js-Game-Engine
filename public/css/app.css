@@ -506,11 +506,20 @@ ol.tree
     width:100%;
     padding:0;
     margin:0;
-    background-color:#111;
+    background-color:#222;
     margin-top:0.5%;
 }
 
+.btn-editor {
+    background:#222;
+    color:#9d9d9d;
+    border:0;
+}
 
+.btn-editor:hover {
+    background:#222;
+    color:#FFF;
+}
 
 
 
@@ -526,21 +535,72 @@ ol.tree
 .btn.ent-accordion {
     border-radius: 0;
     background:#222;
-    color:#FFF;
+    color:#9d9d9d;
     border-color:#222;
     border:0;
+    opacity:1;
+}
+
+@keyframes appear
+{
+    0% {opacity: 0}
+    100% {opacity: 1;}
+}
+
+.ent-accordion > h4 {
+    opacity:1;
+    animation: appear 0.5s ease-in;
+}
+
+.ent-accordion:hover {
+    color:#FFF;
+    transition: color 0.25s ease-in-out;
+}
+
+.ent-accordion > h4::after
+{
+    font-family: "Glyphicons Halflings";
+    content: "\e252";
+    left:50%;
+    display:block;
+    font-size:8px;
+    opacity:0;
+}
+
+.ent-accordion:hover > h4::after {
+    opacity:1;
+}
+
+.ent-accordion:hover > h4::after {
+    transition: opacity 0.5s ease-out;
 }
 
 .panel.ent-accordion {
     border:0;
     background:#111;
+    color:#9d9d9d;
 }
 
+.panel-collapse > .list-group > .list-group-item:hover {
+    transition: color 0.1s ease-out;
+    color:#FFF;
+}
 
+.panel-collapse > .list-group > .list-group-item {
+    transition: color 0.1s ease-out;
+    border:0;
+    color:#9d9d9d;
+    animation: appear 0.5s ease-out;
+}
 
+.panel-collapse > .panel > .ent-accordion > .panel-title {
+    margin-top:5%;
+}
 
-
-
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}
 
 
 
