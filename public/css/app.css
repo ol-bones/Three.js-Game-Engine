@@ -602,11 +602,46 @@ ol.tree
     background: transparent; /* make scrollbar transparent */
 }
 
+.rigid-body-buttons {
+    display:flex;
+    flex-wrap: nowrap | wrap | wrap-reverse;
+}
 
+.rigid-body-buttons > * {
+    width:25%;
+}
 
+.rigid-body-buttons > *:active {
+    background-color:#222 !important;
+    outline:0;
+    color:#d6d6d6;
+}
 
+.rigid-body-buttons > *:focus {
+    background-color:#222 !important;
+    outline:0;
+    color:#d6d6d6;
+}
 
+.btn-save {
+    color:#d6d6d6;
+}
+.btn-save:hover { color:#55FF55; }
 
+.btn-visible {
+    color:#d6d6d6;
+}
+.btn-visible:hover { color:#5555FF; }
+
+.btn-copy {
+    color:#d6d6d6;
+}
+.btn-copy:hover { color:#FFFF55; }
+
+.btn-delete {
+    color:#d6d6d6;
+}
+.btn-delete:hover { color:#FF5555; }
 
 
 

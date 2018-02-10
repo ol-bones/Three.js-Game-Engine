@@ -81,6 +81,17 @@ this.m_Parent.m_Position.z);
 	this.m_Mesh.scale.set(x,y,z);
     }
 
+    Remove()
+    {
+	ENGINE.m_World.m_Scene.remove(this.m_Mesh);
+	try
+	{
+	    this.m_Mesh.material.dispose();
+	    delete this.m_Mesh.material;
+	} catch(e) {}
+	delete this.m_Mesh;
+    }
+
     Update()
     {
     }

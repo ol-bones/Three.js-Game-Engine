@@ -16,7 +16,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 
 	this.m_ID = Entity._idGenerator();
 
-	this.m_Parent = {};
+	this.m_Parent = ENGINE.m_World;
 
 	this.m_Components = {};
 	this.m_Entities = [];
@@ -27,8 +27,6 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 	this.m_Position = new THREE.Vector3(x,y,z);
 	this.m_Scale = new THREE.Vector3(1,1,1);
     }
-
-    saywhat() { console.log(this.m_ID + " says what"); }
 
     Initialise()
     {
@@ -171,6 +169,21 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
     SetScaleX(x) { this.SetScale(x, this.m_Scale.y, this.m_Scale.z); }
     SetScaleY(y) { this.SetScale(this.m_Scale.x, y, this.m_Scale.z); }
     SetScaleZ(z) { this.SetScale(this.m_Scale.x, this.m_Scale.y, z); }
+
+    Delete()
+    {
+	Object.keys(this.m_Components).forEach(
+	    c => this.m_Components[c].Remove()
+	);
+
+	this.m_Parent.m_Entities.splice(
+	    this.m_Parent.m_Entities.indexOf(this), 1
+	);
+
+	ENGINE.m_World.m_FlatEntities.splice(
+	    ENGINE.m_World.m_FlatEntities.indexOf(this), 1
+	);
+    }
 
     Update()
     {

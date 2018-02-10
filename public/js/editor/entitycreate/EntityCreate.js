@@ -100,7 +100,7 @@ class EntityCreate extends mix(BaseObject).with(
 	    _phys_export[Object.keys(json)[0]] = json[Object.keys(json)[0]];
 	});
 
-	console.log(_phys_export);
+	return _phys_export;
     }
 
     AddOBJGuide(name)
@@ -186,6 +186,33 @@ class EntityCreate extends mix(BaseObject).with(
     SelectPhysEnt(name)
     {
 	this.SelectEntity(entities().find(e => e.__physname === name).m_ID);
+    }
+
+    TogglePhysVisibility()
+    {
+	entities().filter(e => e.__physname)
+	.map(e => e.m_Components.RenderComponent)
+	.forEach(e =>
+	{
+	    e.m_Mesh.visible = !e.m_Mesh.visible;
+	});
+    }
+
+    CopyPhysJSON()
+    {
+	let e_json = this.ExportJSON();
+	$("#clip").html(JSON.stringify(e_json));
+	$("#clipdiv").show();
+	$("#clip").focus();
+	$("#clip").select();
+	document.execCommand('SelectAll')
+	document.execCommand('copy');
+	$("#clipdiv").hide();
+    }
+
+    DeletePhysEnts()
+    {
+	entities().filter(e => e.__physname).forEach(e => e.Delete());
     }
 
     render()

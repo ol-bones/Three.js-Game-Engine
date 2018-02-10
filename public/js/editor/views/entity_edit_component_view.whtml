@@ -19,6 +19,13 @@
 	    </h4>
 	</div>
 	<div id="collapse2" class="panel-collapse collapse">
+	    <div class="rigid-body-buttons">
+		<button class="btn btn-default btn-editor btn-save glyphicon glyphicon-open-file"></button>
+		<button class="btn btn-default btn-editor btn-copy glyphicon glyphicon-duplicate" onclick="EDITOR.CopyPhysJSON();"></button>
+		<button class="btn btn-default btn-editor btn-visible glyphicon glyphicon-eye-open" onclick="EDITOR.TogglePhysVisibility();"></button>
+		<button class="btn btn-default btn-editor btn-delete glyphicon glyphicon-trash" onclick="EDITOR.DeletePhysEnts();"></button>
+	    </div>
+
 	    <ul class="list-group">
 		<li class="list-group-item">Count: {>PhysicsModel.Count}</li>
 	    </ul>
@@ -42,4 +49,5 @@
 	</div>
     </div>
 {/if}
+<div style="display:none;" id="clipdiv"><textarea id="clip"></textarea></div>
 </div>
