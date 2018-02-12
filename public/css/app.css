@@ -605,7 +605,7 @@ ol.tree
 
 .rigid-body-buttons {
     display:flex;
-    flex-wrap: nowrap | wrap | wrap-reverse;
+    background:#222;
 }
 
 .rigid-body-buttons > * {

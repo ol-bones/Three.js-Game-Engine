@@ -15,9 +15,12 @@ let EntityPropertyManipulatorView = (Main) => class extends Main
 	this.m_SelectedEntityModel = {};
 	this.m_EntityManipulatorView = $("#entity-manipulator-view");
 
-	$("#bottom-left-pane").append(whiskers.render(
-	    WHTML["entity_edit_transform_view"]
-	));
+	setTimeout(() =>
+	{
+	    $("#bottom-left-pane").append(whiskers.render(
+		WHTML["entity_edit_transform_view"]
+	    ));
+	}, 1000);
     }
 
     onEntitySelect(entity_model)
