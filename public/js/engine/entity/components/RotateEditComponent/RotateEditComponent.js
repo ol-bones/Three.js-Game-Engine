@@ -97,6 +97,7 @@ class RotateEditComponent extends mix(Component).with()
 	mesh.event_phase = 2;
 	this.m_Parent.SetPosition(p.x,p.y,p.z);
 	this.m_AxisHelpers.forEach(m => m.position.set(p.x,p.y,p.z));
+	EDITOR.FillTransforms(EDITOR.m_SelectedEntityModel);
     }
 
     // This isn't quite 100% user friendly but I can't be bothered
@@ -212,7 +213,7 @@ class RotateEditComponent extends mix(Component).with()
 	    newQuat.setFromAxisAngle(q_axis, (diff*0.05));
 	    body.quaternion.multiplyQuaternions(body.quaternion, newQuat);
 	}
-
+	EDITOR.FillTransforms(EDITOR.m_SelectedEntityModel);
     }
 
     Update()

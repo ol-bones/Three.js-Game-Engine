@@ -491,6 +491,7 @@ ol.tree
 
 
 .editor-bottom-pane {
+    pointer-events:all;
     height:15%;
     width:85%;
     bottom:0%;

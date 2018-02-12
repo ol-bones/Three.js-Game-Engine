@@ -14,6 +14,10 @@ let EntityPropertyManipulatorView = (Main) => class extends Main
 
 	this.m_SelectedEntityModel = {};
 	this.m_EntityManipulatorView = $("#entity-manipulator-view");
+
+	$("#bottom-left-pane").append(whiskers.render(
+	    WHTML["entity_edit_transform_view"]
+	));
     }
 
     onEntitySelect(entity_model)
@@ -24,7 +28,7 @@ let EntityPropertyManipulatorView = (Main) => class extends Main
 	    this.m_SelectedEntityModel = entity_model;
 
 	    try{this.FillMaterialEditor(ref_Entity)}catch(e){};
-	    this.fillproperties(entity_model);
+	    this.FillTransforms(entity_model);
 	    this.fillcomponents(entity_model.components);
 
 	    if(ref_Entity.m_Components.RenderComponent
@@ -72,13 +76,34 @@ let EntityPropertyManipulatorView = (Main) => class extends Main
 	$("#material-editor-texture-name").html(texture_name);
     }
 
-    fillproperties(entity_model)
+    FillTransforms(entity_model)
     {
-	$("#entity-name")[0].value = "Entity";
-	$("#entity-id")[0].value = entity_model.id;
-	$("#entity-x")[0].value = entity_model.pos.x;
-	$("#entity-y")[0].value = entity_model.pos.y;
-	$("#entity-z")[0].value = entity_model.pos.z;
+	let ref_Entity = Entity.FindByID(parseInt(entity_model.id));
+
+	$("#position-transform-x").html(
+	    `x: ${ref_Entity.m_Position.x}`
+	);
+	$("#position-transform-y").html(
+	    `y: ${ref_Entity.m_Position.y}`
+	);
+	$("#position-transform-z").html(
+	    `z: ${ref_Entity.m_Position.z}`
+	);
+
+	$("#scale-transform-x").html(
+	    `x: ${ref_Entity.m_Scale.x}`
+	);
+	$("#scale-transform-y").html(
+	    `y: ${ref_Entity.m_Scale.y}`
+	);
+	$("#scale-transform-z").html(
+	    `z: ${ref_Entity.m_Scale.z}`
+	);
+
+	let rot = ref_Entity.m_Components.RenderComponent.m_Mesh.quaternion;
+	$("#rotation-transform").html(
+	    `x:${rot.x},</br>y:${rot.y},</br>z:${rot.z},</br>w:${rot.w}`
+	);
     }
 
     fillcomponents(component_models)

@@ -232,6 +232,5 @@ class EntityCreate extends mix(BaseObject).with(
 		Entities: entities().filter(e => e.__physname).map(e=>e.__physname)
 	    }
 	}));
-
     }
 }

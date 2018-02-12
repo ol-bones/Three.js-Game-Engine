@@ -115,6 +115,7 @@ class PositionEditComponent extends mix(Component).with()
 		m.position.set(p.x,p.y,p.z);
 	    }
 	});
+	EDITOR.FillTransforms(EDITOR.m_SelectedEntityModel);
     }
 
     ArrowTouchDragEvent(mesh, t, x, y, dir, axis)
@@ -225,6 +226,7 @@ class PositionEditComponent extends mix(Component).with()
 		break;
 	    default: return;
 	}
+	EDITOR.FillTransforms(EDITOR.m_SelectedEntityModel);
     }
 
     Update()
