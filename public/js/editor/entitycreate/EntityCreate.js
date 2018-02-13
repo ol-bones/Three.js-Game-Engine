@@ -11,13 +11,13 @@ class EntityCreate extends mix(BaseObject).with(
     {
 	super();
 
+	this.defaultBox = JSON.parse(`{"type":1,"pos":{"x":0,"y":0,"z":0},"scale":{"x":25,"y":25,"z":25},"rot":{"axis":{"x":1,"y":0,"z":0},"r":0}}`);
 	ENGINE.OnInitialised = () => this.Initialise();
     }
 
     Initialise()
     {
 	EDITOR = this;
-
 	let grid = new THREE.GridHelper(100,10);
 	ENGINE.m_World.m_Scene.add(grid);
     }
@@ -183,8 +183,25 @@ class EntityCreate extends mix(BaseObject).with(
 	ENGINE.m_World.m_Entities.push(e);
     }
 
-    SelectPhysEnt(name)
+    NewPhysEnt(str_type)
     {
+	switch(str_type)
+	{
+	    case "box":
+		this.AddBox("new_rigid_box", this.defaultBox);
+
+		break;
+	    case "cylinder":
+	}
+    }
+
+    SelectPhysEnt(name, evt)
+    {
+	if(evt)
+	{
+	    name = $(evt.srcElement).attr("data-physname") || $(evt.srcElement.children[0]).attr("data-physname");
+	}
+
 	this.SelectEntity(entities().find(e => e.__physname === name).m_ID);
     }
 
@@ -215,6 +232,22 @@ class EntityCreate extends mix(BaseObject).with(
 	entities().filter(e => e.__physname).forEach(e => e.Delete());
     }
 
+    DeletePhysEnt(name, evt)
+    {
+	if(evt)
+	{
+	    evt.srcElement.parentElement.remove();
+	    evt.cancelBubble = true;
+	    name = $(evt.srcElement.parentElement.children[0]).attr("data-physname");
+	}
+	entities().find(e => e.__physname === name).Delete();
+    }
+
+    SetPhysEntName(str_name, str_new_name)
+    {
+	entities().find(e => e.__physname && e.__physname == str_name).__physname = str_new_name;
+    }
+
     render()
     {
 	$("#top-left-pane").empty();
@@ -232,5 +265,20 @@ class EntityCreate extends mix(BaseObject).with(
 		Entities: entities().filter(e => e.__physname).map(e=>e.__physname)
 	    }
 	}));
+
+	$(".rigid-body-shape-name").on("keydown", (e) =>
+	{
+	    var keyCode = e.which || e.keyCode;
+	    if(keyCode == 13)
+	    {
+		e.preventDefault();
+		e.currentTarget.value = e.currentTarget.value.trim();
+		EDITOR.SetPhysEntName(
+		    $(e.currentTarget).attr("data-physname"),
+		    e.currentTarget.value
+		);
+		$(e.currentTarget).attr("data-physname", e.currentTarget.value);
+	    }
+	});
     }
 }

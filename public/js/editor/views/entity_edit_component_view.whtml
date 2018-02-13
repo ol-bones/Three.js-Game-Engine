@@ -39,11 +39,22 @@
 		    <ul class="list-group" style="border-color:#111;">
 			{for SubEnt in PhysicsModel.Entities}
 			    <li class="list-group-item"
-			          onclick="EDITOR.SelectPhysEnt('{>SubEnt}');">
-				{>SubEnt}
+			          onclick="EDITOR.SelectPhysEnt('{>SubEnt}', event);">
+				<textarea data-physname="{>SubEnt}" rows="1" class="rigid-body-shape-name">{>SubEnt}</textarea>
+				<button
+				    class="btn btn-default btn-editor btn-delete glyphicon glyphicon-trash"
+				     onclick="EDITOR.DeletePhysEnt('{>SubEnt}', event);"
+				    style="float:right;padding:0;"
+				>
 			    </li>
 			{/for}
 		    </ul>
+		    <div class="rigid-body-buttons">
+			<button
+			    class="btn btn-default btn-editor btn-save glyphicon glyphicon-plus"
+			    onclick="$('#rigid-body-shape-select-modal').modal();">
+			</button>
+		    </div>
 		</div>
 	    </div>
 	</div>

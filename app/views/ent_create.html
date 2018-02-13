@@ -173,4 +173,39 @@ data-dismiss="modal"><span style="color:red;" class="glyphicon glyphicon-remove"
 </div>
 
 
+<div class="modal fade" id="rigid-body-shape-select-modal" role="dialog">
+    <div class="modal-dialog">
+	<div class="modal-content">
+	    <div class="modal-header" style="padding-top:50px;">
+		<button type="button"
+			class="close" data-dismiss="modal" stlye="color:#fff;">
+			&times;
+		</button>
+		<h4>Rigid Body Physics Shapes</h4>
+		<div class="modal-body" style="display:flex;">
+		    <button class="btn btn-default btn-editor btn-block"
+			    type="submit" data-dismiss="modal"
+			    onclick="EDITOR.NewPhysEnt('box');">
+			Box
+		    </button>
+		    <button class="btn btn-default btn-editor btn-block"
+			    type="submit" data-dismiss="modal"
+			    onclick="EDITOR.NewPhysEnt('cylinder');">
+			Cylinder
+		    </button>
+		</div>
+		<div class="modal-footer">
+		    <button type="submit"
+			    class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+			<span style="color:red;" class="glyphicon glyphicon-remove"></span>
+			Cancel
+		    </button>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+
+
+
 

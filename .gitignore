@@ -2,6 +2,7 @@ node_modules/
 *.swp
 *.swo
 *.swn
+*.swm
 /public/js/libs/three.min.js
 /public/textures/*
 /public/models/*

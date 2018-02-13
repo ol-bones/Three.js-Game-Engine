@@ -615,37 +615,55 @@ ol.tree
 .rigid-body-buttons > *:active {
     background-color:#222 !important;
     outline:0;
-    color:#d6d6d6;
+    color:#9d9d9d;
 }
 
 .rigid-body-buttons > *:focus {
     background-color:#222 !important;
     outline:0;
-    color:#d6d6d6;
+    color:#9d9d9d;
 }
 
 .btn-save {
-    color:#d6d6d6;
+    color:#9d9d9d;
 }
 .btn-save:hover { color:#55FF55; }
 
 .btn-visible {
-    color:#d6d6d6;
+    color:#9d9d9d;
 }
 .btn-visible:hover { color:#5555FF; }
 
 .btn-copy {
-    color:#d6d6d6;
+    color:#9d9d9d;
 }
 .btn-copy:hover { color:#FFFF55; }
 
 .btn-delete {
-    color:#d6d6d6;
+    color:#9d9d9d;
 }
 .btn-delete:hover { color:#FF5555; }
 
+.list-group-item > .btn-delete {
+    display: none;
+}
+.list-group-item:hover > .btn-delete {
+    display: block;
+}
 
+.rigid-body-shape-name {
+    background-color: #111;
+    width: 80%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    resize: none;
+    overflow: hidden;
+}
 
-
-
+.rigid-body-shape-name:focus { 
+    outline: none !important;
+    border-color: #9d9d9d;
+    box-shadow: 0 0 10px 0.5px #9d9d9d;
+}
 
