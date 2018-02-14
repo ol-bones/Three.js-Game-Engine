@@ -172,6 +172,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 
     Delete()
     {
+	while(this.m_Entities.length > 0) { this.m_Entities.forEach(_=>_.Delete()); }
 	Object.keys(this.m_Components).forEach(
 	    c => this.m_Components[c].Remove()
 	);

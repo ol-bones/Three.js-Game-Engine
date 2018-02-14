@@ -25,7 +25,19 @@ class Editor extends mix(BaseObject).with(
     Initialise()
     {
 	EDITOR = this;
+	let grid = new THREE.GridHelper(10000, 10);
+	ENGINE.m_World.m_Scene.add(grid);
 	this.LoadWorld();
+    }
+
+    DeleteEntity(id, evt)
+    {
+	if(evt)
+	{
+	    evt.srcElement.parentElement.parentElement.remove();
+	    evt.cancelBubble = true;
+	}
+	entities().find(e => e.m_ID === id).Delete();
     }
 
     render()

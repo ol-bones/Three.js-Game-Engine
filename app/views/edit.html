@@ -46,53 +46,19 @@ data-target="#editNavbar">
 style="height:50%;overflow:scroll;margin-right:2.5%;margin-bottom:2.5%;background-color:#111;">
 		{>entitytreeview}
 		</div>
-		<div class=""
-style="height:50%;margin-left:0px;overflow:hidden;margin-right:2.5%;background-color:#111;">
-		    <div class="container entity-manipulator-window" style="width:100%;">
-      
-			<div id="entity-manipulator-view">
-			    <div class="input-group">
-				<span class="input-group-addon"><i>Name</i></span>
-				<input autocomplete="off" id="entity-name" type="text" class="form-control" name="entity-name" placeholder="L">
-			    </div>
-			    <div class="input-group">
-				<span class="input-group-addon"><i>ID</i></span>
-				<input id="entity-id" type="text" class="form-control" name="entity-id" placeholder="null">
-			    </div>
-			    <h3>Position</h3>
-			    <div class="input-group">
-				<span class="input-group-addon">x</span>
-				<input id="entity-x" type="text" class="form-control" name="entity-x" placeholder="0">
-			    </div>
-			    <div class="input-group">
-				<span class="input-group-addon">y</span>
-				<input id="entity-y" type="text" class="form-control" name="entity-y" placeholder="0">
-			    </div>
-			    <div class="input-group">
-				<span class="input-group-addon">z</span>
-				<input id="entity-z" type="text" class="form-control" name="entity-z" placeholder="0">
-			    </div></br>
-			    <div class="input-group" style="width:100%;">
-				<div class="input-group-btn">
-				    <button class="btn btn-default" style="width:100%;"
-onclick="$('#editor-component-modal').modal();">
-					<i class="glyphicon glyphicon-edit"> Components</i>
-				    </button>
-				</div>
-			    </div>
-			</div>
-		    </div>
+		<div id="bottom-left-pane" class=""
+style="height:50%;margin-left:0px;overflow:hidden;margin-right:2.5%;background-color:#222;">
 		</div>
 	    </div>
 	    <div class="editor-bottom-pane">
 		<div class="bottom-options">
-		    <button class="btn btn-default glyphicon glyphicon-move"
+		    <button class="btn btn-default btn-editor glyphicon glyphicon-move"
 			    onclick="EDITOR.SelectPositionEditTool()">
 		    </button>
-		    <button class="btn btn-default glyphicon glyphicon-fullscreen"
+		    <button class="btn btn-default btn-editor glyphicon glyphicon-fullscreen"
 			    onclick="EDITOR.SelectScaleEditTool()">
 		    </button>
-		    <button class="btn btn-default glyphicon glyphicon-refresh"
+		    <button class="btn btn-default btn-editor glyphicon glyphicon-refresh"
 			    onclick="EDITOR.SelectRotateEditTool()">
 		    </button>
 		</div>

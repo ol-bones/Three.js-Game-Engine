@@ -125,7 +125,7 @@ e.m_Components.PhysicsComponent).map(e => e.m_Components.RenderComponent.m_Mesh)
 		    {
 			this.m_Parent.SendComms
 			(
-			    { ID: 32, Component: "PhysicsComponent" },
+			    { ID: 9, Component: "PhysicsComponent" },
 			    [ force.x, force.y, force.z ],
 			    "ApplyForce",
 			    0
