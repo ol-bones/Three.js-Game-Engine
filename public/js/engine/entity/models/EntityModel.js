@@ -4,9 +4,20 @@ class EntityModel
 {
     constructor(object)
     {
+	let renderComponent = object.m_Components.RenderComponent;
+
 	this._object = object;
 	this.ID = object.m_ID.toString();
 	this.POS = {x:object.m_Position.x, y:object.m_Position.y, z:object.m_Position.z} || {};
+	this.ROT = renderComponent && renderComponent.m_Mesh ?
+	    {
+		"x": renderComponent.m_Mesh.quaternion._x,
+		"y": renderComponent.m_Mesh.quaternion._y,
+		"z": renderComponent.m_Mesh.quaternion._z,
+		"w": renderComponent.m_Mesh.quaternion._w
+	    }
+	:
+	    "{x:0,y:0,z:0,w:0}";
 
 	this.PARENT = object.m_Parent ? object.m_Parent.m_ID : -1;
 	this.ENTITIES = object.m_Entities.map(e => e.DataModel().ToJSON()) || [];
@@ -16,7 +27,7 @@ object.m_Components[c].DataModel().ToJSON()) || [];
 
     ToJSON()
     {
-	return {id: this.ID, pos: this.POS, parent: this.PARENT, entities: this.ENTITIES, components: this.COMPONENTS};
+	return {id: this.ID, pos: this.POS, rot: this.ROT, parent: this.PARENT, entities: this.ENTITIES, components: this.COMPONENTS};
 
     }
 

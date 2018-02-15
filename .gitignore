@@ -3,6 +3,7 @@ node_modules/
 *.swo
 *.swn
 *.swm
+*.swl
 /public/js/libs/three.min.js
 /public/textures/*
 /public/models/*

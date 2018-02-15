@@ -61,6 +61,10 @@ style="height:50%;margin-left:0px;overflow:hidden;margin-right:2.5%;background-c
 		    <button class="btn btn-default btn-editor glyphicon glyphicon-refresh"
 			    onclick="EDITOR.SelectRotateEditTool()">
 		    </button>
+		    <button class="btn btn-default btn-editor glyphicon glyphicon-plus"
+			    onclick="$('#new-entity-select-modal').modal()"
+			    style="">
+		    </button>
 		</div>
 	    </div>
 	</div>
@@ -143,4 +147,36 @@ data-dismiss="modal"><span style="color:red;" class="glyphicon glyphicon-remove"
 </div>
 
 
+<div class="modal fade" id="new-entity-select-modal" role="dialog">
+    <div class="modal-dialog">
+	<div class="modal-content">
+	    <div class="modal-header" style="padding-top:50px;">
+		<button type="button"
+		    class="close" data-dismiss="modal" stlye="color:#fff;">
+		    &times;
+		</button>
+		<h4>Entities</h4>
+		<div class="modal-body" style="display:flex;">
+		    <button class="btn btn-default btn-editor btn-block"
+			type="submit" data-dismiss="modal"
+			onclick="EDITOR.AddNewBox();">
+			    Box
+		    </button>
+		    <button class="btn btn-default btn-editor btn-block"
+			type="submit" data-dismiss="modal"
+			onclick="EDITOR.NewPhysEnt('cylinder');">
+			    Cylinder
+		    </button>
+		</div>
+		<div class="modal-footer">
+		    <button type="submit"
+			class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+			<span style="color:red;" class="glyphicon glyphicon-remove"></span>
+			Cancel
+		    </button>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
 

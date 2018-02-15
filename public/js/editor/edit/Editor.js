@@ -25,9 +25,56 @@ class Editor extends mix(BaseObject).with(
     Initialise()
     {
 	EDITOR = this;
+
+//	this.m_EditModeToggled = true;
+//	ENGINE.StopUpdating(1);
+//	ENGINE.BeginUpdating(2, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
+
 	let grid = new THREE.GridHelper(10000, 10);
 	ENGINE.m_World.m_Scene.add(grid);
 	this.LoadWorld();
+    }
+
+    AddNewBox()
+    {
+	Entity.FromFile(
+	{
+	    "pos":
+	    {
+		"x":0,
+		"y":150,
+		"z":0
+	    },
+	    "rot":
+	    {
+		"x":0,
+		"y":0,
+		"z":0,
+		"w":1
+	    },
+	    "parent":0,
+	    "entities":[],
+	    "components":[
+	    {
+		"args":
+		{
+		    "Scale":
+		    {
+			"x": 25,
+			"y": 25,
+			"z": 25
+		    }
+		},
+		"name":"BasicBoxMeshRenderComponent",
+		"updateable":false
+	    },
+	    {
+		"args":{"Type":1},
+		"name":"BasicPhysicsComponent",
+		"updateable":false
+	    }
+	]
+	}, entities()[0], new THREE.Vector3(0,0,0));
     }
 
     DeleteEntity(id, evt)

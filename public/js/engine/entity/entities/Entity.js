@@ -26,6 +26,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 
 	this.m_Position = new THREE.Vector3(x,y,z);
 	this.m_Scale = new THREE.Vector3(1,1,1);
+	this.m_Rotation = new THREE.Quaternion(0,0,0,1);
     }
 
     Initialise()
@@ -36,6 +37,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
     OnInitialised()
     {
 	this.__OnInitialised();
+	this.__OnInitialised = () => null;
 	if(entities().includes(this)) return;
 	entities().push(this);
     }
@@ -170,6 +172,20 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
     SetScaleY(y) { this.SetScale(this.m_Scale.x, y, this.m_Scale.z); }
     SetScaleZ(z) { this.SetScale(this.m_Scale.x, this.m_Scale.y, z); }
 
+    SetRotation(x,y,z,w)
+    {
+	this.m_Rotation.set(x,y,z,w);
+	if(this.m_Components.RenderComponent && this.m_Components.RenderComponent.m_Mesh)
+	{
+	    this.m_Components.RenderComponent.m_Mesh.quaternion.set(x,y,z,w);
+	}
+	if(this.m_Components.PhysicsComponent && this.m_Components.PhysicsComponent.m_PhysicsBody)
+	{
+	    this.m_Components.PhysicsComponent.m_PhysicsBody.quaternion.set(x,y,z,w);
+	}
+
+    }
+
     Delete()
     {
 	while(this.m_Entities.length > 0) { this.m_Entities.forEach(_=>_.Delete()); }
@@ -222,6 +238,15 @@ Entity.FindByID = (id) => entities().find(e => e.m_ID === id);
 Entity.FromFile = (json, parent, offset) =>
 {
     let entity = new Entity(json.pos.x + offset.x, json.pos.y + offset.y, json.pos.z + offset.z);
+
+    if(json.rot)
+    {
+	entity.__OnInitialised = () =>
+	{
+	    entity.SetRotation(json.rot.x, json.rot.y, json.rot.z, json.rot.w);
+	}
+    }
+
     try
     {
 	parent.AddChild(entity);
