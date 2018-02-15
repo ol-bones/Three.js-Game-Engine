@@ -54,26 +54,53 @@ class Editor extends mix(BaseObject).with(
 	    },
 	    "parent":0,
 	    "entities":[],
-	    "components":[
-	    {
-		"args":
+	    "components":
+	    [
 		{
-		    "Scale":
+		    "args":
 		    {
-			"x": 25,
-			"y": 25,
-			"z": 25
-		    }
+			"Scale":
+			{
+			    "x": 25,
+			    "y": 25,
+			    "z": 25
+			}
+		    },
+		    "name":"BasicBoxMeshRenderComponent",
+		    "updateable":false
 		},
-		"name":"BasicBoxMeshRenderComponent",
-		"updateable":false
-	    },
-	    {
-		"args":{"Type":1},
-		"name":"BasicPhysicsComponent",
-		"updateable":false
-	    }
-	]
+		{
+		    "args":{"Type":1},
+		    "name":"BasicPhysicsComponent",
+		    "updateable":false
+		}
+	    ]
+	}, entities()[0], new THREE.Vector3(0,0,0));
+    }
+
+    AddNewSphere()
+    {
+	Entity.FromFile(
+	{
+	    "pos": {"x":0,"y":150,"z":0},
+	    "rot": {"x":0,"y":0,"z":0,"w":1},
+	    "parent":0,
+	    "entities":[],
+	    "components":
+	    [
+		{
+		    "args":
+		    {
+			"Radius": 25,
+			"Segments": 36
+		    },
+		    "name": "BasicSphereMeshRenderComponent"
+		},
+		{
+		    "args":{"Type":1,"BodySettings":{"type":"sphere","radius":25, "move":true, "pos":{"x":0,"y":150,"z":0}}},
+		    "name": "BasicPhysicsComponent"
+		}
+	    ],
 	}, entities()[0], new THREE.Vector3(0,0,0));
     }
 

@@ -35,7 +35,7 @@ class Engine extends mix(BaseObject).with()
 	this.BeginUpdating(0, () => ENGINE.m_AssetCache.Update());
 	this.BeginUpdating(1, () => ENGINE.m_World.Update());
 
-	this.m_UpdateIntervalID = setInterval(this.Update.bind(this), 1000/30);
+	this.m_UpdateIntervalID = setInterval(this.Update.bind(this), 1000/60);
 	this.OnInitialised();
 	this.m_Initialised = true;
     }

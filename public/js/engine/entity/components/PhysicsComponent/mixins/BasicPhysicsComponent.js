@@ -40,15 +40,23 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 	};
 
 	let scale = this.m_Parent.m_Scale;
-	this.m_PhysicsShape = new CANNON.Box(
-	    new CANNON.Vec3(
-		(this.m_BodySettings.size[0]/2)*scale.x,
-		(this.m_BodySettings.size[1]/2)*scale.y,
-		(this.m_BodySettings.size[2]/2)*scale.z
-	    )
-	);
-
-	this.m_PhysicsBody = new CANNON.Body({ mass: 10, type: this.m_Args.Type });
+	if(this.m_BodySettings.type === "box")
+	{
+	    this.m_PhysicsShape = new CANNON.Box(
+		new CANNON.Vec3(
+		    (this.m_BodySettings.size[0]/2)*scale.x,
+		    (this.m_BodySettings.size[1]/2)*scale.y,
+		    (this.m_BodySettings.size[2]/2)*scale.z
+		)
+	    );
+	}
+	let mass = 0;
+	if(this.m_BodySettings.type === "sphere")
+	{
+	    mass = 10;
+	    this.m_PhysicsShape = new CANNON.Sphere(this.m_BodySettings.radius);
+	}
+	this.m_PhysicsBody = new CANNON.Body({ mass: mass, type: this.m_Args.Type });
 	this.m_PhysicsBody.addShape(this.m_PhysicsShape);
  	super.Initialise();
     }
