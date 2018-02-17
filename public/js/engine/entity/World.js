@@ -55,12 +55,20 @@ class World extends mix(BaseObject).with(Comms)
 
 	this.m_Controls = new THREE.OrbitControls( this.m_Camera, this.m_Renderer.domElement );
 
-	var ambientLight = new THREE.AmbientLight(0x0c0c0c);
-	this.m_Scene.add(ambientLight);
-	var spotLight = new THREE.SpotLight(0xffffff);
-	spotLight.position.set(-400, 300, -10);
-	spotLight.castShadow = true;
-	this.m_Scene.add(spotLight);
+	this.m_Scene.fog = new THREE.FogExp2( 0xaabbbb, 0.001 );
+
+	let light = new THREE.DirectionalLight( 0xffffff, 0.8 );
+	light.position.set( -2000, 2000, -2000 );
+	light.castShadow = true;
+	light.shadow.camera.top = 1000;
+	light.shadow.camera.right = 1000;
+	light.shadow.camera.left = light.shadow.camera.bottom = -1000;
+	light.shadow.camera.near = 1;
+	light.shadow.camera.far = 3000;
+	this.m_Scene.add( light );
+
+	let ambientLight = new THREE.AmbientLight( 0xcccccc, 0.4 );
+	this.m_Scene.add( ambientLight );
 
 	document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
 
@@ -81,6 +89,7 @@ class World extends mix(BaseObject).with(Comms)
     {
 	this.m_Renderer.autoClear = false;
 	this.m_Controls.update();
+
 	this.m_Renderer.render(this.m_Scene, this.m_Camera);
 	this.m_Renderer.clearDepth();
 	this.m_Renderer.render(this.m_EditorScene, this.m_Camera);

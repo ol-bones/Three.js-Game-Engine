@@ -20,6 +20,18 @@ class Game
     {
 	try
 	{
+
+	    var cubeTextureLoader = new THREE.CubeTextureLoader();
+	    cubeTextureLoader.setPath( 'textures/cube/skyboxsun/' );
+
+	    let cubeMap = cubeTextureLoader.load( [
+		'px.jpg', 'nx.jpg',
+		    'py.jpg', 'ny.jpg',
+		    'pz.jpg', 'nz.jpg',
+		] );
+
+	    ENGINE.m_World._cube = cubeMap;
+
 	    let data = json(`http://${CONFIG.host}/data/world/0.json`)
 	    Entity.FromFile(
 		data,
@@ -53,6 +65,52 @@ class Game
 		    }
 		],
 	    }, entities()[0], new THREE.Vector3(0,0,0));
+
+
+	    var waterGeometry = new THREE.PlaneBufferGeometry(1000, 1000);
+	    let water_normal_map = texture("/waternormals.jpg")
+	    water_normal_map.wrapS = THREE.RepeatWrapping;
+	    water_normal_map.wrapT = THREE.RepeatWrapping;
+
+	    let water = new THREE.Water
+	    (
+		waterGeometry,
+		{
+		    textureWidth: 512,
+		    textureHeight: 512,
+		    waterNormals: water_normal_map,
+		    alpha: 1,
+		    sunDirection: new THREE.Vector3(-200,200,-200).normalize(),
+		    sunColor: 0xffffff,
+		    waterColor: 0x001e0f,
+		    distortionScale: 3.7,
+		    fog: ENGINE.m_World.m_Scene.fog !== undefined
+		}
+	    );
+
+	    water.rotation.x = -Math.PI / 2;
+	    water.receiveShadow = true;
+
+	    ENGINE.m_World.m_Scene.add( water );
+
+	    var cubeShader = THREE.ShaderLib[ 'cube' ];
+	    cubeShader.uniforms[ 'tCube' ].value = cubeMap;
+
+	    var skyBoxMaterial = new THREE.ShaderMaterial( {
+				    fragmentShader: cubeShader.fragmentShader,
+				    vertexShader: cubeShader.vertexShader,
+				    uniforms: cubeShader.uniforms,
+				    side: THREE.BackSide
+				} );
+
+	    var skyBoxGeometry = new THREE.BoxBufferGeometry(
+				    5000,
+				    5000,
+				    5000 );
+
+	    var skyBox = new THREE.Mesh( skyBoxGeometry, skyBoxMaterial );
+
+	    ENGINE.m_World.m_Scene.add( skyBox );
 	}
 	catch(Exception)
 	{
