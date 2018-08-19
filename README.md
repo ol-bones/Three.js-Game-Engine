@@ -11,9 +11,6 @@ Download and install: git, node
 
 > #### First Use
 >```
->> sudo service start mongod
->```
->```
 >> npm install
 >```
 
