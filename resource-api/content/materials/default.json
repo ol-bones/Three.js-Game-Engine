@@ -1,0 +1,5 @@
+{
+    "type": "THREE.MeshPhongMaterial",
+    "texture": "/default.jpg",
+    "color": "0xFFFFFF"
+}

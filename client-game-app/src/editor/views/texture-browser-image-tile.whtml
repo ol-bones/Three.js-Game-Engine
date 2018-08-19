@@ -1,0 +1,7 @@
+<div class="col-sm-6">
+    <button class="btn btn-default texture-panel" onclick="EDITOR.SelectTexture('{>ImageSrc}');">
+	<img src="{>ImageSrc}"
+	     class="img-thumbnail texture-panel"
+	     id="texture-browser-image-tile-img">
+    </button>
+</div>
