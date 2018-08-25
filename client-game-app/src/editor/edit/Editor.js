@@ -1,17 +1,12 @@
 "use strict";
 
-// Dependencies
-// @Engine@
-// @World@
-// @Entity@
-// @Component@
+import World from "./../../engine/entity/World";
+import BaseObject from "./../../engine/entity/entities/BaseObject";
+import Entity from "./../../engine/entity/entities/Entity";
 
-// @EntityTreeView@
+import {mix} from "mixwith";
 
-class Editor extends mix(BaseObject).with(
-    EditToolsControl, MaterialToolsControl, EditNavBarControl,
-    EntityTreeView, EntityPropertyManipulatorView, WorldLoader
-)
+class Editor extends mix(BaseObject).with()
 {
     constructor()
     {
@@ -32,7 +27,7 @@ class Editor extends mix(BaseObject).with(
 
 	let grid = new THREE.GridHelper(10000, 10);
 	ENGINE.m_World.m_Scene.add(grid);
-	this.LoadWorld();
+	//this.LoadWorld();
     }
 
     AddNewBox()
@@ -122,3 +117,5 @@ class Editor extends mix(BaseObject).with(
 
 window.Editor = {};
 let EDITOR = window.Editor;
+
+export default Editor;

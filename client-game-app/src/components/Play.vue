@@ -1,5 +1,5 @@
 <template>
-<div class="game-canvas"></div>
+  <div class="game-canvas"></div>
 </template>
 
 <script>
@@ -23,8 +23,8 @@ export default {
 
 <style scoped>
 .game-canvas {
-  width: 100vw;
-  height:100vh;
+  width: 100%;
+  height:100%;
   overflow: hidden;
 }
 </style>

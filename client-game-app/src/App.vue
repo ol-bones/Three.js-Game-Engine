@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <router-view/>
   </div>
 </template>
@@ -18,11 +18,19 @@ export default {
   text-align: center;
   color: #2c3e50;
   overflow: hidden;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  max-width: 100% !important;
+  position: fixed;
 }
 
 body {
   margin: 0;
 }
+
+.fill {
+  margin: 0;
+  padding:0;
+}
+
 </style>
