@@ -1,9 +1,7 @@
 <template>
-  <div class="col-xs-1 col-sm-1 col-md-1 fill">
     <b-button class="header-button">
       {{this.text}}
     </b-button>
-  </div>
 </template>
 
 <script>
@@ -30,10 +28,12 @@ export default {
 <style scoped>
   .header-button {
     color: #c4c4c4;
-    background-color: #333;
+    background-color: transparent;
+
     border-radius: 0;
     border: 0;
     margin: 0;
+
     height: 100%;
     -webkit-appearance: unset;
     font-size: small;

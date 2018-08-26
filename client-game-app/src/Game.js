@@ -29,24 +29,24 @@ class Game {
 					"parent": 0,
 					"entities": [],
 					"components":
-						[
-							{
-								"args":
-									{
-										"Radius": 2,
-										"Segments": 36
-									},
-								"name": "BasicSphereMeshRenderComponent"
-							},
-							{
-								"args": { "Type": 1, "BodySettings": { "type": "sphere", "radius": 2 } },
-								"name": "BasicPhysicsComponent"
-							},
-							{
-								"args": {},
-								"name": "MinigolfClientBallControlComponent"
-							}
-						],
+					[
+						{
+							"args":
+								{
+									"Radius": 2,
+									"Segments": 36
+								},
+							"name": "BasicSphereMeshRenderComponent"
+						},
+						{
+							"args": { "Type": 1, "BodySettings": { "type": "sphere", "radius": 2 } },
+							"name": "BasicPhysicsComponent"
+						},
+						{
+							"args": {},
+							"name": "MinigolfClientBallControlComponent"
+						}
+					],
 				}, entities()[0], new THREE.Vector3(0, 0, 0));
 		}
 		catch (Exception) {

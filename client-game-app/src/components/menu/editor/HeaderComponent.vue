@@ -35,9 +35,11 @@ export default {
 .header-row {
     height:100%;
     width: 100%;
-    background-color: #333;
+    background-image: linear-gradient(#333, #3a3a3a);
     color: white;
     top: 50%;
+
+    border-bottom: 2px solid #444;
 }
 
 .header-buttons-row {

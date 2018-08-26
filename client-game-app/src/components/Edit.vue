@@ -6,7 +6,11 @@
       </div>
       <div class="row main-container fill">
         <div class="col-xs-2 col-sm-2 col-md-2 fill">
-          <left-panel-component/>
+          <left-panel-component>
+            <div class="col-xs-12 col-sm-12 col-md-12" style="height:100%;padding:0;">
+              <entity-tree-component/>
+            </div>
+          </left-panel-component>
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 fill">
           <div class="row game-container fill">
@@ -27,6 +31,7 @@
 <script>
 import HeaderComponent from "./menu/editor/HeaderComponent";
 import LeftPanelComponent from "./menu/editor/LeftPanelComponent";
+import EntityTreeComponent from "./menu/editor/EntityTreeComponent";
 
 import Editor from "./../editor/edit/Editor";
 
@@ -34,7 +39,8 @@ export default {
   name: "Edit",
   components: {
     HeaderComponent,
-    LeftPanelComponent
+    LeftPanelComponent,
+    EntityTreeComponent
   },
   data() {
     return {

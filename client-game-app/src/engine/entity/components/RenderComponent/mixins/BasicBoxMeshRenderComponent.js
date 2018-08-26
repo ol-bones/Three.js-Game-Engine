@@ -13,7 +13,6 @@ class BasicBoxMeshRenderComponent extends mix(RenderComponent).with()
     Initialise()
     {
 	super.Initialise();
-
 	var geoBox = new THREE.BoxGeometry(
 	    this.m_Args.Scale ? this.m_Args.Scale.x*25 : 25,
 	    this.m_Args.Scale ? this.m_Args.Scale.y*25 : 25,
