@@ -15,13 +15,14 @@ class Editor extends mix(BaseObject).with(WorldLoader)
 		super();
 
 		this.m_UpdateIntervalID = null;
+		this.m_SelectedEntity = null;
 
 		ENGINE.OnInitialised = () => this.Initialise();
     }
 
     Initialise()
     {
-		EDITOR = this;
+		window.EDITOR = this;
 
 		ENGINE.m_World.m_Camera.position.set(-120.65558286328287, 151.31431689725994, 49.16004438380608);
 		ENGINE.m_World.m_Camera.quaternion.set(-0.313321793870273, -0.638001400182456, -0.2988145120070227, 0.6570095484000732);

@@ -7,6 +7,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 Vue.use(BootstrapVue);
 
+
+import 'vue-awesome/icons';
+import Icon from 'vue-awesome/components/Icon'
+Vue.component('icon', Icon);
+
+
 import router from './router';
 
 

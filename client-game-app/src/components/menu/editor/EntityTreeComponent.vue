@@ -4,7 +4,8 @@
       <div class="row" v-for="(entity, index) in EntityTree" :key='index'>
         <entity-tree-entry-component
           :entity="entity"
-          :depth="0"  
+          :depth="0" 
+          v-on:entitySelected="entitySelected" 
         />
       </div>
     </div>
@@ -33,7 +34,8 @@ export default {
   methods: {
     updateEntityTree() {
       this.EntityTree = ENGINE.m_World.m_Entities;
-    }
+    },
+    entitySelected(entity) { this.$emit("entitySelected", entity); }
   }
 };
 </script>
@@ -43,6 +45,7 @@ export default {
     width: 100%;
     height:100%;
     background-color: #333;
+    border-bottom: 0.25vw solid #333;
   }
 
   .entity-tree-container > ::-webkit-scrollbar {
@@ -53,7 +56,7 @@ export default {
   .entity-tree-inner-container {
     overflow: scroll;
     width: 100%;
-    height: 50%;
+    height: 100%;
     background-color: #222;
     padding-left: 15%;
     -webkit-box-shadow: inset 0px -59px 79px -33px rgba(0,0,0,0.5);

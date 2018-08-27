@@ -7,8 +7,15 @@
       <div class="row main-container fill">
         <div class="col-xs-2 col-sm-2 col-md-2 fill">
           <left-panel-component>
-            <div class="col-xs-12 col-sm-12 col-md-12" style="height:100%;padding:0;">
-              <entity-tree-component/>
+            <div slot="top" style="height:100%;">
+              <entity-tree-component
+                v-on:entitySelected="entitySelected"
+              />
+            </div>
+            <div slot="bottom" style="height:100%;">
+              <entity-properties-component
+                :entity="SelectedEntity"
+              />
             </div>
           </left-panel-component>
         </div>
@@ -31,7 +38,9 @@
 <script>
 import HeaderComponent from "./menu/editor/HeaderComponent";
 import LeftPanelComponent from "./menu/editor/LeftPanelComponent";
+
 import EntityTreeComponent from "./menu/editor/EntityTreeComponent";
+import EntityPropertiesComponent from "./menu/editor/EntityPropertiesComponent";
 
 import Editor from "./../editor/edit/Editor";
 
@@ -40,10 +49,12 @@ export default {
   components: {
     HeaderComponent,
     LeftPanelComponent,
-    EntityTreeComponent
+    EntityTreeComponent,
+    EntityPropertiesComponent
   },
   data() {
     return {
+      SelectedEntity: null
     }
   },
   created() {
@@ -51,6 +62,11 @@ export default {
   },
   mounted() {
     ENGINE.Initialise();
+  },
+  methods: {
+    entitySelected(entity) {
+      this.SelectedEntity = entity;
+    }
   }
 };
 </script>

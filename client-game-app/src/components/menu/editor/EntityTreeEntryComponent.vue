@@ -1,13 +1,16 @@
 <template>
   <div class="entity-tree-entry" :style="style">
-    <div class="entity-tree-entry-info" v-on:click="onClick">
+    <div class="entity-tree-entry-info" v-on:mouseover="onHover" v-on:click="onSelect">
       {{this.GetDisplayInfo().name}}
+      <span class="entity-tree-expand" v-on:click="expandChildren" v-show="!this.expanded && this.entity.m_Entities.length > 0">[+]</span>
+      <span class="entity-tree-collapse" v-on:click="expandChildren" v-show="this.expanded && this.entity.m_Entities.length > 0">[-]</span>
     </div>
     <div class="entity-tree-entry-children" v-if="expanded">
       <div v-for="(entity, index) in this.entity.m_Entities" :key='index'>
         <entity-tree-entry-component
           :entity="entity"
-          :depth="1"   
+          :depth="1"
+          v-on:entitySelected="entitySelected"
         />
       </div>
     </div>
@@ -45,10 +48,27 @@ export default {
   mounted() {
   },
   methods: {
-    onClick() {
+    onHover() {
+	    entities().forEach((entity) =>
+	    {
+        if(entity.m_Renderable && entity.m_Components.RenderComponent.m_Mesh)
+        {
+            entity.m_Components.RenderComponent.SetColor("#FFFFFF");
+        }
+	    });
+
+      if(this.entity.m_Renderable && this.entity.m_Components.RenderComponent.m_Mesh)
+      {
+        this.entity.m_Components.RenderComponent.SetColor("#FF0000");
+      }
+    },
+    onSelect(entity) {
+      this.$emit("entitySelected", this.entity);
+    },
+    entitySelected(entity) { this.$emit("entitySelected", entity); },
+    expandChildren() {
       this.expanded = !this.expanded;
     },
-
     GetDisplayInfo()
     {
       if(this.HasComponent("WorldPieceComponent"))
@@ -82,5 +102,10 @@ export default {
 
   .entity-tree-entry-info {
     white-space: nowrap;
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
   }
 </style>
