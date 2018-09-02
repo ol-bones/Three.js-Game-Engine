@@ -30,7 +30,7 @@ class Mouse
 	let width = this.m_Canvas.width;
 	let height = this.m_Canvas.height;
 
-	this.m_ScreenPosition.x = ( evt.clientX / width  ) * 2 - 1;
+	this.m_ScreenPosition.x = ( evt.layerX / width  ) * 2 - 1;
 	this.m_ScreenPosition.y = -( evt.layerY / height ) * 2 + 1;
 
 	this.m_Ray.setFromCamera(this.m_ScreenPosition, ENGINE.m_World.m_Camera);
@@ -84,7 +84,7 @@ class Mouse
 
 	    if(evt && this.m_CurrentHoveredObject)
 	    {
-		console.log(this.m_CurrentHoveredObject.m_ParentEntity.GetSavableData());
+		//console.log(this.m_CurrentHoveredObject.m_ParentEntity.GetSavableData());
 		if(this.m_CurrentHoveredObject !== this.m_CurrentClickedObject)
 		{
 		    this.m_LastClickedObject = this.m_CurrentClickedObject;
@@ -96,7 +96,7 @@ class Mouse
 		{
 		    try{if(EDITOR)
 		    {
-			EDITOR.SelectEntity(this.m_CurrentClickedObject.m_ParentEntity.m_ID);
+			EDITOR.SelectEntity(this.m_CurrentClickedObject.m_ParentEntity);
 		    }}catch(E){} // temporary
 		    this.m_CurrentClickedObject.m_ParentEntity.Click();
 		}

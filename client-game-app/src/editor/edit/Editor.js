@@ -5,10 +5,11 @@ import BaseObject from "./../../engine/entity/entities/BaseObject";
 import Entity from "./../../engine/entity/entities/Entity";
 
 import WorldLoader from "./../mixins/WorldLoader";
+import EditToolsControl from "./../mixins/EditToolsControl";
 
 import {mix} from "mixwith";
 
-class Editor extends mix(BaseObject).with(WorldLoader)
+class Editor extends mix(BaseObject).with(WorldLoader, EditToolsControl)
 {
     constructor()
     {
@@ -18,6 +19,8 @@ class Editor extends mix(BaseObject).with(WorldLoader)
 		this.m_SelectedEntity = null;
 
 		ENGINE.OnInitialised = () => this.Initialise();
+
+		this.m_UICallbacks = {};
     }
 
     Initialise()
@@ -27,8 +30,8 @@ class Editor extends mix(BaseObject).with(WorldLoader)
 		ENGINE.m_World.m_Camera.position.set(-120.65558286328287, 151.31431689725994, 49.16004438380608);
 		ENGINE.m_World.m_Camera.quaternion.set(-0.313321793870273, -0.638001400182456, -0.2988145120070227, 0.6570095484000732);
 		this.m_EditModeToggled = true;
-		//ENGINE.StopUpdating(1);
-		//ENGINE.BeginUpdating(2, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
+		ENGINE.StopUpdating(1);
+		ENGINE.BeginUpdating(2, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
 
 		let grid = new THREE.GridHelper(10000, 10);
 		ENGINE.m_World.m_Scene.add(grid);

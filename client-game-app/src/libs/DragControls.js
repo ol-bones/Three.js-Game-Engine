@@ -75,7 +75,7 @@ THREE.DragControls = function ( _objects, _camera, _domElement ) {
 				target.copy( _intersection.sub( _offset ) );
 
 			}
-			if(EDITOR.m_ref_SelectedEntity === _selected.m_ParentEntity)
+			if(EDITOR.m_SelectedEntity === _selected.m_ParentEntity)
 			{
 			    _selected.touchdrag(target, event.clientX, event.clientY);
 			}
@@ -136,18 +136,18 @@ THREE.DragControls = function ( _objects, _camera, _domElement ) {
 			}
 
 			_domElement.style.cursor = 'move';
-			if(EDITOR.m_ref_SelectedEntity === _selected.m_ParentEntity)
+			if(EDITOR.m_SelectedEntity === _selected.m_ParentEntity)
 			{
 			    var intersects2 = _raycaster.intersectObjects(
 				entities().filter(e=>e.m_Renderable)
-				.map(e => e.m_Components.RenderComponent.m_Mesh )
-				.concat(_objects));
+					.map(e => e.m_Components.RenderComponent.m_Mesh )
+					.concat(_objects));
 
 			    if(intersects2.length > 0
 			    && (intersects2[0].object !== _selected))
 			    {
-				_selected = null;
-				return;
+					_selected = null;
+					return;
 			    }
 			    _selected.touchstart();
 			}
@@ -160,7 +160,7 @@ THREE.DragControls = function ( _objects, _camera, _domElement ) {
 		event.preventDefault();
 
 		if ( _selected ) {
-			if(EDITOR.m_ref_SelectedEntity === _selected.m_ParentEntity)
+			if(EDITOR.m_SelectedEntity === _selected.m_ParentEntity)
 			{
 			    _selected.touchend();
 			}
@@ -192,11 +192,11 @@ THREE.DragControls = function ( _objects, _camera, _domElement ) {
 				target.copy( _intersection.sub( _offset ) );
 			}
 
-			if(EDITOR.m_ref_SelectedEntity === _selected.m_ParentEntity)
+			if(EDITOR.m_SelectedEntity === _selected.m_ParentEntity)
 			{
 			    if(_selected.touchdrag)
 			    {
-				_selected.touchdrag(target, event.clientX, event.clientY);
+					_selected.touchdrag(target, event.clientX, event.clientY);
 			    }
 			}
     			return;
@@ -231,18 +231,18 @@ THREE.DragControls = function ( _objects, _camera, _domElement ) {
 
 			}
 
-			if(EDITOR.m_ref_SelectedEntity === _selected.m_ParentEntity)
+			if(EDITOR.m_SelectedEntity === _selected.m_ParentEntity)
 			{
 			    var intersects2 = _raycaster.intersectObjects(
 				entities().filter(e=>e.m_Renderable)
-				.map(e => e.m_Components.RenderComponent.m_Mesh )
-				.concat(_objects));
+					.map(e => e.m_Components.RenderComponent.m_Mesh )
+					.concat(_objects));
 
 			    if(intersects2.length > 0
 			    && (intersects2[0].object !== _selected))
 			    {
-				_selected = null;
-				return;
+					_selected = null;
+					return;
 			    }
 			    _domElement.style.cursor = 'move';
 			    _selected.touchstart();
@@ -256,7 +256,7 @@ THREE.DragControls = function ( _objects, _camera, _domElement ) {
 		event.preventDefault();
 		setTimeout(() => THREE.DragControls.curDragging = false, 200);
 		if ( _selected ) {
-			if(EDITOR.m_ref_SelectedEntity === _selected.m_ParentEntity)
+			if(EDITOR.m_SelectedEntity === _selected.m_ParentEntity)
 			{
 			    _selected.touchend();
 			    _selected = null;
@@ -268,10 +268,12 @@ THREE.DragControls = function ( _objects, _camera, _domElement ) {
 		    _raycaster.setFromCamera( _mouse, _camera );
 
 		    var intersects = _raycaster.intersectObjects(
-entities().filter(e=>e.m_Renderable).map(e => e.m_Components.RenderComponent.m_Mesh ));
+				entities().filter(e=>e.m_Renderable)
+				.map(e => e.m_Components.RenderComponent.m_Mesh)
+			);
 		    if(intersects.length > 0)
 		    {
-			EDITOR.SelectEntity(intersects[0].object.m_ParentEntity.m_ID);
+				EDITOR.SelectEntity(intersects[0].object.m_ParentEntity.m_ID);
 		    }
 
 		}

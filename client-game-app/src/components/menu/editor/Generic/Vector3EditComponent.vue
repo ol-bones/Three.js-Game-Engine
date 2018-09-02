@@ -91,13 +91,6 @@ export default {
                 }
             }
             catch(Exception) {}
-        },
-        onSelect(event) {
-            try
-            {
-                console.log("KEK");
-                console.log(event);
-            } catch(Exception) {}
         }
     }
 };
