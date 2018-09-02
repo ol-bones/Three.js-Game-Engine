@@ -125,5 +125,8 @@ export default {
 
   .properties-options-row {
     padding-top: 5%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 </style>

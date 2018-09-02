@@ -140,6 +140,11 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 		if (this.m_Components.PhysicsComponent) {
 			this.m_Components.PhysicsComponent.Remove();
 			this.m_Components.PhysicsComponent.Initialise();
+			this.m_Components.PhysicsComponent.SetRotation(
+				this.m_Rotation.x,
+				this.m_Rotation.y,
+				this.m_Rotation.z
+			);
 		}
 	}
 
@@ -147,15 +152,48 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 	SetScaleY(y) { this.SetScale(this.m_Scale.x, y, this.m_Scale.z); }
 	SetScaleZ(z) { this.SetScale(this.m_Scale.x, this.m_Scale.y, z); }
 
-	SetRotation(x, y, z, w) {
-		this.m_Rotation.set(x, y, z, w);
-		if (this.m_Components.RenderComponent && this.m_Components.RenderComponent.m_Mesh) {
-			this.m_Components.RenderComponent.m_Mesh.quaternion.set(x, y, z, w);
+	_SetRotation(x, y, z) {
+		this.m_Rotation.set(x, y, z);
+		if (this.m_Components.RenderComponent && this.m_Components.RenderComponent.m_Mesh
+		&& !this.m_Components.PhysicsComponent) {
+			this.m_Components.RenderComponent.m_Mesh.rotation.set(x, y, z);
+
+			return;
 		}
 		if (this.m_Components.PhysicsComponent && this.m_Components.PhysicsComponent.m_PhysicsBody) {
-			this.m_Components.PhysicsComponent.m_PhysicsBody.quaternion.set(x, y, z, w);
-		}
+			this.m_Components.PhysicsComponent.SetRotation(x, y, z);
 
+			return;
+		}
+	}
+
+	SetRotation(x, y, z)
+	{
+		this._SetRotation(x, y, z);
+	}
+
+	SetRotationX(x) {
+		this.SetRotation(
+			x,
+			this.m_Rotation.y,
+			this.m_Rotation.z
+		);
+	}
+
+	SetRotationY(y) {
+		this.SetRotation(
+			this.m_Rotation.x,
+			y,
+			this.m_Rotation.z
+		);
+	}
+
+	SetRotationZ(z) {
+		this.SetRotation(
+			this.m_Rotation.x,
+			this.m_Rotation.y,
+			z
+		);
 	}
 
 	Delete() {

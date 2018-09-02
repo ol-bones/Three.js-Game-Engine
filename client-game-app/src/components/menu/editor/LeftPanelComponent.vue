@@ -36,6 +36,7 @@ export default {
 <style scoped>
 
   .left-panel-row {
+    position: absolute;
     height:100%;
     width: 100%;
     background-color: #333;
