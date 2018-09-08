@@ -9,85 +9,103 @@ let EditToolsControl = Mixin((superclass) => class extends superclass
 {
     constructor()
     {
-		super();
+			super();
 
-		this.m_SelectedTool = null;
-		this.m_LastEntitySelectTime = 0;
-		this.m_ref_LastSelectedEntity = null;
-		this.m_EditModeToggled = false;
+			this.m_SelectedTool = null;
+			this.m_LastEntitySelectTime = 0;
+			this.m_LastSelectedEntity = null;
+			this.m_EditModeToggled = false;
     }
 
     ClearEditComponents(entity)
     {
-		Object.keys(entity.m_Components)
-			.filter(c => entity.m_Components[c].m_Name.includes("EditComponent"))
-			.map(c => entity.m_Components[c].m_Name)
-			.forEach(c => entity.RemoveComponent(c));
+			if(!entity || !entity.m_Components) return;
+			
+			Object.keys(entity.m_Components)
+				.filter(c => entity.m_Components[c].m_Name.includes("EditComponent"))
+				.map(c => entity.m_Components[c].m_Name)
+				.forEach(c => entity.RemoveComponent(c));
     }
 
     SelectPositionEditTool()
-    {
-		if(this.m_EditModeToggled && this.m_SelectedTool !== null
-		&& this.m_SelectedEntity && this.m_SelectedEntity.m_Components)
 		{
-			this.ClearEditComponents(this.m_SelectedEntity);
-			this.m_SelectedTool = "PositionEditComponent";
-			let ToolType = (Component._TypeFromName({"name":this.m_SelectedTool}));
-			this.m_SelectedEntity.AddComponent(new ToolType({Parent: this.m_SelectedEntity}));
-		}
-		else
-		{
-			this.m_SelectedTool = "PositionEditComponent";
-		}
+			if(this.m_EditModeToggled &&  this.m_SelectedEntity && this.m_SelectedEntity.m_Components)
+			{
+				this.ClearEditComponents(this.m_SelectedEntity);
+				this.m_SelectedTool = "PositionEditComponent";
+				this.ApplyTool();
+			}
+			else
+			{
+				this.m_SelectedTool = "PositionEditComponent";
+			}
     }
 
     SelectScaleEditTool()
     {
-		if(this.m_EditModeToggled && this.m_SelectedTool !== null
-		&& this.m_SelectedEntity && this.m_SelectedEntity.m_Components)
-		{
-			this.ClearEditComponents(this.m_SelectedEntity);
-			this.m_SelectedTool = "ScaleEditComponent";
-			let ToolType = (Component._TypeFromName({"name":this.m_SelectedTool}));
-			this.m__SelectedEntity.AddComponent(new ToolType({Parent: this.m_SelectedEntity}));
-		}
-		else
-		{
-			this.m_SelectedTool = "ScaleEditComponent";
-		}
+			if(this.m_EditModeToggled && this.m_SelectedEntity && this.m_SelectedEntity.m_Components)
+			{
+				this.ClearEditComponents(this.m_SelectedEntity);
+				this.m_SelectedTool = "ScaleEditComponent";
+				this.ApplyTool();
+			}
+			else
+			{
+				this.m_SelectedTool = "ScaleEditComponent";
+			}
     }
 
     SelectRotateEditTool()
     {
-		if(this.m_EditModeToggled && this.m_SelectedTool !== null
-		&& this.m_SelectedEntity && this.m_SelectedEntity.m_Components)
+			if(this.m_EditModeToggled && this.m_SelectedEntity && this.m_SelectedEntity.m_Components)
+			{
+				this.ClearEditComponents(this.m_SelectedEntity);
+				this.m_SelectedTool = "RotateEditComponent";
+				this.ApplyTool();
+			}
+			else
+			{
+				this.m_SelectedTool = "RotateEditComponent";
+			}
+		}
+		
+		ApplyTool()
 		{
-			this.ClearEditComponents(this.m_SelectedEntity);
-			this.m_SelectedTool = "RotateEditComponent";
-			let ToolType = (Component._TypeFromName({"name":this.m_SelectedTool}));
+			let ToolType = (Component._TypeFromName({"name": this.m_SelectedTool}));
 			this.m_SelectedEntity.AddComponent(new ToolType({Parent: this.m_SelectedEntity}));
 		}
-		else
+
+		NoTool()
 		{
-			this.m_SelectedTool = "RotateEditComponent";
+			this.m_SelectedTool = null;
+			this.ClearEditComponents(this.m_SelectedEntity);
 		}
-    }
 
     SelectEntity(entity)
     {
-		if((Date.now() - this.m_LastEntitySelectTime) > 750)
+			if((Date.now() - this.m_LastEntitySelectTime) > 750)
+			{
+				this.SetSelectedEntity(entity);
+			}
+		}
+		
+		SetSelectedEntity(entity, supressCallback)
 		{
 			if(entity)
 			{
-				this.m_ref_LastSelectedEntity = this.m_SelectedEntity;
+				this.m_LastSelectedEntity = this.m_SelectedEntity;
 				this.m_SelectedEntity = entity;
-				this.m_UICallbacks.onEntitySelected(entity);
-				//this.onEntitySelect(entity.GetSavableData());
+				this.m_LastEntitySelectTime = Date.now();
+
+				if(!supressCallback) this.m_UICallbacks.onEntitySelected(entity, true);
+
+				if(this.m_SelectedTool)
+				{
+					this.ClearEditComponents(this.m_LastSelectedEntity);
+					this.ApplyTool();
+				}
 			}
-			console.log(Date.now() - this.m_LastEntitySelectTime);
-			this.m_LastEntitySelectTime = Date.now();
 		}
-    }
 });
 
 export default EditToolsControl;

@@ -71,7 +71,6 @@ class PositionEditComponent extends mix(Component).with()
 		let width = rect.width;
 		let height = rect.height + 50;
 
-
 		var pos = obj.position.clone();
 		pos.project(ENGINE.m_World.m_Camera);
 		pos.x = ( pos.x * (width/2) ) + (width/2);
@@ -115,7 +114,6 @@ class PositionEditComponent extends mix(Component).with()
 				m.position.set(p.x,p.y,p.z);
 			}
 		});
-		EDITOR.FillTransforms(EDITOR.m_SelectedEntityModel);
     }
 
     ArrowTouchDragEvent(mesh, t, x, y, dir, axis)
@@ -226,7 +224,6 @@ class PositionEditComponent extends mix(Component).with()
 				break;
 			default: return;
 		}
-		EDITOR.FillTransforms(EDITOR.m_SelectedEntityModel);
     }
 
     Update()

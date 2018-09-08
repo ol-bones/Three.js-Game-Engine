@@ -2,6 +2,7 @@
 
 import Entity from "./../../engine/entity/entities/Entity";
 import {mix, Mixin} from "mixwith";
+
 let WorldLoader = Mixin((superclass) => class extends superclass
 {
     constructor()

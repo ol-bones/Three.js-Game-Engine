@@ -27,23 +27,32 @@
             <bottom-panel-component>
               <div slot="top" style="width:100%;height:100%;">
                 <div class="row">
-                  <div class="col-sm-1">
-                    <b-button class="editor-button"
-                      v-b-tooltip.hover.topright title="Position Tool"
-                      v-on:click="onPositionToolButtonClicked">
-                      <icon name="arrows-alt" scale="1"/>
-                    </b-button>
-                  </div>
-                  <div class="col-sm-1">
-                    <b-button class="editor-button">
-                      <icon name="sync" scale="1"/>
-                    </b-button>
-                  </div>
-                  <div class="col-sm-1">
-                    <b-button class="editor-button">
-                      <icon name="expand-arrows-alt" scale="1"/>
-                    </b-button>
-                  </div>
+                  <tr>
+                    <th>
+                      <b-button class="editor-button"
+                        v-b-tooltip.hover.topright title="Position Tool"
+                        v-on:click="onPositionToolButtonClicked"
+                        :pressed.sync="ToolButtonStates.PositionEditButtonSelected">
+                        <icon name="arrows-alt" scale="1"/>
+                      </b-button>
+                    </th>
+                    <th>
+                      <b-button class="editor-button"
+                        v-b-tooltip.hover.topright title="Rotation Tool"
+                        v-on:click="onRotationToolButtonClicked"
+                        :pressed.sync="ToolButtonStates.RotationEditButtonSelected">
+                        <icon name="sync" scale="1"/>
+                      </b-button>
+                    </th>
+                    <th>
+                      <b-button class="editor-button"
+                        v-b-tooltip.hover.topright title="Scale Tool"
+                        v-on:click="onScaleToolButtonClicked"
+                        :pressed.sync="ToolButtonStates.ScaleEditButtonSelected">
+                        <icon name="expand-arrows-alt" scale="1"/>
+                      </b-button>
+                    </th>
+                  </tr>
                 </div>
               </div>
             </bottom-panel-component>
@@ -80,7 +89,12 @@ export default {
   },
   data() {
     return {
-      SelectedEntity: null
+      SelectedEntity: null,
+      ToolButtonStates: {
+        PositionEditButtonSelected: false,
+        RotationEditButtonSelected: false,
+        ScaleEditButtonSelected: false
+      }
     }
   },
   watch: {
@@ -100,11 +114,47 @@ export default {
     this.Editor.m_UICallbacks.onEntitySelected = this.entitySelected;
   },
   methods: {
-    entitySelected(entity) {
+    entitySelected(entity, suppressCallback) {
       this.SelectedEntity = entity;
+      if(!suppressCallback) EDITOR.SetSelectedEntity(entity, true);
+    },
+    UntoggleAllToolsExcept(currentButton) {
+      Object.keys(this.ToolButtonStates)
+        .filter(stateKey => stateKey !== currentButton)
+        .forEach(buttonState => this.ToolButtonStates[buttonState] = false)
     },
     onPositionToolButtonClicked() {
-      EDITOR.SelectPositionEditTool();
+      if(this.ToolButtonStates.PositionEditButtonSelected) {
+        this.UntoggleAllToolsExcept("PositionEditButtonSelected");
+        EDITOR.SelectPositionEditTool();
+      }
+      else
+      {
+        this.UntoggleAllToolsExcept();
+        EDITOR.NoTool();
+      }
+    },
+    onRotationToolButtonClicked() {
+      if(this.ToolButtonStates.RotationEditButtonSelected) {
+        this.UntoggleAllToolsExcept("RotationEditButtonSelected");
+        EDITOR.SelectRotateEditTool();
+      }
+      else
+      {
+        this.UntoggleAllToolsExcept();
+        EDITOR.NoTool();
+      }
+    },
+    onScaleToolButtonClicked() {
+      if(this.ToolButtonStates.ScaleEditButtonSelected) {
+        this.UntoggleAllToolsExcept("ScaleEditButtonSelected");
+        EDITOR.SelectScaleEditTool();
+      }
+      else
+      {
+        this.UntoggleAllToolsExcept();
+        EDITOR.NoTool();
+      }
     }
   }
 };
@@ -133,7 +183,6 @@ export default {
 }
 
 .editor-button {
-    position: absolute;
     background-color: #333;
     border: 1px solid #444;
 }

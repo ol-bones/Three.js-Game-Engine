@@ -140,7 +140,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 		if (this.m_Components.PhysicsComponent) {
 			this.m_Components.PhysicsComponent.Remove();
 			this.m_Components.PhysicsComponent.Initialise();
-			this.m_Components.PhysicsComponent.SetRotation(
+			this._SetRotation(
 				this.m_Rotation.x,
 				this.m_Rotation.y,
 				this.m_Rotation.z
