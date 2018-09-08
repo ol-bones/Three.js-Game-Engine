@@ -12,7 +12,7 @@
 
 <script>
 
-import HeaderButtonComponent from "./Header/HeaderButtonComponent";
+import HeaderButtonComponent from "./HeaderButtonComponent";
 
 export default {
   name: "HeaderComponent",

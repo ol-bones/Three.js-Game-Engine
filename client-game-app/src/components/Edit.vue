@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="col-xs-2 col-sm-2 col-md-2 fill">
-            <!-- <right-panel-component/> -->
+          <right-panel-component/>
         </div>
       </div>
     </div>
@@ -67,9 +67,10 @@
 </template>
 
 <script>
-import HeaderComponent from "./menu/editor/HeaderComponent";
-import LeftPanelComponent from "./menu/editor/LeftPanelComponent";
-import BottomPanelComponent from "./menu/editor/BottomPanelComponent";
+import HeaderComponent from "./menu/editor/Header/HeaderComponent";
+import LeftPanelComponent from "./menu/editor/Panel/LeftPanelComponent";
+import BottomPanelComponent from "./menu/editor/Panel/BottomPanelComponent";
+import RightPanelComponent from "./menu/editor/Panel/RightPanelComponent";
 
 
 import EntityTreeComponent from "./menu/editor/EntityTreeComponent";
@@ -83,6 +84,7 @@ export default {
     HeaderComponent,
     LeftPanelComponent,
     BottomPanelComponent,
+    RightPanelComponent,
 
     EntityTreeComponent,
     EntityPropertiesComponent
