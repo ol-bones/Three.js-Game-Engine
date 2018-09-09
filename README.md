@@ -1,7 +1,6 @@
-# Minigolf Test Demo Video
-
-[![YouTube](https://img.youtube.com/vi/lOMJUnvHzDo/0.jpg)](https://www.youtube.com/watch?v=lOMJUnvHzDo "YouTube")
-
+| Minigolf Test Video | Editor UI |
+| ------------- | ------------- |
+| [![YouTube](https://img.youtube.com/vi/lOMJUnvHzDo/0.jpg)](https://www.youtube.com/watch?v=lOMJUnvHzDo "YouTube") | ![](https://i.imgur.com/kdRHfP7.png) |
 
 
 
