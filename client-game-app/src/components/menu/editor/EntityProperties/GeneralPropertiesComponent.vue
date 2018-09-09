@@ -47,7 +47,7 @@
 
 <script>
 
-import Vector3EditComponent from "./Generic/Vector3EditComponent.vue";
+import Vector3EditComponent from "./../Generic/Vector3EditComponent.vue";
 
 export default {
   name: "GeneralPropertiesComponent",

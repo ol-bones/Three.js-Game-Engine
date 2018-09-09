@@ -53,13 +53,13 @@ export default {
 	    {
         if(entity.m_Renderable && entity.m_Components.RenderComponent.m_Mesh)
         {
-            entity.m_Components.RenderComponent.SetColor("#FFFFFF");
+            entity.m_Components.RenderComponent.Unhighlight();
         }
 	    });
 
       if(this.entity.m_Renderable && this.entity.m_Components.RenderComponent.m_Mesh)
       {
-        this.entity.m_Components.RenderComponent.SetColor("#FF0000");
+        this.entity.m_Components.RenderComponent.Highlight();
       }
     },
     onSelect(entity) {

@@ -15,9 +15,13 @@
           <icon :name="ComponentIcon(component)" scale="1"></icon>  
         </div>
       </div>
-      <div class="row properties-options-row">
+      <div class="row properties-options-row" id="properties-panel">
         <general-properties-component
           v-show="tabSelected === 'General'"
+          :entity="this.entity"
+        />
+        <render-component-properties-component
+          v-show="tabSelected === 'RenderComponent'"
           :entity="this.entity"
         />
       </div>
@@ -27,12 +31,14 @@
 
 <script>
 
-import GeneralPropertiesComponent from "./GeneralPropertiesComponent"
+import GeneralPropertiesComponent from "./EntityProperties/GeneralPropertiesComponent";
+import RenderComponentPropertiesComponent from "./EntityProperties/RenderComponentPropertiesComponent";
 
 export default {
   name: "EntityPropertiesComponent",
   components: {
-    GeneralPropertiesComponent
+    GeneralPropertiesComponent,
+    RenderComponentPropertiesComponent
   },
   props: {
     entity: {

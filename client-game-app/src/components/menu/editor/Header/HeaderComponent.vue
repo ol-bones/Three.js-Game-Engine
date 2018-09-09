@@ -2,9 +2,9 @@
   <div class="row header-row fill">
     <div class="col-xs-12 col-sm-12 col-md-12">
       <div class="row fill header-buttons-row">
-        <header-button-component text="Home"/>
-        <header-button-component text="Play"/>
-        <header-button-component text="EntityCreate"/>
+        <header-button-component text="File"/>
+        <header-button-component text="Edit"/>
+        <header-button-component text="View"/>
       </div>
     </div>
   </div>

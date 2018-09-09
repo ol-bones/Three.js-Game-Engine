@@ -1,5 +1,5 @@
 <template>
-  <div class="row bottom-panel-row fill">
+  <div class="row bottom-panel-row fill" id="bottom-panel">
     <div class="bottom col-xs-12 col-sm-12 col-md-12">
       <div class="row fill" style="height:50%;padding:0;">
         <div class="col-xs-12 col-sm-12 col-md-12" style="padding:0;">
