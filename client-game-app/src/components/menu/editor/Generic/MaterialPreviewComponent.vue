@@ -24,6 +24,8 @@
         </div>
         <div class="row fill">
           <div class="material-button"
+            v-on:mouseover="textureBrowserButtonHovered = true"
+            v-on:mouseleave="onTextureBrowserButtonLeave"
             v-b-tooltip.hover.topright title="Texture Browser">
             <icon name="chess-board" scale="1.5"/>
           </div>
@@ -48,16 +50,25 @@
           v-if="shouldShowColorPicker"/>
         </div>
     </div>
+    <div
+      v-on:mouseover="textureBrowserHovered = true"
+      v-on:mouseleave="textureBrowserHovered = false">
+      <texture-browser-modal-component
+        v-if="shouldShowTextureBrowser"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import { Chrome } from 'vue-color';
+import TextureBrowserModalComponent from "./TextureBrowserModalComponent";
 
 export default {
   name: "MaterialPreviewComponent",
   components: {
-    "ChromePicker": Chrome
+    "ChromePicker": Chrome,
+    TextureBrowserModalComponent
   },
   props: {
     entity: {
@@ -87,7 +98,9 @@ export default {
 
       previewColour:  { r: 1, g: 1, b: 1 },
       colorPickerButtonHovered: false,
-      colorPickerHovered: false
+      colorPickerHovered: false,
+      textureBrowserButtonHovered: false,
+      textureBrowserHovered: false
     }
   },
   watch: {
@@ -96,7 +109,6 @@ export default {
       handler(changed, previous) {
         try
         {
-          console.log(changed);
           if(!changed) return;
 
           this.previewColour = changed.m_Components.RenderComponent.m_Colour;
@@ -126,6 +138,9 @@ export default {
   computed: {
     shouldShowColorPicker() {
       return this.colorPickerButtonHovered || this.colorPickerHovered;
+    },
+    shouldShowTextureBrowser() {
+      return this.textureBrowserButtonHovered || this.textureBrowserHovered;
     },
     pickerPosition() {
       const bottomPanel = document.getElementById("bottom-panel");
@@ -178,7 +193,9 @@ export default {
     UpdatePreviewModelColour(colour) {
       try
       {
-        this.CurrentShape.material.color.set(colour)
+        this.CurrentShape.material.color.set(
+          colour ? colour : this.entity.m_Components.RenderComponent.m_Colour
+        );
       }
       catch(e) {}
     },
@@ -291,6 +308,9 @@ export default {
     },
     onColorPickerButtonLeave() {
       setTimeout(() => this.colorPickerButtonHovered = false, 1000);
+    },
+    onTextureBrowserButtonLeave() {
+      setTimeout(() => this.textureBrowserButtonHovered = false, 1000);
     }
   }
 };

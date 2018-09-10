@@ -21,7 +21,7 @@
         </div>
         <div class="col-xs-8 col-sm-8 col-md-8 fill">
           <div class="row game-container fill">
-            <div class="game-canvas"></div>
+            <div class="game-canvas" id="main-canvas"></div>
           </div>
           <div class="row bottom-panel-container fill">
             <bottom-panel-component>
