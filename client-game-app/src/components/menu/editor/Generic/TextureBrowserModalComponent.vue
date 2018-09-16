@@ -1,22 +1,31 @@
 <template>
   <div class="row texture-browser-container fill"
     v-bind:style="getPosition">
-    <div class="col-xs-2 col-sm-2 col-md-2 texture-folders">
-      <div v-for="(folder, index) in this.Folders" :key="index" class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 texture-folder">
-          {{folder}}
-        </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 texture-categories">
+      <div class="row">
+        <b-form-input v-model.trim="UserSearchInput"
+                      type="text"
+                      placeholder="Search..."
+                      class="texture-search-input">
+        </b-form-input>
       </div>
+      <b-form-group>
+        <b-form-checkbox-group buttons stacked
+          class="texture-category-checkbutton"
+          v-model="SelectedTextureCategories"
+          :options="this.TextureCategories">
+        </b-form-checkbox-group>
+      </b-form-group>
     </div>
     <div class="col-xs-10 col-sm-10 col-md-10">
-      <div class="row">
+      <div class="row texture-tiles">
         <div v-for="(row, rowIndex) in this.textureRows" :key='rowIndex' class="col-xs-2 col-sm-2 col-md-2 fill">
           <div v-for="(texture, colIndex) in row" :key='colIndex' class="row fill">
             <div class="col-xs-12 col-sm-12 col-md-12 fill" style="overflow:hidden;">
               <div class="texture-tile-overlay row fill">
                 <div class="col-xs-12 col-sm-12 col-md-12 fill">
                   <div class="row fill">
-                    {{texture.url.split("/").find((sub, i, arr) => i === arr.length-1)}}
+                    {{texture.name}}
                   </div>
                   <div class="row fill">
                     512x512
@@ -24,7 +33,7 @@
                 </div>
               </div>
               <b-img center fluid
-                :src="texture.url"
+                :src="'http://localhost:9090/textures' + texture.url"
                 :alt="texture.url"
                 class="texture-tile"/>
             </div>
@@ -36,6 +45,7 @@
 </template>
 
 <script>
+const axios = require("axios");
 
 export default {
   name: "TextureBrowserModalComponent",
@@ -43,33 +53,32 @@ export default {
   },
   data() {
     return {
-      Folders: [
-        "All",
-        "private",
-        "cube"
-      ],
-      Textures: [
-        {url: "http://localhost:9090/textures/1.png"},
-        {url: "http://localhost:9090/textures/2.png"},
-        {url: "http://localhost:9090/textures/5.png"},
-        {url: "http://localhost:9090/textures/6.png"},
-        {url: "http://localhost:9090/textures/7.png"},
-        {url: "http://localhost:9090/textures/8.png"},
-        {url: "http://localhost:9090/textures/9.png"},
-        {url: "http://localhost:9090/textures/10.png"},
-        {url: "http://localhost:9090/textures/11.png"},
-        {url: "http://localhost:9090/textures/12.png"},
-        {url: "http://localhost:9090/textures/default.jpg"},
-        {url: "http://localhost:9090/textures/waternormals.jpg"},
-        {url: "http://localhost:9090/textures/private/check.png"},
-        {url: "http://localhost:9090/textures/private/swirl.jpg"},
-        {url: "http://localhost:9090/textures/cube/skyboxsun/nx.jpg"},
-        {url: "http://localhost:9090/textures/cube/skyboxsun/ny.jpg"},
-        {url: "http://localhost:9090/textures/cube/skyboxsun/nz.jpg"},
-        {url: "http://localhost:9090/textures/cube/skyboxsun/px.jpg"},
-        {url: "http://localhost:9090/textures/cube/skyboxsun/py.jpg"},
-        {url: "http://localhost:9090/textures/cube/skyboxsun/pz.jpg"}
-      ]
+      TextureCategories: [],
+      Textures: [],
+      SelectedTextureCategories: [],
+      UserSearchInput: ""
+    }
+  },
+  watch: {
+    SelectedTextureCategories: {
+      immediate: true,
+      handler(current, previous) {
+          this.GetTexturesFiltered();
+      }
+    },
+    UserSearchInput: {
+      immediate: true,
+      handler(current, previous) {
+        if(current === previous) return;
+        if(current.length === 0)
+        {
+          this.GetAllTextures();
+        }
+        else
+        {
+          this.GetTexturesFiltered();
+        }
+      }
     }
   },
   computed: {
@@ -105,7 +114,27 @@ export default {
   created() {
   },
   mounted() {
-    console.table(this.textureRows);
+    this.GetAllTextures();
+
+    axios.get('http://localhost:9090/textureCategories')
+      .then(response => this.TextureCategories = response.data)
+      .catch(error => console.error(error));
+  },
+  methods: {
+    GetAllTextures() {
+      axios.get('http://localhost:9090/textures')
+        .then(response => this.Textures = response.data)
+        .catch(error => console.error(error));
+    },
+    GetTexturesFiltered() {
+      const params = {params: {
+        search: this.UserSearchInput,
+        categories: this.SelectedTextureCategories.join(",")
+      }};
+      axios.get('http://localhost:9090/textures', params)
+        .then(response => this.Textures = response.data)
+        .catch(error => console.error(error));
+    }
   }
 };
 </script>
@@ -120,11 +149,16 @@ export default {
 
     background-color: #222;
     border-top: 2px solid #333;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-x: hidden; 
+    overflow-y: hidden;
   }
 
-  .texture-folders {
+  .texture-tiles {
+    overflow-y: scroll;
+    height:100%;
+  }
+
+  .texture-categories {
     border-right: 1px solid #333;
     text-align: left;
   }
@@ -157,5 +191,46 @@ export default {
   .texture-tile-overlay:hover {
     transition: transform 0.5s ease;
     transform: translate(0%, 0%);
+  }
+
+  .texture-search-input {
+    border: 0;
+    border-radius: 0;
+    margin: 5%;
+    background-color: #333;
+    color: white;
+  }
+  
+  .texture-category-checkbutton{
+    width: 100%;
+    border-radius: 0 !important;
+    border: 0 !important;
+    background-color: #333 !important;
+  }
+</style>
+
+<style>
+  .texture-category-checkbutton > label {
+    width: 100%;
+    border-radius: 0 !important;
+    border: 0 !important;
+    color: #888;
+    font-weight: 100;
+    background-color: #222 !important;
+    padding: 2%;
+    text-align: left;
+    -webkit-appearance: none !important;
+    outline: none !important; 
+    border: 0 !important;
+    outline-width: 0 !important;
+    outline-style: none !important;
+    box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+  }
+
+  .texture-category-checkbutton > .active {
+    color: white !important;
+    font-weight: bolder;
   }
 </style>
