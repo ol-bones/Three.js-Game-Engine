@@ -18,6 +18,8 @@
         </div>
         <div class="row fill">
           <div class="material-button"
+            v-on:mouseover="materialBrowserButtonHovered = true"
+            v-on:mouseleave="onMaterialBrowserButtonLeave"
             v-b-tooltip.hover.topright title="Material Preset">
             <icon name="image" scale="1.5"/>
           </div>
@@ -55,6 +57,17 @@
       v-on:mouseleave="textureBrowserHovered = false">
       <texture-browser-modal-component
         v-if="shouldShowTextureBrowser"
+        :entity="entity"
+        :preview="CurrentShape"
+      />
+    </div>
+    <div
+      v-on:mouseover="materialBrowserHovered = true"
+      v-on:mouseleave="materialBrowserHovered = false">
+      <material-browser-modal-component
+        v-if="shouldShowMaterialBrowser"
+        :entity="entity"
+        :preview="CurrentShape || {}"
       />
     </div>
   </div>
@@ -63,12 +76,14 @@
 <script>
 import { Chrome } from 'vue-color';
 import TextureBrowserModalComponent from "./TextureBrowserModalComponent";
+import MaterialBrowserModalComponent from "./MaterialBrowserModalComponent";
 
 export default {
   name: "MaterialPreviewComponent",
   components: {
     "ChromePicker": Chrome,
-    TextureBrowserModalComponent
+    TextureBrowserModalComponent,
+    MaterialBrowserModalComponent
   },
   props: {
     entity: {
@@ -97,10 +112,13 @@ export default {
       AmbientLight: null,
 
       previewColour:  { r: 1, g: 1, b: 1 },
+
       colorPickerButtonHovered: false,
       colorPickerHovered: false,
       textureBrowserButtonHovered: false,
-      textureBrowserHovered: false
+      textureBrowserHovered: false,
+      materialBrowserButtonHovered: false,
+      materialBrowserHovered: false
     }
   },
   watch: {
@@ -113,6 +131,7 @@ export default {
 
           this.previewColour = changed.m_Components.RenderComponent.m_Colour;
           this.UpdatePreviewModelColour(this.previewColour);
+          this.RefreshPreviewModelTexture();
         } catch(e) {}
       }
     },
@@ -141,6 +160,9 @@ export default {
     },
     shouldShowTextureBrowser() {
       return this.textureBrowserButtonHovered || this.textureBrowserHovered;
+    },
+    shouldShowMaterialBrowser() {
+      return this.materialBrowserButtonHovered || this.materialBrowserHovered;
     },
     pickerPosition() {
       const bottomPanel = document.getElementById("bottom-panel");
@@ -190,6 +212,15 @@ export default {
       }
       catch(e) {}
     },
+    RefreshPreviewModelTexture() {
+      try
+      {
+        const entityTextureSrc = this.entity.m_Components.RenderComponent.m_Mesh.material.map.image.currentSrc;
+        this.CurrentShape.material.map = window.texture(entityTextureSrc.split("/textures")[1]);
+        this.CurrentShape.material.map.needsUpdate = true;
+        this.CurrentShape.material.needsUpdate = true;
+      } catch(e) {}
+    },
     UpdatePreviewModelColour(colour) {
       try
       {
@@ -214,7 +245,6 @@ export default {
         this.Scene.add(this.Sphere);
 
         this.CurrentShape = this.Sphere;
-        this.UpdatePreviewModelColour();
         this.CurrentShapeID = 0;
       }
       catch(e) {}
@@ -227,7 +257,6 @@ export default {
         this.Scene.add(this.Cube);
 
         this.CurrentShape = this.Cube;
-        this.UpdatePreviewModelColour();
         this.CurrentShapeID = 1;
       }
       catch(e) {}
@@ -240,7 +269,6 @@ export default {
         this.Scene.add(this.Cone);
 
         this.CurrentShape = this.Cone;
-        this.UpdatePreviewModelColour();
         this.CurrentShapeID = 2;
       }
       catch(e) {}
@@ -253,7 +281,6 @@ export default {
         this.Scene.add(this.Plane);
 
         this.CurrentShape = this.Plane;
-        this.UpdatePreviewModelColour();
         this.CurrentShapeID = 3;
       }
       catch(e) {}
@@ -270,6 +297,8 @@ export default {
           case 3: this.AddSphere(); break;
           default: this.AddSphere(); break;
         }
+        this.UpdatePreviewModelColour();
+        this.RefreshPreviewModelTexture();
       }
       catch(e) {}
     },
@@ -311,6 +340,9 @@ export default {
     },
     onTextureBrowserButtonLeave() {
       setTimeout(() => this.textureBrowserButtonHovered = false, 1000);
+    },
+    onMaterialBrowserButtonLeave() {
+      setTimeout(() => this.materialBrowserButtonHovered = false, 1000);
     }
   }
 };

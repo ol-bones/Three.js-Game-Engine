@@ -35,7 +35,10 @@
               <b-img center fluid
                 :src="'http://localhost:9090/textures' + texture.url"
                 :alt="texture.url"
-                class="texture-tile"/>
+                class="texture-tile"
+                v-on:mouseover="textureTileHovered(texture.url)"
+                v-on:mouseleave="textureTileLeave(texture.url)"
+                v-on:click="textureTileClick(texture.url)"/>
             </div>
           </div>
         </div>
@@ -50,6 +53,16 @@ const axios = require("axios");
 export default {
   name: "TextureBrowserModalComponent",
   components: {
+  },
+  props: {
+    entity: {
+      type: Object,
+      required: true
+    },
+    preview: {
+      type: Object,
+      required: true
+    }
   },
   data() {
     return {
@@ -127,13 +140,40 @@ export default {
         .catch(error => console.error(error));
     },
     GetTexturesFiltered() {
-      const params = {params: {
-        search: this.UserSearchInput,
-        categories: this.SelectedTextureCategories.join(",")
-      }};
-      axios.get('http://localhost:9090/textures', params)
-        .then(response => this.Textures = response.data)
-        .catch(error => console.error(error));
+      try
+      {
+        const params = {params: {
+          search: this.UserSearchInput,
+          categories: this.SelectedTextureCategories.join(",")
+        }};
+        axios.get('http://localhost:9090/textures', params)
+          .then(response => this.Textures = response.data)
+          .catch(error => console.error(error));
+      } catch(e) {}
+    },
+    textureTileHovered(texture) {
+      try
+      {
+        this.preview.material.map = window.texture(texture);
+        this.preview.material.map.needsUpdate = true;
+        this.preview.material.needsUpdate = true;
+      } catch(e) {}
+
+    },
+    textureTileLeave(texture) {
+      try
+      {
+        const entityTextureSrc = this.entity.m_Components.RenderComponent.m_Mesh.material.map.image.currentSrc;
+        this.preview.material.map = window.texture(entityTextureSrc.split("/textures")[1]);
+        this.preview.material.map.needsUpdate = true;
+        this.preview.material.needsUpdate = true;
+      } catch(e) {}
+    },
+    textureTileClick(texture) {
+      try
+      {
+        this.entity.m_Components.RenderComponent.SetTexture(texture);
+      } catch(e) {}
     }
   }
 };

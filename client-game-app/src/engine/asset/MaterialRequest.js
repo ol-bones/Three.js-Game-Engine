@@ -10,16 +10,16 @@ class MaterialRequest extends mix(AssetRequest).with()
 {
     constructor(uri)
     {
-	super(uri);
+		super(uri);
 
-	this.m_Data = null;
+		this.m_Data = null;
     }
 
     Initialise()
     {
-	this.m_LoadState = LOADSTATE.INITIALISING;
+		this.m_LoadState = LOADSTATE.INITIALISING;
 
-	this.OnInitialised();
+		this.OnInitialised();
     }
 
     Download()
@@ -39,46 +39,46 @@ class MaterialRequest extends mix(AssetRequest).with()
 
     OnComplete(data)
     {
-	super.OnComplete();
-	this.m_Data = data;
-	this.m_LoadState = LOADSTATE.PROCESS;
+		super.OnComplete();
+		this.m_Data = data;
+		this.m_LoadState = LOADSTATE.PROCESS;
     }
 
     OnFinished(material)
     {
-	this.m_Asset = material;
-	super.OnFinished();
+		this.m_Asset = material;
+		super.OnFinished();
     }
 
     Process()
     {
-	try
-	{
-	    let material;
-	    switch(this.m_Data.type)
-	    {
-		case "THREE.MeshPhongMaterial":
-		    material = new THREE.MeshPhongMaterial(
-		    {
-			color: new THREE.Color(1,1,1),
-			map: texture(this.m_Data.texture),
-			transparent: true,
-			opacity: 1
-		    });
+		try
+		{
+			let material;
+			switch(this.m_Data.type)
+			{
+				case "THREE.MeshPhongMaterial":
+					material = new THREE.MeshPhongMaterial(
+					{
+						color: new THREE.Color(1,1,1),
+						map: texture(this.m_Data.texture),
+						transparent: true,
+						opacity: 1
+					});
 
-		    material.map.needsUpdate = true;
-		    material.needsUpdate = true;
-		    break;
-		default:
+					material.map.needsUpdate = true;
+					material.needsUpdate = true;
+					break;
+				default:
 
-		    break;
-	    }
+					break;
+			}
 
-	    this.OnFinished(material);
-	}
-	catch(Exception)
-	{
-	}
+			this.OnFinished(material);
+		}
+		catch(Exception)
+		{
+		}
     }
 }
 

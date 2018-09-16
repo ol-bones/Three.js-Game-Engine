@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Home from "./../Home/Home.js";
+import Home from "./../home/Home.js";
 
 export default {
   name: "Home",
