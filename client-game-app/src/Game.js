@@ -14,7 +14,7 @@ class Game {
 
 	LoadWorld() {
 		try {
-			let data = json(`http://${CONFIG.host}/data/world/0.json`);
+			let data = json(`/content/data/world/0.json`);
 
 			Entity.FromFile(
 				data,

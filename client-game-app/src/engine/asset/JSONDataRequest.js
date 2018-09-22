@@ -25,7 +25,7 @@ class JSONDataRequest extends mix(AssetRequest).with()
 		try
 		{
 			this.OnDownloading();
-			axios.get(this.m_URI)
+			axios.get(`http://${CONFIG.host}${this.m_URI}`)
 				.then((data) => this.OnFinished(data.data))
 				.catch((error) => this.OnError(error));
 		}

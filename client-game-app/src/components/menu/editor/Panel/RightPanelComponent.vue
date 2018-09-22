@@ -1,14 +1,9 @@
 <template>
   <div class="row right-panel-row fill">
     <div class="right-side col-xs-12 col-sm-12 col-md-12">
-      <div class="row fill" style="height:50%;padding:0;">
+      <div class="row fill" style="height:100%;padding:0;">
         <div class="col-xs-12 col-sm-12 col-md-12" style="padding:0;">
-          <slot name="top"/>
-        </div>
-      </div>
-      <div class="row fill" style="height:50%;padding:0;">
-        <div class="col-xs-12 col-sm-12 col-md-12" style="padding:0;">
-          <slot name="bottom"/>
+          <entity-select-component/>
         </div>
       </div>
     </div>
@@ -18,9 +13,12 @@
 
 <script>
 
+import EntitySelectComponent from "./../Generic/EntitySelectComponent";
+
 export default {
   name: "RightPanelComponent",
   components: {
+    EntitySelectComponent
   },
   data() {
     return {

@@ -1,0 +1,36 @@
+{
+    "pos": {"x":0,"y":150,"z":0},
+    "rot": {"x":0,"y":0,"z":0,"w":1},
+    "parent":0,
+    "entities":[],
+    "components":
+    [
+        {
+            "args":
+            {
+                "Radius": 25,
+                "Segments": 36
+            },
+            "name": "BasicSphereMeshRenderComponent"
+        },
+        {
+            "args":
+            {
+                "Type":1,
+                "BodySettings":
+                {
+                    "type":"sphere",
+                    "radius":25,
+                    "move":true,
+                    "pos":
+                    {
+                        "x":0,
+                        "y":150,
+                        "z":0
+                    }
+                }
+            },
+            "name": "BasicPhysicsComponent"
+        }
+    ]
+}

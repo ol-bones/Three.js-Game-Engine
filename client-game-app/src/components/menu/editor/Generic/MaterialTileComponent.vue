@@ -71,40 +71,49 @@ export default {
         catch(e) { }
     },
     AddPlane() {
-        return new Promise((resolve, reject) => {
-            let interval = -1;
-            const addPlane = () => { 
-                this.Geometry = new THREE.PlaneGeometry( 4, 4, 32 );
-                this.Plane = new THREE.Mesh(this.Geometry, material(this.material));
-                this.Scene.add(this.Plane);
+        try
+        {
+            return new Promise((resolve, reject) => {
+                let interval = -1;
+                const addPlane = () => { 
+                    this.Geometry = new THREE.PlaneGeometry( 4, 4, 32 );
+                    this.Plane = new THREE.Mesh(this.Geometry, material(this.material));
+                    this.Scene.add(this.Plane);
 
-                this.CurrentShape = this.Plane;
-                clearInterval(interval)
-                resolve();
-            };
-            interval = setInterval(() => {
-                try
-                {
-                    addPlane();
-                } catch(e) {}
-            }, 100);
-        });
+                    this.CurrentShape = this.Plane;
+                    clearInterval(interval)
+                    resolve();
+                };
+                interval = setInterval(() => {
+                    try
+                    {
+                        addPlane();
+                    } catch(e) {}
+                }, 100);
+            });
+        } catch(e) {}
     },
     onResize() {
-        this.RenderElementSize.width = this.RenderElement.clientWidth;
-        this.RenderElementSize.height = this.RenderElement.clientHeight;
-        this.Camera.aspect = this.RenderElementSize.width / this.RenderElementSize.height;
-        this.Camera.updateProjectionMatrix();
+        try
+        {
+            this.RenderElementSize.width = this.RenderElement.clientWidth;
+            this.RenderElementSize.height = this.RenderElement.clientHeight;
+            this.Camera.aspect = this.RenderElementSize.width / this.RenderElementSize.height;
+            this.Camera.updateProjectionMatrix();
+        } catch(e) {}
     },
     beforeDestroy() {
-        this.Scene.remove(this.AmbientLight);
-        this.Scene.remove(this.Plane);
-        this.Scene.remove(this.Camera);
-        delete this.Plane.material.map;
-        delete this.Plane.material;
-        delete this.Geometry;
-        delete this.AmbientLight;
-        delete this.Camera;
+        try
+        {
+            this.Scene.remove(this.AmbientLight);
+            this.Scene.remove(this.Plane);
+            this.Scene.remove(this.Camera);
+            delete this.Plane.material.map;
+            delete this.Plane.material;
+            delete this.Geometry;
+            delete this.AmbientLight;
+            delete this.Camera;
+        } catch(e) {}
     }
   }
 };

@@ -76,21 +76,27 @@ export default {
     SelectedTextureCategories: {
       immediate: true,
       handler(current, previous) {
+        try
+        {
           this.GetTexturesFiltered();
+        } catch(e) {}
       }
     },
     UserSearchInput: {
       immediate: true,
       handler(current, previous) {
-        if(current === previous) return;
-        if(current.length === 0)
+        try
         {
-          this.GetAllTextures();
-        }
-        else
-        {
-          this.GetTexturesFiltered();
-        }
+          if(current === previous) return;
+          if(current.length === 0)
+          {
+            this.GetAllTextures();
+          }
+          else
+          {
+            this.GetTexturesFiltered();
+          }
+        } catch(e) {}
       }
     }
   },
@@ -124,20 +130,24 @@ export default {
       } catch(e) {}
     }
   },
-  created() {
-  },
   mounted() {
-    this.GetAllTextures();
+    try
+    {
+      this.GetAllTextures();
 
-    axios.get('http://localhost:9090/textureCategories')
-      .then(response => this.TextureCategories = response.data)
-      .catch(error => console.error(error));
+      axios.get('http://localhost:9090/textureCategories')
+        .then(response => this.TextureCategories = response.data)
+        .catch(error => console.error(error));
+    } catch(e) {}
   },
   methods: {
     GetAllTextures() {
-      axios.get('http://localhost:9090/textures')
-        .then(response => this.Textures = response.data)
-        .catch(error => console.error(error));
+      try
+      {
+        axios.get('http://localhost:9090/textures')
+          .then(response => this.Textures = response.data)
+          .catch(error => console.error(error));
+      } catch(e) {}
     },
     GetTexturesFiltered() {
       try

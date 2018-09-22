@@ -6,6 +6,27 @@ const glob = require("glob");
 
 const texturesFolder = "./content/textures/";
 const materialsFolder = "./content/materials/";
+const entitiesFolder = "./content/entities/";
+
+
+// this is temporary until back end becomes focus
+const entityCategories = glob.sync(`${entitiesFolder}*/`, [])
+    .map(entityDirPath => entityDirPath
+        .replace("./content/entities/", "")
+        .replace("/", ""));
+
+const entities = glob.sync(`${entitiesFolder}**/*.json`, [])
+    .map(entityPath => {
+        console.log(entityPath);
+        return {
+            url: entityPath.replace("./content", ""),
+            category: entityPath.split("./content/entities")[1].split("/")[1],
+            name: entityPath.split("/").find((sub, i, arr) => i === arr.length-1).replace(".json", "")
+        };
+});
+
+console.table(entityCategories);
+console.table(entities);
 
 const textureCategories = glob.sync(`${texturesFolder}*/`, [])
     .map(textureDirPath => textureDirPath
@@ -33,7 +54,6 @@ const materials = glob.sync(`${materialsFolder}**/*.json`, [])
             name: materialPath.split("/").find((sub, i, arr) => i === arr.length-1).replace(".json","")
         };
 });
-console.table(materials);
 
 const config = require("./config.json");
 
@@ -44,7 +64,6 @@ app.use(express.static(__dirname + "/content"));
 app.get("/", (req, res) => res.json("api"));
 app.get("/data/world/0.json", (req, res) => res.json(JSON.parse(fs.readFileSync(path.join(__dirname, "content/data/world/0.json")))));
 
-// this is temporary until back end becomes focus
 app.get("/materialCategories", (req, res) => res.json(materialCategories));
 app.get("/materials", (req, res) => {
     const searchTerm = req.query.search;
@@ -82,6 +101,9 @@ app.get("/materials", (req, res) => {
         res.json(materials);
     }
 });
+
+app.get("/entityCategories", (req, res) => res.json(entityCategories));
+app.get("/entities/", (req, res) => res.json(entities));
 
 app.get("/textureCategories", (req, res) => res.json(textureCategories));
 app.get("/textures", (req, res) => {

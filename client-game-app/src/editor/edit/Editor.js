@@ -36,7 +36,15 @@ class Editor extends mix(BaseObject).with(WorldLoader, EditToolsControl)
 		let grid = new THREE.GridHelper(10000, 10);
 		ENGINE.m_World.m_Scene.add(grid);
 		this.LoadWorld();
-    }
+	}
+	
+	AddEntity(json)
+	{
+		try
+		{
+			Entity.FromFile(window.json(json), entities()[0], new THREE.Vector3(0,0,0));
+		} catch(e) { setTimeout(this.AddEntity.bind(this, json), 50); }
+	}
 
     AddNewBox()
     {

@@ -14,7 +14,7 @@ let WorldLoader = Mixin((superclass) => class extends superclass
     {
 		try
 		{
-			let data = json(`http://${CONFIG.host}/data/world/0.json`);
+			let data = json(`/data/world/0.json`);
 			Entity.FromFile(
 				data,
 				null,

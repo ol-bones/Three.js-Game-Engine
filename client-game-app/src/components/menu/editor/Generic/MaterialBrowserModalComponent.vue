@@ -85,22 +85,28 @@ export default {
     SelectedMaterialCategories: {
       immediate: true,
       handler(current, previous) {
+        try
+        {
           this.GetMaterialsFiltered();
+        } catch(e) {}
       }
     },
     UserSearchInput: {
       immediate: true,
       handler(current, previous) {
-        if(current === previous) return;
-        this.Materials = [];
-        if(current.length === 0)
+        try
         {
-          this.GetAllMaterials();
-        }
-        else
-        {
-          this.GetMaterialsFiltered();
-        }
+          if(current === previous) return;
+          this.Materials = [];
+          if(current.length === 0)
+          {
+            this.GetAllMaterials();
+          }
+          else
+          {
+            this.GetMaterialsFiltered();
+          }
+        } catch(e) {}
       }
     }
   },
@@ -134,15 +140,16 @@ export default {
       } catch(e) {}
     }
   },
-  created() {
-  },
   mounted() {
-    this.GetAllMaterials();
+    try
+    {
+      this.GetAllMaterials();
 
-    axios.get('http://localhost:9090/materialCategories')
-      .then(response => this.MaterialCategories = response.data)
-      .then(this.SetupRenderer)
-      .catch(error => console.error(error));
+      axios.get('http://localhost:9090/materialCategories')
+        .then(response => this.MaterialCategories = response.data)
+        .then(this.SetupRenderer)
+        .catch(error => console.error(error));
+    } catch(e) {}
   },
   methods: {
     SetupRenderer() {
@@ -162,9 +169,12 @@ export default {
       catch(e) {}
     },
     GetAllMaterials() {
-      axios.get('http://localhost:9090/materials')
-        .then(response => this.Materials = response.data)
-        .catch(error => console.error(error));
+      try
+      {
+        axios.get('http://localhost:9090/materials')
+          .then(response => this.Materials = response.data)
+          .catch(error => console.error(error));
+      } catch(e) {}
     },
     GetMaterialsFiltered() {
       try
@@ -189,7 +199,7 @@ export default {
     materialTileLeave(material) {
       try
       {
-        this.preview.material = this.entity.m_Components.RenderComponent.m_Mesh.material.copy();
+        this.preview.material = this.entity.m_Components.RenderComponent.m_Mesh.material;
         this.preview.material.map.needsUpdate = true;
         this.preview.material.needsUpdate = true;
       } catch(e) {}

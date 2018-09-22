@@ -175,14 +175,12 @@ export default {
       }
     }
   },
-  created() {
-  },
   mounted() {
-      try
-      {
-        this.$nextTick(this.SetupRenderer);
-      }
-      catch(e) {}
+    try
+    {
+      this.$nextTick(this.SetupRenderer);
+    }
+    catch(e) {}
   },
   methods: {
     SetupRenderer() {
