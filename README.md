@@ -9,7 +9,7 @@ Download and install: git, node, npm
 >> npm install
 >```
 >```
-> npm run dev
+> node server.js
 >```
 >```
 
