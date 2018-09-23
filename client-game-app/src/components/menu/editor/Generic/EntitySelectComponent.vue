@@ -39,7 +39,7 @@ export default {
     {
       this.GetAllEntities();
 
-      axios.get('http://localhost:9090/entityCategories')
+      axios.get(`http://${CONFIG.host}/entityCategories`)
         .then(response => this.EntityGroups = response.data.map(
           group => ({
             name: group,
@@ -55,7 +55,7 @@ export default {
     GetAllEntities() {
       try
       {
-        axios.get('http://localhost:9090/entities')
+        axios.get(`http://${CONFIG.host}/entities`)
           .then(response => response.data.forEach(entity => {
             this.EntityGroups.find(group => group.name === entity.category)
               .entities.push({

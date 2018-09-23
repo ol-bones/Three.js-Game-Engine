@@ -33,7 +33,7 @@
                 </div>
               </div>
               <b-img center fluid
-                :src="'http://localhost:9090/textures' + texture.url"
+                :src="`http://localhost:9090/textures` + texture.url"
                 :alt="texture.url"
                 class="texture-tile"
                 v-on:mouseover="textureTileHovered(texture.url)"
@@ -135,7 +135,7 @@ export default {
     {
       this.GetAllTextures();
 
-      axios.get('http://localhost:9090/textureCategories')
+      axios.get(`http://${CONFIG.host}/textureCategories`)
         .then(response => this.TextureCategories = response.data)
         .catch(error => console.error(error));
     } catch(e) {}
@@ -144,7 +144,7 @@ export default {
     GetAllTextures() {
       try
       {
-        axios.get('http://localhost:9090/textures')
+        axios.get(`http://${CONFIG.host}/textures`)
           .then(response => this.Textures = response.data)
           .catch(error => console.error(error));
       } catch(e) {}
@@ -156,7 +156,7 @@ export default {
           search: this.UserSearchInput,
           categories: this.SelectedTextureCategories.join(",")
         }};
-        axios.get('http://localhost:9090/textures', params)
+        axios.get(`http://${CONFIG.host}/textures`, params)
           .then(response => this.Textures = response.data)
           .catch(error => console.error(error));
       } catch(e) {}

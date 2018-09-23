@@ -145,7 +145,7 @@ export default {
     {
       this.GetAllMaterials();
 
-      axios.get('http://localhost:9090/materialCategories')
+      axios.get(`http://${CONFIG.host}/materialCategories`)
         .then(response => this.MaterialCategories = response.data)
         .then(this.SetupRenderer)
         .catch(error => console.error(error));
@@ -171,7 +171,7 @@ export default {
     GetAllMaterials() {
       try
       {
-        axios.get('http://localhost:9090/materials')
+        axios.get(`http://${CONFIG.host}/materials`)
           .then(response => this.Materials = response.data)
           .catch(error => console.error(error));
       } catch(e) {}
@@ -183,7 +183,7 @@ export default {
           search: this.UserSearchInput,
           categories: this.SelectedMaterialCategories.join(",")
         }};
-        axios.get('http://localhost:9090/materials', params)
+        axios.get(`http://${CONFIG.host}/materials`, params)
           .then(response => this.Materials = response.data)
           .catch(error => console.error(error));
       } catch(e) {}
@@ -199,7 +199,7 @@ export default {
     materialTileLeave(material) {
       try
       {
-        this.preview.material = this.entity.m_Components.RenderComponent.m_Mesh.material;
+        this.preview.material = this.entity.m_Components.RenderComponent.m_Mesh.material.clone();
         this.preview.material.map.needsUpdate = true;
         this.preview.material.needsUpdate = true;
       } catch(e) {}
