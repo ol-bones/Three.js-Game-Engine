@@ -7,30 +7,77 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 {
     constructor(args)
     {
-	super(args);
+		super(args);
     }
 
     Initialise()
     {
-	super.Initialise();
+		super.Initialise();
 
-	this.m_Mesh = model(this.m_Args.model);
-	this.m_Meshes = _.flattenDeep(this.m_Mesh.children);
-	this.m_Meshes.forEach(m => m.material = m.material.clone());
-	this.m_Meshes.forEach(m =>
-	{
-	    m.m_ParentEntity = this.m_Parent
-	});
+		this.m_Mesh = model(this.m_Args.model);
+		this.m_Meshes = _.flattenDeep(this.m_Mesh.children);
+		this.m_Meshes.forEach(m => m.material = m.material.clone());
+		this.m_Meshes.forEach(m =>
+		{
+			m.m_ParentEntity = this.m_Parent
+		});
 
-	this.OnInitialised();
+		this.OnInitialised();
     }
 
-    SetColor(c)
+    SetTexture(name)
     {
-	this.m_Meshes.forEach(m =>
-	    m.material.color.set(c)
-	);
+		try
+		{
+			this.m_Meshes.forEach(m => {
+				m.material.map = texture(name);
+				m.material.map.needsUpdate = true;
+				m.material.needsUpdate = true;
+			});
+		}
+		catch(Exception)
+		{
+			setTimeout(() => this.SetTexture(name), 100);
+		}
+	}
+
+	SetMaterial(name)
+	{
+		try
+		{
+			this.m_Meshes.forEach(m => {
+				m.material = window.material(name);
+				m.material.map.needsUpdate = true;
+				m.material.needsUpdate = true;
+			});
+		}
+		catch(Exception)
+		{
+			setTimeout(() => this.SetMaterial(name), 100);
+		}
+	}
+	
+    SetColor(col)
+    {
+		this.m_Colour = col;
+		this.m_Meshes.forEach(m =>
+			m.material.color.set(col)
+		);
     }
+
+	Highlight()
+	{
+		this.m_Meshes.forEach(m =>
+			m.material.color.set(new THREE.Color(10, 1, 1))
+		);
+	}
+
+	Unhighlight()
+	{
+		this.m_Meshes.forEach(m =>
+			m.material.color.set(this.m_Colour)
+		);
+	}
 
     Update()
     {

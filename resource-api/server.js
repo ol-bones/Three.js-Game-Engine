@@ -8,7 +8,6 @@ const texturesFolder = "./content/textures/";
 const materialsFolder = "./content/materials/";
 const entitiesFolder = "./content/entities/";
 
-
 // this is temporary until back end becomes focus
 const entityCategories = glob.sync(`${entitiesFolder}*/`, [])
     .map(entityDirPath => entityDirPath

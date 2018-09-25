@@ -207,7 +207,7 @@ export default {
     materialTileClick(material) {
       try
       {
-        this.entity.m_Components.RenderComponent.m_Mesh.material = window.material(material);
+        this.entity.m_Components.RenderComponent.SetMaterial(material);
       } catch(e) {}
     },
     ResizeRenderer() {
