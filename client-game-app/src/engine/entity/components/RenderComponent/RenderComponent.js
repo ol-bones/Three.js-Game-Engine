@@ -88,7 +88,12 @@ class RenderComponent extends mix(Component).with()
     {
 			this.m_Colour = c;
 			this.m_Mesh.material.color.set(c);
-    }
+	}
+	
+	SetOpacity(o)
+	{
+		this.m_Mesh.material.opacity = o;
+	}
 
 		Highlight()
 		{
@@ -127,7 +132,19 @@ class RenderComponent extends mix(Component).with()
 
     Update()
     {
-    }
+	}
+	
+	InlineMaterialArgs()
+	{
+		const materialObject = this.m_Mesh.material;
+		
+		return {
+			type: materialObject.type ? `THREE.${materialObject.type}` : "THREE.MeshPhongMaterial",
+			texture: materialObject.map.image.currentSrc.split("textures")[1],
+			repeat: [materialObject.map.repeat.x, materialObject.map.repeat.y],
+			color: materialObject.color.getHex()
+		}
+	}
 }
 
 export default RenderComponent;

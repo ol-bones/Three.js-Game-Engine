@@ -25,7 +25,7 @@ class OBJPhysicsComponent extends mix(PhysicsComponent).with()
 	let phys_model = null;
 	if(name.includes(".obj"))
 	{
-	    phys_model = json(name.replace(".obj", "_phys.json"));
+	    phys_model = json(name.replace(".obj", ".phys"));
 	}
 	else
 	{

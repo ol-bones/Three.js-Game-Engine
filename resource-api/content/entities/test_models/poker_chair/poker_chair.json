@@ -21,21 +21,14 @@
             {
                 "Scale":
                 {
-                    "x": 1,
-                    "y": 1,
-                    "z": 1
+                    "x": 40,
+                    "y": 40,
+                    "z": 40
                 },
-                "model": "Directors_Chair.obj"
+                "model": "poker_chair.obj",
+                "texture":  "/poker_chair.jpg"
             },
             "name":"OBJRenderComponent",
-            "updateable":false
-        },
-        {
-            "args":
-            {
-                "model": "/models/Directors_Chair/Directors_Chair.phys"
-            },
-            "name":"OBJPhysicsComponent",
             "updateable":false
         }
     ]

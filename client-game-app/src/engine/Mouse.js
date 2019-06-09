@@ -35,7 +35,7 @@ class Mouse
 		this.m_Ray.setFromCamera(this.m_ScreenPosition, ENGINE.m_World.m_Camera);
 
 		let intersects = this.m_Ray.intersectObjects(_.flatten(entities()
-			.filter(e => e.m_Renderable)
+			.filter(e => e.m_Renderable && e.m_Components.RenderComponent && e.m_Components.RenderComponent.m_Meshes)
 			.map(e => e.m_Components.RenderComponent.m_Meshes))
 		);
 
@@ -50,7 +50,7 @@ class Mouse
 
 			entities().forEach((entity) =>
 			{
-				if(entity.m_Renderable && entity.m_Components.RenderComponent.m_Mesh)
+				if(entity.m_Renderable &&  entity.m_Components.RenderComponent && entity.m_Components.RenderComponent.m_Meshes)
 				{
 					entity.m_Components.RenderComponent.Unhighlight();
 				}

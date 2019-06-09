@@ -208,6 +208,7 @@ export default {
       try
       {
         this.entity.m_Components.RenderComponent.SetMaterial(material);
+        this.entity.m_Components.RenderComponent.m_Args.material = material;
       } catch(e) {}
     },
     ResizeRenderer() {

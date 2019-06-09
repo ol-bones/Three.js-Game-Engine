@@ -1,6 +1,13 @@
 <template>
-    <b-button class="header-button">
+    <b-button class="header-button"
+    v-on:mouseover="hovered = true"
+    v-on:mouseleave="hovered = false"
+    :id="`header-button-${String(this._uid)}`">
       {{this.text}}
+      <div class="header-menu" v-if="hovered"
+      v-bind:style="menuPosition">
+        <slot name="options"/>
+      </div>
     </b-button>
 </template>
 
@@ -16,9 +23,26 @@ export default {
   },
   data() {
     return {
+      hovered: false
     }
   },
-  created() {
+  computed: {
+    menuPosition() {
+      try
+      {
+        const buttonElement = document.getElementById(`header-button-${String(this._uid)}`);
+        return {
+          left: `${buttonElement.getClientRects()[0].left}px`,
+          top: `${buttonElement.clientTop + buttonElement.clientHeight}px`
+        }
+      }
+      catch(e) {
+        return {
+          left: `0px`,
+          top: `0px`
+        }
+      }
+    }
   },
   mounted() {
   }
@@ -40,7 +64,19 @@ export default {
   }
 
   .header-button:hover {
-    background-color: black;
+    background-image: linear-gradient(black, #222);
     color: white;
+  }
+
+  .header-menu {
+    position: fixed;
+    z-index: 9999;
+    background-image: linear-gradient(#222, #2e2e2e);
+    border: 1px solid #222;
+    width: 10vw;
+    padding: 0.5%;
+    -webkit-box-shadow: 0px 5px 24px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 5px 24px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 5px 24px 0px rgba(0,0,0,0.75);
   }
 </style>

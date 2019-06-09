@@ -38,14 +38,14 @@ class PhysicsComponent extends mix(Component).with()
 
     SetVelocity(x,y,z)
     {
-			this.m_PhysicsBody.velocity = new CANNON.Vec3(x,y,z);
+		this.m_PhysicsBody.velocity = new CANNON.Vec3(x,y,z);
     }
 
-		SetRotation(x, y, z)
-		{
-			this.m_PhysicsBody.quaternion = new CANNON.Quaternion();
-			this.m_PhysicsBody.quaternion.setFromEuler(x, y, z);
-		}
+	SetRotation(x, y, z)
+	{
+		this.m_PhysicsBody.quaternion = new CANNON.Quaternion();
+		this.m_PhysicsBody.quaternion.setFromEuler(x, y, z);
+	}
 
     ApplyForce(x,y,z)
     {
@@ -58,6 +58,8 @@ class PhysicsComponent extends mix(Component).with()
     {
 			let body_pos = new THREE.Vector3(this.m_PhysicsBody.position.x, this.m_PhysicsBody.position.y, this.m_PhysicsBody.position.z);
 			this.m_Parent._SetPosition(body_pos.x, body_pos.y, body_pos.z);
+			
+			if(!this.m_Parent.m_Components.RenderComponent || !this.m_Parent.m_Components.RenderComponent.m_Mesh) return;
 			this.m_Parent.m_Components.RenderComponent.m_Mesh.quaternion.copy(this.m_PhysicsBody.quaternion);
     }
 }

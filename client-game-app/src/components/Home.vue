@@ -11,7 +11,8 @@
             v-on:click="goToEditor">
             Editor
           </div>
-          <div class="row menu-option">
+          <div class="row menu-option"
+            v-on:click="goToEntityCreator">
             Entity Creator
           </div>
         </div>
@@ -43,6 +44,9 @@ export default {
     },
     goToEditor() {
       this.$router.push("/Editor");
+    },
+    goToEntityCreator() {
+      this.$router.push("/EntityCreator");
     }
   },
   beforeDestroy() {

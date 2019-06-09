@@ -149,6 +149,9 @@ export default {
             );
             this.UpdatePreviewModelColour(colour);
             this.UpdateEditorModelColour(colour);
+
+            const renderComponent = this.entity.m_Components.RenderComponent;
+            renderComponent.m_Args.material = renderComponent.InlineMaterialArgs();
           }
         } catch(e) {}
       }
@@ -231,7 +234,8 @@ export default {
     UpdateEditorModelColour(colour) {
       try
       {
-        this.entity.m_Components.RenderComponent.SetColor(colour);
+        const renderComponent = this.entity.m_Components.RenderComponent;
+        renderComponent.SetColor(colour);
       }
       catch(e) {}
     },

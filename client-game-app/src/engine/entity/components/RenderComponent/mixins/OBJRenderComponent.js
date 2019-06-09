@@ -22,6 +22,8 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 			m.m_ParentEntity = this.m_Parent
 		});
 
+		if(this.m_Args.texture) this.SetTexture(this.m_Args.texture);
+		this.SetScale(this.m_Args.Scale.x, this.m_Args.Scale.y, this.m_Args.Scale.z);
 		this.OnInitialised();
     }
 
@@ -63,7 +65,14 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 		this.m_Meshes.forEach(m =>
 			m.material.color.set(col)
 		);
-    }
+	}
+	
+	SetOpacity(o)
+	{
+		this.m_Meshes.forEach(m =>
+			m.material.opacity = o
+		);
+	}
 
 	Highlight()
 	{

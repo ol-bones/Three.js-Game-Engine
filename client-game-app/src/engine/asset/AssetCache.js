@@ -21,11 +21,31 @@ class AssetCache
 
     GetAsset(assetURI, type)
     {
-		if(this.AssetExists(assetURI))
+		if(type === "material" && typeof assetURI === "object" && JSON.stringify(assetURI))
+		{
+			let inlineMaterial = new MaterialRequest("inline");
+			inlineMaterial.m_Data = assetURI;
+			inlineMaterial.Process();
+			return inlineMaterial.m_Asset;
+		}
+		else if(this.AssetExists(assetURI))
 		{
 			let asset = this.FindAsset(assetURI).asset;
-			try { return asset.clone(); asset.needsUpdate = true;}
-			catch(e) { try { return asset.copy(); } catch(e) { return asset; }}
+			switch(type)
+			{
+				case "json":
+				{
+					try { return JSON.parse(JSON.stringify(asset)); }
+					catch(e) { return asset; }
+					break;
+				}
+				default:
+				{
+					try { return asset.clone(); asset.needsUpdate = true;}
+					catch(e) { try { return asset.copy(); } catch(e) { return asset; }}
+					break;
+				}
+			}
 		}
 		else
 		{

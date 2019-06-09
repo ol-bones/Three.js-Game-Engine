@@ -29,14 +29,6 @@
             },
             "name":"OBJRenderComponent",
             "updateable":false
-        },
-        {
-            "args":
-            {
-                "model": "/models/Directors_Chair/Directors_Chair.phys"
-            },
-            "name":"OBJPhysicsComponent",
-            "updateable":false
         }
     ]
 }

@@ -42,6 +42,7 @@ class Editor extends mix(BaseObject).with(WorldLoader, EditToolsControl)
 	{
 		try
 		{
+			this.SetSelectedEntity(null, false);
 			Entity.FromFile(window.json(json), entities()[0], new THREE.Vector3(0,0,0));
 		} catch(e) { setTimeout(this.AddEntity.bind(this, json), 50); }
 	}

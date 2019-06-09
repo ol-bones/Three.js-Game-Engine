@@ -17,8 +17,8 @@
         </b-form-checkbox-group>
       </b-form-group>
     </div>
-    <div class="col-xs-10 col-sm-10 col-md-10">
-      <div class="row texture-tiles">
+    <div class="col-xs-10 col-sm-10 col-md-10 texture-tiles">
+      <div class="row">
         <div v-for="(row, rowIndex) in this.textureRows" :key='rowIndex' class="col-xs-2 col-sm-2 col-md-2 fill">
           <div v-for="(texture, colIndex) in row" :key='colIndex' class="row fill">
             <div class="col-xs-12 col-sm-12 col-md-12 fill" style="overflow:hidden;">
@@ -106,7 +106,7 @@ export default {
       {
         const cols = 6;
         let it = 0;
-        return _.groupBy(this.Textures, () => it++ > cols**2 ? "rem" : (it-1)%cols);
+        return _.groupBy(this.Textures, () => ((it++)-1)%cols);
       } catch(e) {}
     },
     getPosition() {
@@ -182,7 +182,9 @@ export default {
     textureTileClick(texture) {
       try
       {
-        this.entity.m_Components.RenderComponent.SetTexture(texture);
+        const renderComponent = this.entity.m_Components.RenderComponent;
+        renderComponent.SetTexture(texture);
+        renderComponent.m_Args.material = renderComponent.InlineMaterialArgs();
       } catch(e) {}
     }
   }
@@ -211,6 +213,8 @@ export default {
   .texture-categories {
     border-right: 1px solid #333;
     text-align: left;
+    overflow-y: scroll;
+    height: 100%;
   }
 
   .texture-folder:hover {

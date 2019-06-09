@@ -51,13 +51,13 @@ export default {
     onHover() {
 	    entities().forEach((entity) =>
 	    {
-        if(entity.m_Renderable && entity.m_Components.RenderComponent.m_Mesh)
+        if(entity.m_Renderable && entity.m_Components.RenderComponent && entity.m_Components.RenderComponent.m_Meshes)
         {
             entity.m_Components.RenderComponent.Unhighlight();
         }
 	    });
 
-      if(this.entity.m_Renderable && this.entity.m_Components.RenderComponent.m_Mesh)
+      if(this.entity.m_Renderable && this.entity.m_Components.RenderComponent && this.entity.m_Components.RenderComponent.m_Meshes)
       {
         this.entity.m_Components.RenderComponent.Highlight();
       }

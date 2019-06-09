@@ -55,20 +55,34 @@ class MaterialRequest extends mix(AssetRequest).with()
 		try
 		{
 			let material;
-			switch(this.m_Data.type)
+
+			const data = this.m_Data;
+			switch(data.type)
 			{
 				case "THREE.MeshPhongMaterial":
+				{
 					material = new THREE.MeshPhongMaterial(
 					{
-						color: new THREE.Color(1,1,1),
-						map: texture(this.m_Data.texture),
+						color: data.color ? new THREE.Color().setHex(data.color) : new THREE.Color(1,1,1),
+						map: texture(data.texture),
 						transparent: true,
 						opacity: 1
 					});
 
+					if(data.repeat && data.repeat.length === 2)
+					{
+						if(data.repeat[0] > 1 || data.repeat[1] > 1)
+						{
+							material.map.repeat.set(data.repeat[0], data.repeat[1]);
+							material.map.wrapS = THREE.RepeatWrapping;
+							material.map.wrapT = THREE.RepeatWrapping;
+						}
+					}
+
 					material.map.needsUpdate = true;
 					material.needsUpdate = true;
 					break;
+				}
 				default:
 
 					break;

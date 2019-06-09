@@ -38,7 +38,22 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 			move:true
 		};
 
+        var groundMaterial = new CANNON.Material("groundMaterial");
+
+		let materialOptions = {
+            friction: 40,
+            restitution: 3,
+            contactEquationStiffness: 1e8,
+            contactEquationRelaxation: 3,
+            frictionEquationStiffness: 1e8,
+            frictionEquationRegularizationTime: 3,
+        };
+        // Adjust constraint equation parameters for ground/ground contact
+
+        // Add contact material to the world
+
 		let scale = this.m_Parent.m_Scale;
+		let angularDamping = 0.1;
 		if(this.m_BodySettings.type === "box")
 		{
 			this.m_PhysicsShape = new CANNON.Box(
@@ -52,10 +67,18 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 		let mass = 0;
 		if(this.m_BodySettings.type === "sphere")
 		{
-			mass = 10;
+			mass = 2;
+			angularDamping = 1;
 			this.m_PhysicsShape = new CANNON.Sphere(this.m_BodySettings.radius);
 		}
-		this.m_PhysicsBody = new CANNON.Body({ mass: mass, type: this.m_Args.Type });
+        var ground_ground_cm = new CANNON.ContactMaterial(groundMaterial, materialOptions);
+        ENGINE.m_World.m_PhysicsWorld.addContactMaterial(ground_ground_cm);
+		this.m_PhysicsBody = new CANNON.Body({
+			mass: mass,
+			type: this.m_Args.Type,
+			material: ground_ground_cm,
+			angularDamping: angularDamping 
+		});
 		this.m_PhysicsBody.addShape(this.m_PhysicsShape);
 		super.Initialise();
     }

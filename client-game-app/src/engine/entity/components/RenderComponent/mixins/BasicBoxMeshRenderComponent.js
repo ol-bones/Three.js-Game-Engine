@@ -13,14 +13,10 @@ class BasicBoxMeshRenderComponent extends mix(RenderComponent).with()
     Initialise()
     {
 	super.Initialise();
-	var geoBox = new THREE.BoxGeometry(
-	    this.m_Args.Scale ? this.m_Args.Scale.x*25 : 25,
-	    this.m_Args.Scale ? this.m_Args.Scale.y*25 : 25,
-	    this.m_Args.Scale ? this.m_Args.Scale.z*25 : 25
-	);
+	var geoBox = new THREE.BoxGeometry(1,1,1);
 	geoBox.center();
 
-	var mshBox = new THREE.Mesh(geoBox, material("default"));
+	var mshBox = new THREE.Mesh(geoBox, material(this.m_Args.material || "default"));
 	mshBox.material.needsUpdate = true;
 	mshBox.material.map.needsUpdate = true;
 

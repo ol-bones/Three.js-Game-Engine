@@ -1,0 +1,6 @@
+{
+    "type": "THREE.MeshPhongMaterial",
+    "texture": "/grass2.jpg",
+    "color": "0xFFFFFF",
+    "repeat": [5, 2]
+}

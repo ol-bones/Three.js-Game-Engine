@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-xs-11 col-sm-11 col-md-11 fill" style="height:0;">
                     <b-form-input
-                        :value="this.Vector3Fixed.x"
+                        :value="this.Vector2Fixed.x"
                         type="number"
                         class="number-entry-input"
                         v-on:input="vectorComponentChanged('x', $event)"
@@ -20,23 +20,10 @@
                 </div>
                 <div class="col-xs-11 col-sm-11 col-md-11 fill" style="height:0;">
                     <b-form-input
-                        :value="this.Vector3Fixed.y"
+                        :value="this.Vector2Fixed.y"
                         type="number"
                         class="number-entry-input"
                         v-on:input="vectorComponentChanged('y', $event)"
-                    />
-                </div>
-            </div>
-            <div class="row fill">
-                <div class="col-xs-1 col-sm-1 col-md-1 fill">
-                    z:
-                </div>
-                <div class="col-xs-11 col-sm-11 col-md-11 fill" style="height:0;">
-                    <b-form-input
-                        :value="this.Vector3Fixed.z"
-                        type="number"
-                        class="number-entry-input"
-                        v-on:input="vectorComponentChanged('z', $event)"
                     />
                 </div>
             </div>
@@ -47,7 +34,7 @@
 <script>
 
 export default {
-    name: "Vector3EditComponent",
+    name: "Vector2EditComponent",
     components: {
     },
     props: {
@@ -57,18 +44,17 @@ export default {
         }
     },
     computed: {
-        Vector3Fixed() {
+        Vector2Fixed() {
             try
             {
                 return {
                     x: this.vector && this.vector.x ? this.vector.x : 0,
-                    y: this.vector && this.vector.y ? this.vector.y : 0,
-                    z: this.vector && this.vector.z ? this.vector.z : 0
+                    y: this.vector && this.vector.y ? this.vector.y : 0
                 }
             }
             catch(Exception)
             {
-                return {x: 0, y: 0, z: 0}
+                return {x: 0, y: 0}
             }
         }
     },
@@ -85,7 +71,7 @@ export default {
             try
             {
                 const valueNumber = Number(value);
-                if(this.Vector3Fixed[vectorComponent] !== valueNumber)
+                if(this.Vector2Fixed[vectorComponent] !== valueNumber)
                 {
                     this.$emit("changed", vectorComponent, valueNumber);
                 }

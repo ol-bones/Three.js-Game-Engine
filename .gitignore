@@ -4,6 +4,16 @@ dist/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+resource-api/content/textures/clouds/*
+resource-api/content/textures/leather/*
+resource-api/content/textures/milmetal/*
+resource-api/content/textures/covering/*
+resource-api/content/textures/exmarble/*
+resource-api/content/textures/flower/*
+resource-api/content/textures/frames/*
+resource-api/content/textures/grabbag/*
+resource-api/content/textures/paper/*
+resource-api/content/textures/tiles/*
 
 # Editor directories and files
 .idea

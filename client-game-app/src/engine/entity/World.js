@@ -31,6 +31,9 @@ class World extends mix(BaseObject).with(Comms)
 		this.m_PhysicsWorld.gravity.set(0, -6, 0);
 		this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
 		this.m_PhysicsWorld.solver.iterations = 50;
+		this.m_PhysicsWorld.solver.tolerance = 0.0001;
+		this.m_PhysicsWorld.defaultMaterial.friction = 4;
+		this.m_PhysicsWorld.defaultContactMaterial.friction = 4;
 		this.m_Scene = new THREE.Scene();
 		this.m_EditorScene = new THREE.Scene();
 		this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);

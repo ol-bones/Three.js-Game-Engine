@@ -29,6 +29,12 @@ class Home
 				"z":0,
 				"w":1
 			},
+			"scale":
+			{
+				"x": 25,
+				"y": 25,
+				"z": 25
+			},
 			"parent":0,
 			"entities":[],
 			"components":
@@ -36,12 +42,6 @@ class Home
 				{
 					"args":
 					{
-					"Scale":
-					{
-						"x": 2.5,
-						"y": 2.5,
-						"z": 2.5
-					}
 					},
 					"name":"BasicBoxMeshRenderComponent",
 					"updateable":false

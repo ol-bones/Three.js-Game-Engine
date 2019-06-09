@@ -2,9 +2,12 @@ import BaseObject from "./BaseObject";
 import Movable from "./../mixins/Movable";
 import Clickable from "./../mixins/Clickable";
 import Savable from "./../mixins/Savable";
-import Component from "./../components/Component";
 
+import Component from "./../components/Component";
 import Comms from "./../mixins/Comms/Comms";
+
+import EntityModel from "./../models/EntityModel";
+
 import {mix} from "mixwith";
 
 class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
@@ -239,6 +242,7 @@ import MinigolfClientBallControlComponent from "./../components/MinigolfClientBa
 import PathFindingNodeComponent from "./../components/PathFindingNodeComponent/PathFindingNodeComponent";
 import PhysicsComponent from "./../components/PhysicsComponent/PhysicsComponent";
 import BasicPhysicsComponent from "./../components/PhysicsComponent/mixins/BasicPhysicsComponent";
+import HeightmapPhysicsComponent from "./../components/PhysicsComponent/mixins/HeightmapPhysicsComponent";
 import OBJPhysicsComponent from "./../components/PhysicsComponent/mixins/OBJPhysicsComponent";
 import PositionEditComponent from "./../components/PositionEditComponent/PositionEditComponent";
 import BasicBoxMeshRenderComponent from "./../components/RenderComponent/mixins/BasicBoxMeshRenderComponent";
@@ -246,6 +250,7 @@ import BasicCylinderMeshRenderComponent from "./../components/RenderComponent/mi
 import BasicHullMeshRenderComponent from "./../components/RenderComponent/mixins/BasicHullMeshRenderComponent";
 import BasicShapeMeshRenderComponent from "./../components/RenderComponent/mixins/BasicShapeMeshRenderComponent";
 import BasicSphereMeshRenderComponent from "./../components/RenderComponent/mixins/BasicSphereMeshRenderComponent";
+import HeightmapPlaneMeshRenderComponent from "./../components/RenderComponent/mixins/HeightmapPlaneMeshRenderComponent";
 import OBJRenderComponent from "./../components/RenderComponent/mixins/OBJRenderComponent";
 import RenderComponent from "./../components/RenderComponent/RenderComponent";
 import RotateEditComponent from "./../components/RotateEditComponent/RotateEditComponent";
@@ -260,14 +265,16 @@ window.ComponentTypes = [
     MinigolfClientBallControlComponent,
     PathFindingNodeComponent,
     PhysicsComponent,
-    BasicPhysicsComponent,
+	BasicPhysicsComponent,
+	HeightmapPhysicsComponent,
     OBJPhysicsComponent,
     PositionEditComponent,
     BasicBoxMeshRenderComponent,
     BasicCylinderMeshRenderComponent,
     BasicHullMeshRenderComponent,
     BasicShapeMeshRenderComponent,
-    BasicSphereMeshRenderComponent,
+	BasicSphereMeshRenderComponent,
+	HeightmapPlaneMeshRenderComponent,
     OBJRenderComponent,
     RenderComponent,
     RotateEditComponent,
@@ -287,12 +294,29 @@ Entity._idGenerator = () => Entity._idCount++;
 
 Entity.FindByID = (id) => entities().find(e => e.m_ID === id);
 
-Entity.FromFile = (json, parent, offset) => {
+Entity.FromFile = (json, parent, offset, postinit) => {
+	console.log(json)
 	let entity = new Entity(json.pos.x + offset.x, json.pos.y + offset.y, json.pos.z + offset.z);
 
-	if (json.rot) {
+	if (json.rot || json.scale) {
 		entity.__OnInitialised = () => {
-			entity.SetRotation(json.rot.x, json.rot.y, json.rot.z, json.rot.w);
+			if(json.scale) entity.SetScale(
+				json.scale.x, json.scale.y, json.scale.z
+			);
+			if(json.rot) entity.SetRotation(
+				json.rot.x, json.rot.y, json.rot.z, json.rot.w
+			);
+
+			const coloredComponent = json.components.find(c => { 
+				try { if(c.args.material.color) {return true;} } catch(e) { return false; }
+			});
+
+			if(coloredComponent)
+			{
+				entity.m_Components.RenderComponent.SetColor(new THREE.Color().setHex(coloredComponent.args.material.color));
+			}
+
+			if(postinit && typeof postinit === "function") try { postinit(entity); } catch(e) {}
 		}
 	}
 

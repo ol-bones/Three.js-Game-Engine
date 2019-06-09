@@ -57,11 +57,14 @@ export default {
       {
         axios.get(`http://${CONFIG.host}/entities`)
           .then(response => response.data.forEach(entity => {
-            this.EntityGroups.find(group => group.name === entity.category)
-              .entities.push({
+            const ents = this.EntityGroups.find(group => group.name === entity.category)
+            if(!ents || !ents.entities) return;
+        
+            ents.entities.push({
                 name: entity.name,
                 json: entity.url
-              })
+            });
+            
           }))
           .catch(error => console.error(error));
       } catch(e) {}

@@ -21,7 +21,7 @@ class BasicSphereMeshRenderComponent extends mix(RenderComponent).with()
 	);
 	geoBox.center();
 
-	var mshBox = new THREE.Mesh(geoBox, material("default"));
+	var mshBox = new THREE.Mesh(geoBox, material(this.m_Args.material || "default"));
 	mshBox.material.needsUpdate = true;
 	mshBox.material.map.needsUpdate = true;
 
