@@ -69,6 +69,7 @@ class HeightmapPhysicsComponent extends mix(PhysicsComponent).with()
 			geometry.translate(offset, offset, 0);
 		}
 
+		geometry.verticesNeedUpdate = true;
 		super.Initialise();
     }
 

@@ -12,7 +12,7 @@ class Mouse
 		this.m_CurrentHoveredObject = null;
 		this.m_LastHoveredObject = null;
 
-		this.m_CurrentClickedOBject = null;
+		this.m_CurrentClickedObject = null;
 		this.m_LastClickedObject = null;
 
 		this.m_Canvas = document.querySelector("canvas");

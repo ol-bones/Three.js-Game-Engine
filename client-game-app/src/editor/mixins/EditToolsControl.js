@@ -69,6 +69,19 @@ let EditToolsControl = Mixin((superclass) => class extends superclass
 			}
 		}
 		
+	SelectHeightmapEditTool()
+	{
+		if(this.m_EditModeToggled && this.m_SelectedEntity && this.m_SelectedEntity.m_Components)
+		{
+			this.ClearEditComponents(this.m_SelectedEntity);
+			this.m_SelectedTool = "HeightmapEditComponent";
+			this.ApplyTool();
+		}
+		else
+		{
+			this.m_SelectedTool = "HeightmapEditComponent";
+		}
+	}
 		ApplyTool()
 		{
 			let ToolType = (Component._TypeFromName({"name": this.m_SelectedTool}));

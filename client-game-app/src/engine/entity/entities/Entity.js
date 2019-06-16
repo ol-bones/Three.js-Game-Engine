@@ -255,6 +255,7 @@ import OBJRenderComponent from "./../components/RenderComponent/mixins/OBJRender
 import RenderComponent from "./../components/RenderComponent/RenderComponent";
 import RotateEditComponent from "./../components/RotateEditComponent/RotateEditComponent";
 import ScaleEditComponent from "./../components/ScaleEditComponent/ScaleEditComponent";
+import HeightmapEditComponent from "./../components/HeightmapEditComponent/HeightmapEditComponent";
 import TriggerComponent from "./../components/TriggerComponent/TriggerComponent";
 import WASDPlayerControlComponent from "./../components/WASDPlayerControlComponent/WASDPlayerControlComponent";
 import WorldPieceComponent from "./../components/WorldPieceComponent/WorldPieceComponent";
@@ -278,7 +279,8 @@ window.ComponentTypes = [
     OBJRenderComponent,
     RenderComponent,
     RotateEditComponent,
-    ScaleEditComponent,
+	ScaleEditComponent,
+	HeightmapEditComponent,
     TriggerComponent,
     WASDPlayerControlComponent,
     WorldPieceComponent,

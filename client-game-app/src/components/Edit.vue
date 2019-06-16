@@ -52,6 +52,14 @@
                         <icon name="expand-arrows-alt" scale="1"/>
                       </b-button>
                     </th>
+                    <th v-if="SelectedEntity && SelectedEntity.m_Components && SelectedEntity.m_Components.PhysicsComponent && SelectedEntity.m_Components.PhysicsComponent.constructor.name === 'HeightmapPhysicsComponent'">
+                      <b-button class="editor-button"
+                        v-b-tooltip.hover.topright title="Heightmap Tool"
+                        v-on:click="onHeightmapToolButtonClicked"
+                        :pressed.sync="ToolButtonStates.HeightmapEditButtonSelected">
+                        <icon name="chess-board" scale="1"/>
+                      </b-button>
+                    </th>
                   </tr>
                 </div>
               </div>
@@ -95,7 +103,8 @@ export default {
       ToolButtonStates: {
         PositionEditButtonSelected: false,
         RotationEditButtonSelected: false,
-        ScaleEditButtonSelected: false
+        ScaleEditButtonSelected: false,
+        HeightmapEditButtonSelected: false
       }
     }
   },
@@ -151,6 +160,17 @@ export default {
       if(this.ToolButtonStates.ScaleEditButtonSelected) {
         this.UntoggleAllToolsExcept("ScaleEditButtonSelected");
         EDITOR.SelectScaleEditTool();
+      }
+      else
+      {
+        this.UntoggleAllToolsExcept();
+        EDITOR.NoTool();
+      }
+    },
+    onHeightmapToolButtonClicked() {
+      if(this.ToolButtonStates.HeightmapEditButtonSelected) {
+        this.UntoggleAllToolsExcept("HeightmapEditButtonSelected");
+        EDITOR.SelectHeightmapEditTool();
       }
       else
       {

@@ -57,7 +57,8 @@ export default {
   },
   data() {
     return {
-      Size: 0
+      Size: 0,
+      Divisions: 0
     }
   },
   created() {
@@ -74,10 +75,41 @@ export default {
   },
   methods: {
     sizeChanged(value) {
-      console.log(value);
+      this.physicsComponent.m_BodySettings.Size = value;
+      this.Size = value;
+      this.reCreateEntity();
     },
     divsChanged(value) {
-      console.log(value);
+      this.physicsComponent.m_BodySettings.Divisions = value;
+      this.Divisions = value;
+      this.reCreateEntity();
+    },
+    generateHeightmap()
+    {
+      let newMap = new Array(this.Divisions + 1).fill(new Array(this.Divisions + 1).fill(0));
+      this.physicsComponent.m_BodySettings.HeightMap = newMap;
+    },
+    reCreateEntity() {
+      console.log(this.physicsComponent);
+      this.physicsComponent.Remove();
+      this.generateHeightmap();
+
+      const renderComponent = this.physicsComponent.m_Parent.m_Components.RenderComponent;
+
+      renderComponent.m_Args.Size = this.Size;
+      renderComponent.m_Args.Divisions = this.Divisions;
+      renderComponent.Remove();
+      renderComponent.Initialise();
+
+      this.physicsComponent.Initialise();
+      this.physicsComponent.SetRotation(-Math.PI/2, 0, 0);
+    
+      const debugComponent = this.physicsComponent.m_Parent.m_Components.DebugComponent;
+      if(debugComponent != void(0))
+      {
+        debugComponent.Remove();
+        debugComponent.Initialise();
+      }
     }
   }
 };
