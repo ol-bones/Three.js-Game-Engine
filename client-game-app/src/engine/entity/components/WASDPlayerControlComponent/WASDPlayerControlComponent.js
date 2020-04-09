@@ -15,6 +15,8 @@ class WASDPlayerControlComponent extends mix(Component).with()
 		this.m_TargetPosition = {};
 		this.m_Ray = {};
 
+		this.m_PLControls = null;
+
 		this.m_Keys =
 		{
 			W: false,
@@ -27,11 +29,17 @@ class WASDPlayerControlComponent extends mix(Component).with()
     Initialise()
     {
 		super.Initialise();
+		
+		this.m_PLControls = new THREE.PointerLockControls(
+			ENGINE.m_World.m_Camera
+		);
+		
+		ENGINE.m_World.m_Scene.add(this.m_PLControls.getObject());
 
 		this.m_TargetPosition = this.m_Parent.m_Position.clone();
 		this.m_Ray = new THREE.Raycaster();
 
-		$('body').on('keydown', e =>
+		window.addEventListener('keydown', e =>
 		{
 			switch(e.keyCode)
 			{
@@ -56,7 +64,7 @@ class WASDPlayerControlComponent extends mix(Component).with()
 			}
 		});
 
-		$('body').on('keyup', e =>
+		window.addEventListener('keyup', e =>
 		{
 			switch(e.keyCode)
 			{
@@ -86,9 +94,9 @@ class WASDPlayerControlComponent extends mix(Component).with()
 
     OnInitialised()
     {
-	this.m_Arrow = new THREE.ArrowHelper(new THREE.Vector3(0,0,0), new THREE.Vector3(0,1,0), 2.5, 0xFF0000);
-	ENGINE.m_World.m_Scene.add(this.m_Arrow);
-	this.m_IsInitialised = true;
+		this.m_Arrow = new THREE.ArrowHelper(new THREE.Vector3(0,0,0), new THREE.Vector3(0,1,0), 2.5, 0xFF0000);
+		ENGINE.m_World.m_Scene.add(this.m_Arrow);
+		this.m_IsInitialised = true;
     }
 
     Update()
@@ -121,18 +129,34 @@ e.m_Components.PhysicsComponent).map(e => e.m_Components.RenderComponent.m_Mesh)
 
 		    let force = (this.m_TargetPosition.clone().sub(this.m_Parent.m_Position.clone())).multiplyScalar(100);
 
-		    if(Math.abs(force.x + force.y + force.z) > 0)
-		    {
-			this.m_Parent.SendComms
-			(
-			    { ID: 9, Component: "PhysicsComponent" },
-			    [ force.x, force.y, force.z ],
-			    "ApplyForce",
-			    0
-			);
-		    }
+			const keysPressed = !!Object.keys(this.m_Keys)
+				.map(k => this.m_Keys[k])
+				.reduce((a,k) => a+k);
 
-		   this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.y = (intersects[0].point.y + 50);
+		    if(keysPressed)
+		    {
+				this.m_Parent.SendComms
+				(
+					{ ID: 2, Component: "PhysicsComponent" },
+					[ force.x, force.y, force.z ],
+					"ApplyForce",
+					0
+				);
+			}
+			else
+			{
+				const pbb = this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody;
+				const vv = pbb.velocity;
+				pbb.velocity.set(
+					vv.x * 0.9,
+					vv.y,
+					vv.z * 0.9
+				);
+			}
+
+			const pb = this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position;
+			this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position.y = (intersects[0].point.y + 50);
+			ENGINE.m_World.m_Camera.position.set(pb.x, pb.y, pb.z);
 		}
     }
 }

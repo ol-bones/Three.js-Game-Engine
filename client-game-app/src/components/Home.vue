@@ -8,6 +8,10 @@
             Minigolf Demo
           </div>
           <div class="row menu-option"
+            v-on:click="goToDesert">
+            Desert Demo
+          </div>
+          <div class="row menu-option"
             v-on:click="goToEditor">
             Editor
           </div>
@@ -41,6 +45,9 @@ export default {
   methods: {
     goToMinigolf() {
       this.$router.push("/Play");
+    },
+    goToDesert() {
+      this.$router.push("/Desert");
     },
     goToEditor() {
       this.$router.push("/Editor");

@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import Home from '@/components/Home';
 import Play from '@/components/Play';
+import Desert from '@/components/Desert';
 import Edit from '@/components/Edit';
 import EntityCreate from '@/components/EntityCreate';
 
@@ -19,6 +20,11 @@ export default new Router({
       path: '/Play',
       name: 'Play',
       component: Play
+    },
+    {
+      path: '/Desert',
+      name: 'Desert',
+      component: Desert
     },
     {
       path: '/Editor',

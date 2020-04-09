@@ -28,12 +28,12 @@ class World extends mix(BaseObject).with(Comms)
 		this.m_Entities = [];
 
 		this.m_PhysicsWorld = new CANNON.World();
-		this.m_PhysicsWorld.gravity.set(0, -6, 0);
+		this.m_PhysicsWorld.gravity.set(0, -9.8, 0);
 		this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
 		this.m_PhysicsWorld.solver.iterations = 50;
 		this.m_PhysicsWorld.solver.tolerance = 0.0001;
 		this.m_PhysicsWorld.defaultMaterial.friction = 4;
-		this.m_PhysicsWorld.defaultContactMaterial.friction = 4;
+		this.m_PhysicsWorld.defaultContactMaterial.friction = 40;
 		this.m_Scene = new THREE.Scene();
 		this.m_EditorScene = new THREE.Scene();
 		this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
@@ -52,8 +52,6 @@ class World extends mix(BaseObject).with(Comms)
 		this.m_Camera.position.y = 40;
 		this.m_Camera.position.z = 30;
 		this.m_Camera.lookAt(this.m_Scene.position);
-
-		this.m_Controls = new THREE.OrbitControls(this.m_Camera, this.m_Renderer.domElement);
 
 		var ambientLight = new THREE.AmbientLight(0x0c0c0c);
 		this.m_Scene.add(ambientLight);
@@ -78,7 +76,7 @@ class World extends mix(BaseObject).with(Comms)
 	// clean this eventually
 	render() {
 		this.m_Renderer.autoClear = false;
-		this.m_Controls.update();
+		//this.m_Controls.update();
 		this.m_Renderer.render(this.m_Scene, this.m_Camera);
 		this.m_Renderer.clearDepth();
 		this.m_Renderer.render(this.m_EditorScene, this.m_Camera);

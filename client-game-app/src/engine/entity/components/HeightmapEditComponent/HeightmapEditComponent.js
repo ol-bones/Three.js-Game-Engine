@@ -21,6 +21,8 @@ class HeightmapEditComponent extends mix(Component).with()
 
 		this.m_ModifyArrows = [];
 		this.m_AreaSelected = false;
+
+		this.m_Step = new THREE.Vector3(0, 0, 1);
     }
 
     Initialise()
@@ -86,16 +88,78 @@ class HeightmapEditComponent extends mix(Component).with()
 
 	onMouseDown()
 	{
-		if(this.m_AreaSelected && this.m_ModifyArrows.length > 0)
+		try
 		{
-			const renderComponent = this.m_Parent.m_Components.RenderComponent;
-			const geometry = renderComponent.m_Mesh.geometry;
-			console.log("kek", this.m_VertsSelected);
-			this.m_VertsSelected.forEach(v =>
-				geometry.vertices[v].setZ(10)
-			);
-			geometry.verticesNeedUpdate = true;
+			if(this.m_AreaSelected && this.m_ModifyArrows.length > 0)
+			{
+				const renderComponent = this.m_Parent.m_Components.RenderComponent;
+				const geometry = renderComponent.m_Mesh.geometry;
+				
+				this.m_VertsSelected.forEach(v =>
+					geometry.vertices[v].add(this.m_Step)
+				);
+
+				const divs = this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.Divisions;
+				const saved = [];
+				
+				const heights = geometry.vertices.map(
+					v => v.z
+				).reverse();
+
+				let index = 0;
+				for(let y = divs; y >= 0; y--)
+				{
+					saved.push([]);
+					for(let x = 0; x <= divs; x++)
+					{
+						saved[saved.length-1].push([heights[index], x, y]);
+						index++;
+					}
+					saved[saved.length-1].reverse();
+				}
+
+				this.m_Parent.m_Components.PhysicsComponent.m_Args.BodySettings.HeightMap = saved.map(
+					row => row.map(v =>
+					{
+						const z = v[0];
+						const x = v[1];
+						const y = v[2];
+
+						const p = new THREE.Vector2(x,y);
+						const m = new THREE.Vector2(divs/2,divs/2);
+						const rot = Math.PI/2;
+						const r = p.rotateAround(m, rot);
+						const rp = saved[Math.round(r.y)][Math.round(r.x)];
+
+						return rp[0];
+					}).reverse()
+				);
+
+				geometry.verticesNeedUpdate = true;
+				this.m_Parent.m_Components.PhysicsComponent.regeneratePhys();
+			}
 		}
+		catch(e) { console.log(e); }
+	}
+
+	regeneratePhys()
+	{
+        this.m_Parent.m_Components.PhysicsComponent.regeneratePhys();
+	}
+
+	SetStepX(v)
+	{
+		this.m_Step.setX(v);
+	}
+
+	SetStepY(v)
+	{
+		this.m_Step.setY(v);
+	}
+
+	SetStepZ(v)
+	{
+		this.m_Step.setZ(v);
 	}
 
     Remove()
@@ -103,6 +167,9 @@ class HeightmapEditComponent extends mix(Component).with()
 		super.Remove();
 		
 		this.m_AreaSelected = false;
+
+		this.m_ModifyArrows.forEach(v => ENGINE.m_World.m_EditorScene.remove(v));
+		delete this.m_ModifyArrows;
     }
 }
 

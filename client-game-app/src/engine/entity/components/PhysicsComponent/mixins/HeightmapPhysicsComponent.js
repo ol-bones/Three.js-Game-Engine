@@ -73,6 +73,31 @@ class HeightmapPhysicsComponent extends mix(PhysicsComponent).with()
 		super.Initialise();
     }
 
+	regeneratePhys()
+	{
+		this.m_PhysicsBody.shapes = [];
+
+		this.m_PhysicsShape = new CANNON.Heightfield(this.m_BodySettings.HeightMap, {
+			elementSize: this.m_BodySettings.Size / this.m_BodySettings.Divisions
+		});
+
+		let mass =  0;
+        var groundMaterial = new CANNON.Material("groundMaterial");
+
+		let materialOptions = {
+            friction: 40,
+            restitution: 3,
+            contactEquationStiffness: 1e8,
+            contactEquationRelaxation: 3,
+            frictionEquationStiffness: 1e8,
+            frictionEquationRegularizationTime: 3,
+		};
+        var ground_ground_cm = new CANNON.ContactMaterial(groundMaterial, materialOptions);
+		ENGINE.m_World.m_PhysicsWorld.addContactMaterial(ground_ground_cm);
+		
+		this.m_PhysicsBody.addShape(this.m_PhysicsShape);
+	}
+
     Remove()
     {
 		ENGINE.m_World.m_PhysicsWorld.remove(this.m_PhysicsBody);

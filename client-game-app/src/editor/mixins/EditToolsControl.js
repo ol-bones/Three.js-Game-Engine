@@ -114,7 +114,7 @@ let EditToolsControl = Mixin((superclass) => class extends superclass
 
 				if(!supressCallback) this.m_UICallbacks.onEntitySelected(entity, true);
 
-				if(entity && this.m_SelectedTool)
+				if(entity && this.m_SelectedTool && entity !== this.m_LastSelectedEntity)
 				{
 					this.ClearEditComponents(this.m_LastSelectedEntity);
 					this.ApplyTool();

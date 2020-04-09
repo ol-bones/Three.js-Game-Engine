@@ -15,6 +15,8 @@ class Mouse
 		this.m_CurrentClickedObject = null;
 		this.m_LastClickedObject = null;
 
+		this.m_HighlightMousePick = false;
+
 		this.m_Canvas = document.querySelector("canvas");
 		this.m_Nav = document.getElementById("#Navbar");
 
@@ -61,6 +63,9 @@ class Mouse
 				this.m_LastHoveredObject = null;
 			}
 			this.m_CurrentHoveredObject = intersects[0].object;
+
+			if(!this.m_HighlightMousePick) return;
+
 			intersects[0].object.m_ParentEntity.m_Components.RenderComponent.Highlight();
 		}
 		else
@@ -76,8 +81,8 @@ class Mouse
 			evt.preventDefault();
 			if(THREE.OrbitControls.curDragging)
 			{
-			setTimeout(()=>THREE.OrbitControls.curDragging = false, 50);
-			return;
+				setTimeout(()=>THREE.OrbitControls.curDragging = false, 50);
+				return;
 			}
 
 			if(evt && this.m_CurrentHoveredObject)

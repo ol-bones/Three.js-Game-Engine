@@ -73,7 +73,8 @@ export default {
     z-index: 9999;
     background-image: linear-gradient(#222, #2e2e2e);
     border: 1px solid #222;
-    width: 10vw;
+    min-width: 10vw;
+    width: fit-content;
     padding: 0.5%;
     -webkit-box-shadow: 0px 5px 24px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 5px 24px 0px rgba(0,0,0,0.75);

@@ -20,6 +20,8 @@ import router from './router';
 import Engine from "./engine/Engine";
 
 window.THREE = require("./libs/three.min.js");
+
+require("./libs/PointerLockControls");
 window.CANNON = require("./libs/cannon.min.js");
 window.CannonDebugRenderer = require("./libs/CannonDebugRenderer");
 window.OrbitControls = require("./libs/OrbitControls");

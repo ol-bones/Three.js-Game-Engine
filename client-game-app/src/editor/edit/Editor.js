@@ -27,6 +27,8 @@ class Editor extends mix(BaseObject).with(WorldLoader, EditToolsControl)
     {
 		window.EDITOR = this;
 
+		ENGINE.m_World.m_Controls = new THREE.OrbitControls(ENGINE.m_World.m_Camera, ENGINE.m_World.m_Renderer.domElement);
+
 		ENGINE.m_World.m_Camera.position.set(-120.65558286328287, 151.31431689725994, 49.16004438380608);
 		ENGINE.m_World.m_Camera.quaternion.set(-0.313321793870273, -0.638001400182456, -0.2988145120070227, 0.6570095484000732);
 		this.m_EditModeToggled = true;
@@ -35,16 +37,16 @@ class Editor extends mix(BaseObject).with(WorldLoader, EditToolsControl)
 
 		let grid = new THREE.GridHelper(10000, 10);
 		ENGINE.m_World.m_Scene.add(grid);
-		this.LoadWorld();
+	//	this.LoadWorld();
 	}
 	
-	AddEntity(json)
+	AddEntity(json, wp = true)
 	{
 		try
 		{
 			this.SetSelectedEntity(null, false);
-			Entity.FromFile(window.json(json), entities()[0], new THREE.Vector3(0,0,0));
-		} catch(e) { setTimeout(this.AddEntity.bind(this, json), 50); }
+			Entity.FromFile(window.json(json), wp ? entities()[0] : null, new THREE.Vector3(0,0,0));
+		} catch(e) { setTimeout(this.AddEntity.bind(this, json, wp), 50); }
 	}
 
     AddNewBox()
@@ -88,10 +90,10 @@ class Editor extends mix(BaseObject).with(WorldLoader, EditToolsControl)
 				}
 			]
 		}, entities()[0], new THREE.Vector3(0,0,0));
-		}
+	}
 
-		AddNewSphere()
-		{
+	AddNewSphere()
+	{
 		Entity.FromFile(
 		{
 			"pos": {"x":0,"y":150,"z":0},
@@ -116,6 +118,29 @@ class Editor extends mix(BaseObject).with(WorldLoader, EditToolsControl)
 		}, entities()[0], new THREE.Vector3(0,0,0));
     }
 
+	AddNewWorldPiece()
+	{
+		Entity.FromFile(
+			{
+				"id": "0",
+				"pos": { "x": 0, "y": 0, "z": 0 },
+				"rot": { "x":0, "y":0, "z":0, "w":1 },
+				"scale": { "x": 1, "y": 1, "z": 1 },
+				"entities": [],
+				"components":
+				[
+					{
+						"args": { "Parent": 0 },
+						"name": "WorldPieceComponent",
+						"updateable": false
+					}
+				]
+			},
+			null,
+			new THREE.Vector3(0,0,0)
+		);
+	}
+
     DeleteEntity(id, evt)
     {
 		if(evt)
@@ -128,6 +153,7 @@ class Editor extends mix(BaseObject).with(WorldLoader, EditToolsControl)
 
     render()
     {
+		this.m_Controls.update();
 		super.render();
     }
 }

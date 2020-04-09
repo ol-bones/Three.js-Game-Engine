@@ -52,6 +52,8 @@ export default {
             try
             {
                 const valueNumber = Number(value);
+                if(value === this.NumberFixed) return false;
+
                 if(this.NumberFixed[value] !== valueNumber)
                 {
                     this.$emit("changed", valueNumber);

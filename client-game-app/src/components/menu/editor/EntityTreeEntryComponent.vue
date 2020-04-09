@@ -1,9 +1,17 @@
 <template>
   <div class="entity-tree-entry" :style="style">
-    <div class="entity-tree-entry-info" v-on:mouseover="onHover" v-on:click="onSelect">
+    <div class="entity-tree-entry-info" v-on:mouseover="onHover" v-on:click="onSelect" @contextmenu.prevent="context_show">
       {{this.GetDisplayInfo().name}}
       <span class="entity-tree-expand" v-on:click="expandChildren" v-show="!this.expanded && this.entity.m_Entities.length > 0">[+]</span>
       <span class="entity-tree-collapse" v-on:click="expandChildren" v-show="this.expanded && this.entity.m_Entities.length > 0">[-]</span>
+      <b-dropdown ref="ddown" size="lg" variant="link" toggle-class="text-decoration-none" no-caret lazy class="entity-context-menu">
+        <b-dropdown-header>
+          Entity {{this.entity.m_ID}}
+        </b-dropdown-header>
+        <b-dropdown-item>Save</b-dropdown-item>
+        <b-dropdown-item @click="CopyEntityData">Copy Data</b-dropdown-item>
+        <b-dropdown-item @click="DeleteSelectedEntity">Delete</b-dropdown-item>
+      </b-dropdown>
     </div>
     <div class="entity-tree-entry-children" v-if="expanded">
       <div v-for="(entity, index) in this.entity.m_Entities" :key='index'>
@@ -48,6 +56,22 @@ export default {
   mounted() {
   },
   methods: {
+    CopyEntityData() {
+      navigator.clipboard.writeText(JSON.stringify(this.entity.DataModel().ToJSON())).then(this.context_hide.bind(this));
+    },
+    DeleteSelectedEntity() {
+      try
+      {
+        this.$refs.ddown.visible = false;
+        EDITOR.DeleteEntity(this.entity.m_ID);
+      } catch(e) {}
+    },
+    context_show() {
+      this.$refs.ddown.visible = true;
+    },
+    context_hide() {
+      this.$refs.ddown.visible = false;
+    },
     onHover() {
 	    entities().forEach((entity) =>
 	    {
@@ -107,5 +131,37 @@ export default {
    -webkit-user-select: none;
    -ms-user-select: none;
    user-select: none;
+  }
+
+  .entity-context-menu > .dropdown-menu {
+    background: #2a2a2a;
+    color: white;
+  }
+
+  .entity-context-menu > * > .dropdown-header {
+    background: #2a2a2a;
+    color: #444;
+    outline: none;
+  }
+
+  .entity-context-menu > * > .dropdown-item {
+    background: #2a2a2a;
+    color: white;
+    outline: none;
+  }
+
+  .entity-context-menu > * > .dropdown-item:hover {
+    background: #2a2a2a;
+    color: white;
+    outline: none;
+    font-weight: bolder;
+  }
+</style>
+
+<style>
+
+  .entity-context-menu > .dropdown-menu {
+    background: #2a2a2a;
+    color: white;
   }
 </style>

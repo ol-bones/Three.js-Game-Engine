@@ -75,25 +75,40 @@ export default {
   },
   methods: {
     sizeChanged(value) {
+      if(this.physicsComponent.m_BodySettings.Size === value && this.Size === value) return;
+
       this.physicsComponent.m_BodySettings.Size = value;
+      this.physicsComponent.m_Args.Size = value;
       this.Size = value;
       this.reCreateEntity();
     },
     divsChanged(value) {
+      if(this.physicsComponent.m_BodySettings.Divisions === value && this.Divisions === value) return;
+      
+      const previous = this.physicsComponent.m_Args.BodySettings.Divisions;
+
       this.physicsComponent.m_BodySettings.Divisions = value;
+      this.physicsComponent.m_Args.BodySettings.Divisions = value;
       this.Divisions = value;
+
+      const heightMap = this.physicsComponent.m_Args.BodySettings.HeightMap;
+
+      if(value < previous)
+      {
+        this.physicsComponent.m_Args.BodySettings.HeightMap = heightMap
+          .slice(0, value+1)
+          .map(r => r.slice(0, value+1));
+      }
+      else
+      {
+        this.physicsComponent.m_Args.BodySettings.HeightMap = heightMap
+          .concat(new Array((value+1) - heightMap.length).fill(new Array(value+1).fill(0)))
+          .map(r => r.concat(new Array((value+1) - r.length).fill(0)));
+      }
+
       this.reCreateEntity();
     },
-    generateHeightmap()
-    {
-      let newMap = new Array(this.Divisions + 1).fill(new Array(this.Divisions + 1).fill(0));
-      this.physicsComponent.m_BodySettings.HeightMap = newMap;
-    },
     reCreateEntity() {
-      console.log(this.physicsComponent);
-      this.physicsComponent.Remove();
-      this.generateHeightmap();
-
       const renderComponent = this.physicsComponent.m_Parent.m_Components.RenderComponent;
 
       renderComponent.m_Args.Size = this.Size;
@@ -101,9 +116,13 @@ export default {
       renderComponent.Remove();
       renderComponent.Initialise();
 
+      this.physicsComponent.Remove();
       this.physicsComponent.Initialise();
+
+
+     // this.physicsComponent.Initialise();
       this.physicsComponent.SetRotation(-Math.PI/2, 0, 0);
-    
+
       const debugComponent = this.physicsComponent.m_Parent.m_Components.DebugComponent;
       if(debugComponent != void(0))
       {

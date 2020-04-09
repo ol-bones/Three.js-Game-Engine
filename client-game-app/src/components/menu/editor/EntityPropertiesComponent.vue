@@ -49,14 +49,22 @@
       <div class="row properties-options-row" id="properties-panel">
         <general-properties-component
           v-show="tabSelected === 'General'"
+          v-if="this.entity"
           :entity="this.entity"
         />
         <render-component-properties-component
           v-show="tabSelected === 'RenderComponent'"
+          v-if="this.entity.m_Components && this.entity.m_Components.RenderComponent"
           :entity="this.entity"
         />
         <physics-component-properties-component
           v-show="tabSelected === 'PhysicsComponent'"
+          v-if="this.entity.m_Components && this.entity.m_Components.PhysicsComponent"
+          :entity="this.entity"
+        />
+        <height-map-edit-component-properties-component
+          v-show="tabSelected === 'HeightmapEditComponent'"
+          v-if="this.entity.m_Components && this.entity.m_Components.HeightmapEditComponent"
           :entity="this.entity"
         />
       </div>
@@ -69,13 +77,15 @@
 import GeneralPropertiesComponent from "./EntityProperties/GeneralPropertiesComponent";
 import RenderComponentPropertiesComponent from "./EntityProperties/RenderComponentPropertiesComponent";
 import PhysicsComponentPropertiesComponent from "./EntityProperties/PhysicsComponentPropertiesComponent";
+import HeightMapEditComponentPropertiesComponent from "./EntityProperties/HeightMapEditComponentPropertiesComponent";
 
 export default {
   name: "EntityPropertiesComponent",
   components: {
     GeneralPropertiesComponent,
     RenderComponentPropertiesComponent,
-    PhysicsComponentPropertiesComponent
+    PhysicsComponentPropertiesComponent,
+    HeightMapEditComponentPropertiesComponent
   },
   props: {
     entity: {

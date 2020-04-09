@@ -142,6 +142,27 @@ app.get("/textures", (req, res) => {
     }
 });
 
+const getWorlds = () => fs.readdirSync("./content/data/", { withFileTypes: true })
+                            .filter(entry => entry.isDirectory())
+                            .map(entry => entry.name);
+
+const getPieces = (world) =>  fs.readdirSync(`./content/data/${world}`, { withFileTypes: true })
+                                .filter(entry => entry.isFile())
+                                .filter(entry => path.extname(entry.name) === ".json")
+                                .map(entry => entry.name);
+                                
+app.get("/worlds", (req, res) => {
+    res.json({
+        "worlds": getWorlds() || []
+    });
+});
+
+app.get("/:world/pieces", (req, res) => {
+    res.json({
+        "pieces": getPieces(req.params.world) || []
+    });
+})
+
 app.listen(Number(config.port), () => {
     console.log(`Started on port ${config.port}`);
 });

@@ -7,19 +7,24 @@
             <div class="row">
               New
             </div>
+            <div class="row" @mouseenter="OpenWorldBrowser"
+              @mouseleave="CloseWorldBrowser">
+              Open
+              <world-browser-component :show="m_ShowWorldBrowserComponent"/>
+            </div>
             <div class="row">
               Save
             </div>
             <div class="row">
               Save As
             </div>
-            <div class="row">
-              Exit
-            </div>
           </div>
         </header-button-component>
         <header-button-component text="Edit">
           <div slot="options" class="col">
+            <div class="row" @click="NewWorldPiece">
+              New WorldPiece
+            </div>
             <div class="row" @click="DeleteSelectedEntity">
               Delete
             </div>
@@ -29,6 +34,14 @@
           <div slot="options" class="col">
             <div class="row" @click="ToggleDebugRenderer">
               Debug Renderer
+            </div>
+            <div class="row" @click="ToggleHighlightMousePick">
+              <div class="col-xs-2 col-sm-2 col-md-2">
+                <icon name="check" scale="0.6" v-if="HighlightMousePick"/>
+              </div>
+              <div class="col-xs-10 col-sm-10 col-md-10">
+                Highlight Mouse Pick
+              </div>
             </div>
           </div>
         </header-button-component>
@@ -40,22 +53,35 @@
 <script>
 
 import HeaderButtonComponent from "./HeaderButtonComponent";
+import WorldBrowserComponent from "./../Modal/WorldBrowserComponent";
 
 import DebugComponent from "./../../../../engine/entity/components/DebugComponent/DebugComponent";
 
 export default {
   name: "HeaderComponent",
   components: {
-    HeaderButtonComponent
+    HeaderButtonComponent,
+    WorldBrowserComponent
   },
   data() {
     return {
-      m_DebugRendererToggled: false
+      m_DebugRendererToggled: false,
+      m_HighlightMousePickToggled: false,
+      m_ShowWorldBrowserComponent: false
     }
   },
   created() {
   },
   mounted() {
+  },
+  computed: {
+    HighlightMousePick()
+    {
+      try
+      {
+        return this.m_HighlightMousePickToggled;
+      } catch(e) { return false; }
+    }
   },
   methods: {
     ToggleDebugRenderer(e)
@@ -85,12 +111,33 @@ export default {
           this.m_DebugRendererToggled = true;
       }
     },
+    ToggleHighlightMousePick(e)
+    {
+      try
+      {
+          ENGINE.m_Mouse.m_HighlightMousePick = !ENGINE.m_Mouse.m_HighlightMousePick;
+          this.m_HighlightMousePickToggled = ENGINE.m_Mouse.m_HighlightMousePick;
+      }
+      catch(e) {}
+    },
     DeleteSelectedEntity()
     {
       try
       {
         EDITOR.DeleteEntity(EDITOR.m_SelectedEntity.m_ID);
       } catch(e) {}
+    },
+    OpenWorldBrowser()
+    {
+      this.m_ShowWorldBrowserComponent = true;
+    },
+    CloseWorldBrowser()
+    {
+      this.m_ShowWorldBrowserComponent = false;
+    },
+    NewWorldPiece()
+    {
+      EDITOR.AddNewWorldPiece();
     }
   }
 };

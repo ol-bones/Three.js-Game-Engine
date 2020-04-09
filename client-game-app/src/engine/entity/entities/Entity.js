@@ -239,6 +239,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 import DebugComponent from "./../components/../components/./DebugComponent/DebugComponent";
 import GRIDPlayerControlComponent from "./../components/GRIDPlayerControlComponent/GRIDPlayerControlComponent";
 import MinigolfClientBallControlComponent from "./../components/MinigolfClientBallControlControlComponent/MinigolfClientBallControlComponent";
+import FPSPlayerControl from "./../components/FPSPlayerControl/FPSPlayerControl";
 import PathFindingNodeComponent from "./../components/PathFindingNodeComponent/PathFindingNodeComponent";
 import PhysicsComponent from "./../components/PhysicsComponent/PhysicsComponent";
 import BasicPhysicsComponent from "./../components/PhysicsComponent/mixins/BasicPhysicsComponent";
@@ -263,7 +264,8 @@ import WorldPieceComponent from "./../components/WorldPieceComponent/WorldPieceC
 window.ComponentTypes = [
     DebugComponent,
     GRIDPlayerControlComponent,
-    MinigolfClientBallControlComponent,
+	MinigolfClientBallControlComponent,
+	FPSPlayerControl,
     PathFindingNodeComponent,
     PhysicsComponent,
 	BasicPhysicsComponent,
@@ -323,7 +325,14 @@ Entity.FromFile = (json, parent, offset, postinit) => {
 	}
 
 	try {
-		parent.AddChild(entity);
+		if(parent != void(0))
+		{
+			parent.AddChild(entity);
+		}
+		else
+		{
+			ENGINE.m_World.m_Entities.push(entity);
+		}
 	}
 	catch (e) {
 		ENGINE.m_World.m_Entities.push(entity);

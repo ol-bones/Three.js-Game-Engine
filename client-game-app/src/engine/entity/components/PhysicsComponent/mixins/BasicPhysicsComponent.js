@@ -41,7 +41,7 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
         var groundMaterial = new CANNON.Material("groundMaterial");
 
 		let materialOptions = {
-            friction: 40,
+            friction: 400,
             restitution: 3,
             contactEquationStiffness: 1e8,
             contactEquationRelaxation: 3,
@@ -54,6 +54,7 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 
 		let scale = this.m_Parent.m_Scale;
 		let angularDamping = 0.1;
+		let mass = 0;
 		if(this.m_BodySettings.type === "box")
 		{
 			this.m_PhysicsShape = new CANNON.Box(
@@ -64,7 +65,6 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 			)
 			);
 		}
-		let mass = 0;
 		if(this.m_BodySettings.type === "sphere")
 		{
 			mass = 2;
@@ -77,7 +77,8 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 			mass: mass,
 			type: this.m_Args.Type,
 			material: ground_ground_cm,
-			angularDamping: angularDamping 
+			angularDamping: angularDamping,
+			linearDamping: 0.9
 		});
 		this.m_PhysicsBody.addShape(this.m_PhysicsShape);
 		super.Initialise();
