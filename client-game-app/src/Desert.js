@@ -23,7 +23,7 @@ class Desert {
 
 			Entity.FromFile(
 				{
-					"pos": { "x": 150, "y": 170, "z": -175 },
+					"pos": { "x": 525, "y": 170, "z": -675 },
 					"rot": { "x": 0, "y": 0, "z": 0, "w": 1 },
 					"parent": 0,
 					"entities": [],
@@ -34,9 +34,9 @@ class Desert {
 							{
 								"Scale":
 								{
-									"x": 1,
-									"y": 1,
-									"z": 1
+									"x": 10,
+									"y": 10,
+									"z": 10
 								}
 							},
 							"name":"BasicBoxMeshRenderComponent",

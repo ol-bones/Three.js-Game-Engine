@@ -41,6 +41,8 @@ class FPSPlayerControl extends mix(Component).with()
 	
 	RegisterKeyEvents()
 	{
+		window.addEventListener("click", this.onFire.bind(this), false);
+
 		window.addEventListener("keydown", (e) =>
 		{
 			const key = e.key;
@@ -68,6 +70,7 @@ class FPSPlayerControl extends mix(Component).with()
 
     OnInitialised()
     {
+		this.m_Canvas = document.querySelector("canvas");
 		this.m_IsInitialised = true;
 
 		this.m_Gun = Entity.FromFile(
@@ -138,10 +141,10 @@ class FPSPlayerControl extends mix(Component).with()
 		*/
 
 		const force = new THREE.Vector2();
-		if(this.m_MovementKeyStates["w"]) { force.x += 85; }
-		if(this.m_MovementKeyStates["a"]) { force.y -= 85; }
-		if(this.m_MovementKeyStates["s"]) { force.x -= 85; }
-		if(this.m_MovementKeyStates["d"]) { force.y += 85; }
+		if(this.m_MovementKeyStates["w"]) { force.x += 110; }
+		if(this.m_MovementKeyStates["a"]) { force.y -= 110; }
+		if(this.m_MovementKeyStates["s"]) { force.x -= 110; }
+		if(this.m_MovementKeyStates["d"]) { force.y += 110; }
 
 		const dir = this.GetDirection().clone();
 		const cr = new THREE.Vector2(dir.x, dir.z);
@@ -153,9 +156,9 @@ class FPSPlayerControl extends mix(Component).with()
 		);
 
 		const pb = this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position;
-		ENGINE.m_World.m_Camera.position.set(pb.x, pb.y, pb.z);
+		ENGINE.m_World.m_Camera.position.set(pb.x, pb.y + 64, pb.z);
 		
-		const gunPos = new THREE.Vector3(pb.x, pb.y, pb.z);
+		const gunPos = new THREE.Vector3(pb.x, pb.y + 64, pb.z);
 		const eyeDir = new THREE.Vector3(dir.x, dir.y, dir.z);
 		
 		let m = new THREE.Matrix4().lookAt( eyeDir, new THREE.Vector3(), new THREE.Vector3(0, 1, 0) );
@@ -177,7 +180,52 @@ class FPSPlayerControl extends mix(Component).with()
 		{
 			this.m_Gun.SetRotation(rot.x, rot.y, rot.z);
 		}
-    }
+	}
+	
+	onFire(evt)
+	{
+		try
+		{
+			this.m_Ray = new THREE.Raycaster();
+
+			this.m_ScreenPosition = new THREE.Vector2(0,0);
+			this.m_WorldPosition = new THREE.Vector3(0,0,0);
+
+			let width = this.m_Canvas.width;
+			let height = this.m_Canvas.height;
+	
+			this.m_ScreenPosition.x = ( evt.layerX / width  ) * 2 - 1;
+			this.m_ScreenPosition.y = -( evt.layerY / height ) * 2 + 1;
+	
+			this.m_Ray.setFromCamera(this.m_ScreenPosition, ENGINE.m_World.m_Camera);
+	
+			let intersects = this.m_Ray.intersectObjects(_.flatten(entities()
+				.filter(e => e.m_Renderable && e.m_Components.RenderComponent && e.m_Components.RenderComponent.m_Meshes)
+				.map(e => e.m_Components.RenderComponent.m_Meshes))
+			);
+
+			if(intersects.length > 0 && intersects[0].object.m_ParentEntity.m_Components.PhysicsComponent.m_BodySettings.type === "sphere")
+			{
+				this.m_WorldPosition.set
+				(
+					intersects[0].point.x,
+					intersects[0].point.y,
+					intersects[0].point.z
+				);
+
+				const obj = intersects[0].object;
+				const dir = this.GetDirection().clone();
+				const cr = new THREE.Vector2(dir.x, dir.z);
+				const angle = cr.angle();
+				const force = new THREE.Vector2(1,1);
+				force.rotateAround(new THREE.Vector2(0,0), angle).multiplyScalar(2000);
+				
+				obj.m_ParentEntity.m_Components.PhysicsComponent.ApplyForce(
+					force.x, 5, force.y
+				);
+			}
+		} catch(e) {}
+	}
 }
 
 export default FPSPlayerControl;
