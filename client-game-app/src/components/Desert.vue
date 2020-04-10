@@ -26,15 +26,32 @@ export default {
   },
   mounted() {
     console.log(this.Desert);
+
+    document.addEventListener("pointerlockchange", this.pointerLockEvent.bind(this), false );
+    document.addEventListener("mozpointerlockchange", this.pointerLockEvent.bind(this), false );
+    document.addEventListener("webkitpointerlockchange", this.pointerLockEvent.bind(this), false );
+    document.addEventListener("pointerlockerror", this.pointerLockEvent.bind(this), false );
+    document.addEventListener("mozpointerlockerror", this.pointerLockEvent.bind(this), false );
+    document.addEventListener("webkitpointerlockerror", this.pointerLockEvent.bind(this), false );
+
     ENGINE.Initialise();
   },
   methods:{
     requestPointerLock() {
       document.body.requestPointerLock();
       this.hasPointerLock = true;
-      document.body.addEventListener("pointerlockchange", e => this.hasPointerLock = false, false);
-      document.addEventListener( 'pointerlockerror', e => this.hasPointerLock = false, false );
-      document.addEventListener( 'webkitpointerlockerror', e => this.hasPointerLock = false, false );
+    },
+    pointerLockEvent() {
+      if(document.pointerLockElement === document.body
+      || document.mozPointerLockElement === document.body
+      || document.webkitPointerLockElement === document.body)
+      {
+        this.hasPointerLock = true;
+      }
+      else
+      {
+        this.hasPointerLock = false;
+      }
     }
   }
 };

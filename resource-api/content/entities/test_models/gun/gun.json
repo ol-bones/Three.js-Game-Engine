@@ -1,0 +1,35 @@
+{
+    "pos":
+    {
+        "x":0,
+        "y":150,
+        "z":0
+    },
+    "rot":
+    {
+        "x":0,
+        "y":0,
+        "z":0,
+        "w":1
+    },
+    "parent": 0,
+    "entities": [],
+    "components":
+    [
+        {
+            "args":
+            {
+                "Scale":
+                {
+                    "x": 40,
+                    "y": 40,
+                    "z": 40
+                },
+                "model": "gun.obj",
+                "texture":  "/poker_chair.jpg"
+            },
+            "name":"OBJRenderComponent",
+            "updateable":false
+        }
+    ]
+}

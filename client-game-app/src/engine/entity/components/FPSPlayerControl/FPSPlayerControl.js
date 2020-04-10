@@ -22,6 +22,8 @@ class FPSPlayerControl extends mix(Component).with()
 		};
 
 		this.m_PLControls = null;
+
+		this.m_Gun = null;
     }
 
     Initialise()
@@ -67,6 +69,43 @@ class FPSPlayerControl extends mix(Component).with()
     OnInitialised()
     {
 		this.m_IsInitialised = true;
+
+		this.m_Gun = Entity.FromFile(
+		{
+			"pos":
+			{
+				"x":0,
+				"y":0,
+				"z":0
+			},
+			"rot":
+			{
+				"x":0,
+				"y":0,
+				"z":0,
+				"w":1
+			},
+			"parent": this.m_Parent.m_ID,
+			"entities": [],
+			"components":
+			[
+				{
+					"args":
+					{
+						"Scale":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						},
+						"model": "gun.obj",
+						"texture":  "/poker_chair.jpg"
+					},
+					"name":"OBJRenderComponent",
+					"updateable":false
+				}
+			]
+		}, this.m_Parent, new THREE.Vector3(0,0,0));
     }
 
     Jump()
@@ -115,6 +154,29 @@ class FPSPlayerControl extends mix(Component).with()
 
 		const pb = this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position;
 		ENGINE.m_World.m_Camera.position.set(pb.x, pb.y, pb.z);
+		
+		const gunPos = new THREE.Vector3(pb.x, pb.y, pb.z);
+		const eyeDir = new THREE.Vector3(dir.x, dir.y, dir.z);
+		
+		let m = new THREE.Matrix4().lookAt( eyeDir, new THREE.Vector3(), new THREE.Vector3(0, 1, 0) );
+		let q = new THREE.Quaternion().setFromRotationMatrix( m );
+		let rot = new THREE.Euler().setFromQuaternion(q);
+
+		const gunOffset = eyeDir.multiplyScalar(2);
+
+
+		
+		const handOFfset = eyeDir.clone();
+		handOFfset.setY(0);
+		gunOffset.add(handOFfset.cross(new THREE.Vector3(0, 1, 0)).normalize().multiplyScalar(2));
+
+		gunPos.add(gunOffset);
+
+		this.m_Gun.SetPosition(gunPos.x, gunPos.y - 0.25, gunPos.z);
+		if(rot && rot.x && rot.y && rot.z)
+		{
+			this.m_Gun.SetRotation(rot.x, rot.y, rot.z);
+		}
     }
 }
 
