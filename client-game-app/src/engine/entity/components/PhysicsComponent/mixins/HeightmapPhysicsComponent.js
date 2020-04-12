@@ -35,7 +35,8 @@ class HeightmapPhysicsComponent extends mix(PhysicsComponent).with()
 					index++;
 				}
 			}
-		} catch(e) { console.log(e) }
+		} catch(e) { return false; }
+
 		let scale = this.m_Parent.m_Scale;
 		
 		this.m_PhysicsShape = new CANNON.Heightfield(this.m_BodySettings.HeightMap, {

@@ -30,7 +30,26 @@
             "updateable":false
         },
         {
-            "args":{"Type":1},
+            "args":
+            {
+                "Type": 2,
+                "BodySettings":
+                {
+                    "type": "box",
+                    "material":
+                    {
+                        "friction": 400,
+                        "restitution": 3,
+                        "stiffness": 1e8,
+                        "relaxation": 3,
+                        "frictionstiffness": 1e8
+                    },
+                    "mass": 3,
+                    "angularDamping": 0.1,
+                    "linearDamping": 0.9,
+                    "fixedRotation": false
+                }
+            },
             "name":"BasicPhysicsComponent",
             "updateable":false
         }

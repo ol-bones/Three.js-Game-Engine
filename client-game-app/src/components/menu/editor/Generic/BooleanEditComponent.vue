@@ -3,9 +3,8 @@
         <div class="col-xs-12 col-sm-12 col-md-12 fill number-entry">
             <div class="row fill">
                 <div class="col-xs-12 col-sm-12 col-md-12 fill" style="height:0;">
-                    <b-form-input
-                        :value="this.NumberFixed"
-                        type="number"
+                    <b-form-checkbox switch
+                        v-model="val"
                         class="number-entry-input"
                         v-on:input="valueChanged($event)"
                     />
@@ -18,30 +17,19 @@
 <script>
 
 export default {
-    name: "NumberEditComponent",
+    name: "BooleanEditComponent",
     components: {
     },
     props: {
         value: {
-            type: Number,
+            type: Boolean,
             required: true
         }
     },
-    computed: {
-        NumberFixed() {
-            try
-            {
-                return this.value;
-            }
-            catch(Exception)
-            {
-                return 0;
-            }
-        }
-    },
     data() {
-    return {
-    }
+        return {
+            val: this.$props.value
+        }
     },
     created() {
     },
@@ -51,13 +39,8 @@ export default {
         valueChanged(value) {
             try
             {
-                const valueNumber = Number(value);
-                if(value == void(0) || value === this.NumberFixed) return false;
-
-                if(this.NumberFixed !== valueNumber)
-                {
-                    this.$emit("changed", valueNumber);
-                }
+                this.val = value;
+                this.$emit("changed", value);
             }
             catch(Exception) {}
         }

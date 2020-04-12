@@ -16,18 +16,23 @@
         {
             "args":
             {
-                "Type":1,
+                "Type": 2,
                 "BodySettings":
                 {
                     "type":"sphere",
                     "radius":25,
-                    "move":true,
-                    "pos":
+                    "material":
                     {
-                        "x":0,
-                        "y":150,
-                        "z":0
-                    }
+                        "friction": 400,
+                        "restitution": 3,
+                        "stiffness": 1e8,
+                        "relaxation": 3,
+                        "frictionstiffness": 1e8
+                    },
+                    "mass": 3,
+                    "angularDamping": 0.1,
+                    "linearDamping": 0.9,
+                    "fixedRotation": false
                 }
             },
             "name": "BasicPhysicsComponent"

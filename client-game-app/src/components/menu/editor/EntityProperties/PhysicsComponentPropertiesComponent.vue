@@ -3,32 +3,133 @@
   v-if="this.entity && this.physicsComponent">
     <div class="row fill" style="height:100%;overflow-y:scroll;"
     v-if="this.physicsComponent.constructor">
-      <div class="col-xs-12 col-sm-12 col-md-12"
-      v-if="isHeightfield">
-      <div class="row material-properties">
-        <div class="col-xs-4 col-sm-4 col-md-4 fill"
-          style="font-size: 12px;">
-            Size
+      <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Friction
           </div> 
           <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
             <div class="row fill">
               <number-edit-component
-                :value="this.physicsComponent.m_BodySettings.Size"
-                v-on:changed="sizeChanged"
+                :value="this.physicsComponent.m_BodySettings.material.friction"
+                v-on:changed="frictionChanged"
               />
             </div>
           </div>
         </div>
-      <div class="row material-properties">
-        <div class="col-xs-4 col-sm-4 col-md-4 fill"
-          style="font-size: 12px;">
-            Divs
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Restitution
           </div> 
           <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
             <div class="row fill">
               <number-edit-component
-                :value="this.physicsComponent.m_BodySettings.Divisions"
-                v-on:changed="divsChanged"
+                :value="this.physicsComponent.m_BodySettings.material.restitution"
+                v-on:changed="restitutionChanged"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Stiffness
+          </div> 
+          <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
+            <div class="row fill">
+              <number-edit-component
+                :value="this.physicsComponent.m_BodySettings.material.stiffness"
+                v-on:changed="stiffnessChanged"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Relaxation
+          </div> 
+          <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
+            <div class="row fill">
+              <number-edit-component
+                :value="this.physicsComponent.m_BodySettings.material.relaxation"
+                v-on:changed="relaxationChanged"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Friction Stiffness
+          </div> 
+          <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
+            <div class="row fill">
+              <number-edit-component
+                :value="this.physicsComponent.m_BodySettings.material.frictionstiffness"
+                v-on:changed="frictionstiffnessChanged"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Mass
+          </div> 
+          <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
+            <div class="row fill">
+              <number-edit-component
+                :value="this.physicsComponent.m_BodySettings.mass"
+                v-on:changed="massChanged"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Angular Damping
+          </div> 
+          <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
+            <div class="row fill">
+              <number-edit-component
+                :value="this.physicsComponent.m_BodySettings.angularDamping"
+                v-on:changed="angularDampingChanged"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Linear Damping
+          </div> 
+          <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
+            <div class="row fill">
+              <number-edit-component
+                :value="this.physicsComponent.m_BodySettings.linearDamping"
+                v-on:changed="linearDampingChanged"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Fixed Rotation
+          </div> 
+          <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
+            <div class="row fill">
+              <boolean-edit-component
+                :value="this.physicsComponent.m_BodySettings.fixedRotation"
+                v-on:changed="fixedRotationChanged"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill" style="font-size: 12px;">
+            Static
+          </div> 
+          <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
+            <div class="row fill">
+              <boolean-edit-component
+                :value="Boolean(this.physicsComponent.m_Args.Type - 1)"
+                v-on:changed="bodyTypeChanged"
               />
             </div>
           </div>
@@ -42,12 +143,14 @@
 
 import MaterialPreviewComponent from "./../Generic/MaterialPreviewComponent";
 import NumberEditComponent from "./../Generic/NumberEditComponent.vue";
+import BooleanEditComponent from "./../Generic/BooleanEditComponent.vue";
 
 export default {
   name: "PhysicsComponentPropertiesComponent",
   components: {
     MaterialPreviewComponent,
-    NumberEditComponent
+    NumberEditComponent,
+    BooleanEditComponent
   },
   props: {
     entity: {
@@ -57,8 +160,6 @@ export default {
   },
   data() {
     return {
-      Size: 0,
-      Divisions: 0
     }
   },
   created() {
@@ -74,61 +175,44 @@ export default {
     }
   },
   methods: {
-    sizeChanged(value) {
-      if(this.physicsComponent.m_BodySettings.Size === value && this.Size === value) return;
-
-      this.physicsComponent.m_BodySettings.Size = value;
-      this.physicsComponent.m_Args.Size = value;
-      this.Size = value;
-      this.reCreateEntity();
+    frictionChanged(value) {
+      this.physicsComponent.m_BodySettings.material.friction = value;
+      this.physicsComponent.m_Args.BodySettings.material.friction = value;
     },
-    divsChanged(value) {
-      if(this.physicsComponent.m_BodySettings.Divisions === value && this.Divisions === value) return;
-      
-      const previous = this.physicsComponent.m_Args.BodySettings.Divisions;
-
-      this.physicsComponent.m_BodySettings.Divisions = value;
-      this.physicsComponent.m_Args.BodySettings.Divisions = value;
-      this.Divisions = value;
-
-      const heightMap = this.physicsComponent.m_Args.BodySettings.HeightMap;
-
-      if(value < previous)
-      {
-        this.physicsComponent.m_Args.BodySettings.HeightMap = heightMap
-          .slice(0, value+1)
-          .map(r => r.slice(0, value+1));
-      }
-      else
-      {
-        this.physicsComponent.m_Args.BodySettings.HeightMap = heightMap
-          .concat(new Array((value+1) - heightMap.length).fill(new Array(value+1).fill(0)))
-          .map(r => r.concat(new Array((value+1) - r.length).fill(0)));
-      }
-
-      this.reCreateEntity();
+    restitutionChanged(value) {
+      this.physicsComponent.m_BodySettings.material.restitution = value;
+      this.physicsComponent.m_Args.BodySettings.material.restitution = value;
     },
-    reCreateEntity() {
-      const renderComponent = this.physicsComponent.m_Parent.m_Components.RenderComponent;
-
-      renderComponent.m_Args.Size = this.Size;
-      renderComponent.m_Args.Divisions = this.Divisions;
-      renderComponent.Remove();
-      renderComponent.Initialise();
-
-      this.physicsComponent.Remove();
-      this.physicsComponent.Initialise();
-
-
-     // this.physicsComponent.Initialise();
-      this.physicsComponent.SetRotation(-Math.PI/2, 0, 0);
-
-      const debugComponent = this.physicsComponent.m_Parent.m_Components.DebugComponent;
-      if(debugComponent != void(0))
-      {
-        debugComponent.Remove();
-        debugComponent.Initialise();
-      }
+    stiffnessChanged(value) {
+      this.physicsComponent.m_BodySettings.material.stiffness = value;
+      this.physicsComponent.m_Args.BodySettings.material.stiffness = value;
+    },
+    relaxationChanged(value) {
+      this.physicsComponent.m_BodySettings.material.relaxation = value;
+      this.physicsComponent.m_Args.BodySettings.material.relaxation = value;
+    },
+    frictionstiffnessChanged(value) {
+      this.physicsComponent.m_BodySettings.material.frictionstiffness = value;
+      this.physicsComponent.m_Args.BodySettings.material.frictionstiffness = value;
+    },
+    massChanged(value) {
+      this.physicsComponent.m_BodySettings.mass = value;
+      this.physicsComponent.m_Args.BodySettings.mass = value;
+    },
+    angularDampingChanged(value) {
+      this.physicsComponent.m_BodySettings.angularDamping = value;
+      this.physicsComponent.m_Args.BodySettings.angularDamping = value;
+    },
+    linearDampingChanged(value) {
+      this.physicsComponent.m_BodySettings.linearDamping = value;
+      this.physicsComponent.m_Args.BodySettings.linearDamping = value;
+    },
+    fixedRotationChanged(value) {
+      this.physicsComponent.m_BodySettings.fixedRotation = value;
+      this.physicsComponent.m_Args.BodySettings.fixedRotation = value;
+    },
+    bodyTypeChanged(value) {
+      this.physicsComponent.m_Args.Type = Number(value+1);
     }
   }
 };

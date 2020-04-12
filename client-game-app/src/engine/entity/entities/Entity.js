@@ -60,7 +60,20 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 					||
 					this.PreviousComponent(key).m_IsInitialised);
 			})
-			.forEach((key) => { try { this.m_Components[key].Initialise(); } catch (e) { } });
+			.forEach((key) =>
+			{
+				try
+				{
+					const now = Date.now();
+					const component = this.m_Components[key];
+					if(component != void(0)
+					&& now - component.m_LastInitialisedTime > 1000)
+					{
+						component.m_LastInitialisedTime = now;
+						component.Initialise();
+					}
+				} catch (e) {}
+			});
 	}
 
 	IsInitialised() { return this.__IsInitialised; }

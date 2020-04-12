@@ -12,6 +12,7 @@ class Component
         this.m_Parent = args.Parent || null;
         this.m_Updateable = args.Updateable || false;
 
+        this.m_LastInitialisedTime = 0;
         this.m_IsInitialised = false;
     }
 

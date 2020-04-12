@@ -1,5 +1,5 @@
 {
-    "id": "9",
+    "id": "0",
     "pos": {
         "x": 0,
         "y": 0,
@@ -18,7 +18,7 @@
     },
     "entities": [
         {
-            "id": "10",
+            "id": "1",
             "pos": {
                 "x": 0,
                 "y": 0,
@@ -34,7 +34,7 @@
                 "y": 1,
                 "z": 1
             },
-            "parent": 9,
+            "parent": 0,
             "entities": [],
             "components": [
                 {
@@ -54,8 +54,7 @@
                                 4
                             ],
                             "color": 16777215
-                        },
-                        "Parent": 10
+                        }
                     },
                     "name": "HeightmapPlaneMeshRenderComponent",
                     "updateable": false
@@ -65,6 +64,17 @@
                         "BodySettings": {
                             "Size": 1000,
                             "Divisions": 100,
+                            "material": {
+                                "friction": 400,
+                                "restitution": 3,
+                                "stiffness": 100000000,
+                                "relaxation": 3,
+                                "frictionstiffness": 100000000
+                            },
+                            "mass": 3,
+                            "angularDamping": 0.1,
+                            "linearDamping": 0.9,
+                            "fixedRotation": false,
                             "HeightMap": [
                                 [
                                     0,
@@ -10471,8 +10481,7 @@
                                 ]
                             ]
                         },
-                        "Size": 1000,
-                        "Parent": 10
+                        "Size": 1000
                     },
                     "name": "HeightmapPhysicsComponent",
                     "updateable": false
@@ -10480,7 +10489,7 @@
             ]
         },
         {
-            "id": "11",
+            "id": "2",
             "pos": {
                 "x": 517.1984993366024,
                 "y": 30.736111949845778,
@@ -10496,7 +10505,7 @@
                 "y": 4,
                 "z": 60
             },
-            "parent": 9,
+            "parent": 0,
             "entities": [],
             "components": [
                 {
@@ -10506,7 +10515,7 @@
                             "y": 1,
                             "z": 1
                         },
-                        "Parent": 11,
+                        "Parent": 2,
                         "material": {
                             "type": "THREE.MeshPhongMaterial",
                             "texture": "/2.png",
@@ -10522,8 +10531,27 @@
                 },
                 {
                     "args": {
-                        "Type": 1,
-                        "Parent": 11
+                        "Type": 2,
+                        "BodySettings": {
+                            "type": "box",
+                            "material": {
+                                "friction": 400,
+                                "restitution": 3,
+                                "stiffness": 100000000,
+                                "relaxation": 3,
+                                "frictionstiffness": 100000000
+                            },
+                            "mass": 3,
+                            "angularDamping": 0.1,
+                            "linearDamping": 0.9,
+                            "fixedRotation": false,
+                            "size": [
+                                1,
+                                1,
+                                1
+                            ]
+                        },
+                        "Parent": 2
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -10531,7 +10559,7 @@
             ]
         },
         {
-            "id": "12",
+            "id": "3",
             "pos": {
                 "x": 640.2581468047636,
                 "y": 14.671141651608107,
@@ -10547,7 +10575,7 @@
                 "y": 30,
                 "z": 5
             },
-            "parent": 9,
+            "parent": 0,
             "entities": [],
             "components": [
                 {
@@ -10557,15 +10585,34 @@
                             "y": 1,
                             "z": 1
                         },
-                        "Parent": 12
+                        "Parent": 3
                     },
                     "name": "BasicBoxMeshRenderComponent",
                     "updateable": false
                 },
                 {
                     "args": {
-                        "Type": 1,
-                        "Parent": 12
+                        "Type": 2,
+                        "BodySettings": {
+                            "type": "box",
+                            "material": {
+                                "friction": 400,
+                                "restitution": 3,
+                                "stiffness": 100000000,
+                                "relaxation": 3,
+                                "frictionstiffness": 100000000
+                            },
+                            "mass": 3,
+                            "angularDamping": 0.1,
+                            "linearDamping": 0.9,
+                            "fixedRotation": false,
+                            "size": [
+                                1,
+                                1,
+                                1
+                            ]
+                        },
+                        "Parent": 3
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -10573,7 +10620,7 @@
             ]
         },
         {
-            "id": "13",
+            "id": "4",
             "pos": {
                 "x": 638.942247990343,
                 "y": 14.6945959065903,
@@ -10589,7 +10636,7 @@
                 "y": 30,
                 "z": 5
             },
-            "parent": 9,
+            "parent": 0,
             "entities": [],
             "components": [
                 {
@@ -10599,15 +10646,34 @@
                             "y": 1,
                             "z": 1
                         },
-                        "Parent": 13
+                        "Parent": 4
                     },
                     "name": "BasicBoxMeshRenderComponent",
                     "updateable": false
                 },
                 {
                     "args": {
-                        "Type": 1,
-                        "Parent": 13
+                        "Type": 2,
+                        "BodySettings": {
+                            "type": "box",
+                            "material": {
+                                "friction": 400,
+                                "restitution": 3,
+                                "stiffness": 100000000,
+                                "relaxation": 3,
+                                "frictionstiffness": 100000000
+                            },
+                            "mass": 3,
+                            "angularDamping": 0.1,
+                            "linearDamping": 0.9,
+                            "fixedRotation": false,
+                            "size": [
+                                1,
+                                1,
+                                1
+                            ]
+                        },
+                        "Parent": 4
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -10615,7 +10681,7 @@
             ]
         },
         {
-            "id": "14",
+            "id": "5",
             "pos": {
                 "x": 395,
                 "y": 14,
@@ -10631,7 +10697,7 @@
                 "y": 30,
                 "z": 5
             },
-            "parent": 9,
+            "parent": 0,
             "entities": [],
             "components": [
                 {
@@ -10641,15 +10707,34 @@
                             "y": 1,
                             "z": 1
                         },
-                        "Parent": 14
+                        "Parent": 5
                     },
                     "name": "BasicBoxMeshRenderComponent",
                     "updateable": false
                 },
                 {
                     "args": {
-                        "Type": 1,
-                        "Parent": 14
+                        "Type": 2,
+                        "BodySettings": {
+                            "type": "box",
+                            "material": {
+                                "friction": 400,
+                                "restitution": 3,
+                                "stiffness": 100000000,
+                                "relaxation": 3,
+                                "frictionstiffness": 100000000
+                            },
+                            "mass": 3,
+                            "angularDamping": 0.1,
+                            "linearDamping": 0.9,
+                            "fixedRotation": false,
+                            "size": [
+                                1,
+                                1,
+                                1
+                            ]
+                        },
+                        "Parent": 5
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -10657,7 +10742,7 @@
             ]
         },
         {
-            "id": "15",
+            "id": "6",
             "pos": {
                 "x": 395,
                 "y": 14,
@@ -10673,7 +10758,7 @@
                 "y": 30,
                 "z": 5
             },
-            "parent": 9,
+            "parent": 0,
             "entities": [],
             "components": [
                 {
@@ -10682,16 +10767,33 @@
                             "x": 1,
                             "y": 1,
                             "z": 1
-                        },
-                        "Parent": 15
+                        }
                     },
                     "name": "BasicBoxMeshRenderComponent",
                     "updateable": false
                 },
                 {
                     "args": {
-                        "Type": 1,
-                        "Parent": 15
+                        "Type": 2,
+                        "BodySettings": {
+                            "type": "box",
+                            "material": {
+                                "friction": 400,
+                                "restitution": 3,
+                                "stiffness": 100000000,
+                                "relaxation": 3,
+                                "frictionstiffness": 100000000
+                            },
+                            "mass": 3,
+                            "angularDamping": 0.1,
+                            "linearDamping": 0.9,
+                            "fixedRotation": false,
+                            "size": [
+                                1,
+                                1,
+                                1
+                            ]
+                        }
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -10699,7 +10801,7 @@
             ]
         },
         {
-            "id": "16",
+            "id": "7",
             "pos": {
                 "x": 500,
                 "y": 57.73328667913074,
@@ -10715,14 +10817,13 @@
                 "y": 1,
                 "z": 1
             },
-            "parent": 9,
+            "parent": 0,
             "entities": [],
             "components": [
                 {
                     "args": {
                         "Radius": 25,
-                        "Segments": 36,
-                        "Parent": 16
+                        "Segments": 36
                     },
                     "name": "BasicSphereMeshRenderComponent",
                     "updateable": false
@@ -10733,14 +10834,18 @@
                         "BodySettings": {
                             "type": "sphere",
                             "radius": 25,
-                            "move": true,
-                            "pos": {
-                                "x": 0,
-                                "y": 150,
-                                "z": 0
-                            }
-                        },
-                        "Parent": 16
+                            "material": {
+                                "friction": 400,
+                                "restitution": 3,
+                                "stiffness": 100000000,
+                                "relaxation": 3,
+                                "frictionstiffness": 100000000
+                            },
+                            "mass": 3,
+                            "angularDamping": 0.1,
+                            "linearDamping": 0.9,
+                            "fixedRotation": false
+                        }
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -10751,7 +10856,7 @@
     "components": [
         {
             "args": {
-                "Parent": 9
+                "Parent": 0
             },
             "name": "WorldPieceComponent",
             "updateable": false
