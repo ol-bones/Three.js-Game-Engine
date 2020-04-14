@@ -163,6 +163,13 @@ app.get("/:world/pieces", (req, res) => {
     });
 })
 
+app.get("/shaders/TerrainMapMaterial", (req, res) => {
+    res.json({
+        "fragmentShader": fs.readFileSync("./content/shaders/TerrainMapMaterial/TerrainMapMaterial_fragment.glsl", { encoding: "utf8"}),
+        "vertexShader": fs.readFileSync("./content/shaders/TerrainMapMaterial/TerrainMapMaterial_vertex.glsl", { encoding: "utf8"})
+    });
+})
+
 app.listen(Number(config.port), () => {
     console.log(`Started on port ${config.port}`);
 });

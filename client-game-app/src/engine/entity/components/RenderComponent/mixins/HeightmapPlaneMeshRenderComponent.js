@@ -27,7 +27,7 @@ class HeightmapPlaneMeshRenderComponent extends mix(RenderComponent).with()
 		console.log(this.m_Args.material);
 		var mshBox = new THREE.Mesh(geometry, material(this.m_Args.material || "default"));
 		mshBox.material.needsUpdate = true;
-		mshBox.material.map.needsUpdate = true;
+		//mshBox.material.map.needsUpdate = true;
 console.log(mshBox)
 		this.m_Mesh = mshBox;
 		this.m_Meshes = mshBox;

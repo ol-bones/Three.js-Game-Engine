@@ -83,6 +83,103 @@ class MaterialRequest extends mix(AssetRequest).with()
 					material.needsUpdate = true;
 					break;
 				}
+				case "TerrainMapMaterial":
+				{
+					const map = texture("/grass2.jpg");
+					const map2 = texture("/default.jpg");
+					const glsl = json("/shaders/TerrainMapMaterial");
+
+					const color = new THREE.Color(1,1,1);
+
+					const canvas  = document.createElement('canvas');
+					canvas.width = data.blendmap[0].length;
+					canvas.height = data.blendmap.length;
+					
+					const context = canvas.getContext("2d");
+					const imgData = context.createImageData(canvas.width, canvas.height);
+					
+					let index = 0;
+					for(let y = data.blendmap.length - 1; y >= 0; y--)
+					{
+						for(let x = 0; x < data.blendmap[0].length; x++)
+						{
+							imgData.data[index++] = data.blendmap[x][y]; // R
+							imgData.data[index++] = data.blendmap[x][y]; // G
+							imgData.data[index++] = data.blendmap[x][y]; // B
+							imgData.data[index++] = data.blendmap[x][y]; // A
+						}
+					}
+
+					context.putImageData(imgData, 0, 0);
+				
+					var image = new Image();
+					image.src = canvas.toDataURL();
+
+					const bm = new THREE.Texture();
+					bm.format = THREE.RGBAFormat;
+					bm.image = image;
+
+					material = new THREE.ShaderMaterial(
+					{
+						uniforms: THREE.UniformsUtils.merge([
+							THREE.ShaderLib.phong.uniforms,
+							{
+								map: { type: "t", value: map},
+								map2: { type: "t", value: map2},
+								blendmap: { type:"t", value: bm },
+								diffuse: { type: "c", value: color },
+								emissive: { type: "c", value: new THREE.Color(0x000000) },
+								specular: { type: "c", value: new THREE.Color(0x111111) },
+								shininess: { type: "f", value: 30 }
+							}
+						]),
+						vertexShader: glsl.vertexShader,
+						fragmentShader: glsl.fragmentShader,
+						lights: true,
+						defines: {
+							USE_MAP: true,
+							USE_UV: true
+						}
+					});
+					
+					material.uniforms.map.value.needsUpdate = true;
+					material.uniforms.map2.value.needsUpdate = true;
+					material.uniforms.blendmap.value.needsUpdate = true;
+					material.combine = THREE.MultiplyOperation;
+
+					//material.map = map;
+					material.color = color;
+
+					setInterval(() => {
+						const imgData2 = context.createImageData(canvas.width, canvas.height);
+						
+						let index1 = 0;
+						for(let y = data.blendmap.length - 1; y >= 0; y--)
+						{
+							for(let x = 0; x < data.blendmap[0].length; x++)
+							{
+								imgData2.data[index1++] = Math.floor(Math.random()*255); // R
+								imgData2.data[index1++] = Math.floor(Math.random()*255); // G
+								imgData2.data[index1++] = Math.floor(Math.random()*255); // B
+								imgData2.data[index1++] = Math.floor(Math.random()*255); // A
+							}
+						}
+
+						context.putImageData(imgData2, 0, 0);
+					
+						var image2 = new Image();
+						image2.src = canvas.toDataURL();
+
+						const bm2 = new THREE.Texture();
+						bm2.format = THREE.RGBAFormat;
+						bm2.image = image2;
+
+						material.uniforms.blendmap.value = bm2;
+						material.uniforms.blendmap.value.needsUpdate = true;
+						material.uniformsNeedUpdate = true;
+					}, 5000);
+					break;
+				}
 				default:
 
 					break;
@@ -92,6 +189,7 @@ class MaterialRequest extends mix(AssetRequest).with()
 		}
 		catch(Exception)
 		{
+			console.log(Exception);
 		}
     }
 }
