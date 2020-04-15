@@ -32,7 +32,7 @@
                     "type": "TerrainMapMaterial",
                     "texture": "/grass2.jpg",
                     "color": "0xFFFFFF",
-                    "repeat": [1, 1],
+                    "repeat": [9, 9],
                     "blendmap":
                     [      
                         [255,255,255,255,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],

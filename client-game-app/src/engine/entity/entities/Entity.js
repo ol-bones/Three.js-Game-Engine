@@ -270,6 +270,7 @@ import RenderComponent from "./../components/RenderComponent/RenderComponent";
 import RotateEditComponent from "./../components/RotateEditComponent/RotateEditComponent";
 import ScaleEditComponent from "./../components/ScaleEditComponent/ScaleEditComponent";
 import HeightmapEditComponent from "./../components/HeightmapEditComponent/HeightmapEditComponent";
+import PlanePaintEditComponent from "./../components/PlanePaintEditComponent/PlanePaintEditComponent";
 import TriggerComponent from "./../components/TriggerComponent/TriggerComponent";
 import WASDPlayerControlComponent from "./../components/WASDPlayerControlComponent/WASDPlayerControlComponent";
 import WorldPieceComponent from "./../components/WorldPieceComponent/WorldPieceComponent";
@@ -291,6 +292,7 @@ window.ComponentTypes = [
     BasicShapeMeshRenderComponent,
 	BasicSphereMeshRenderComponent,
 	HeightmapPlaneMeshRenderComponent,
+	PlanePaintEditComponent,
     OBJRenderComponent,
     RenderComponent,
     RotateEditComponent,

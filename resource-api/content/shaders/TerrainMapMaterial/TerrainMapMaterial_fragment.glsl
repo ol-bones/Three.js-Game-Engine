@@ -5,6 +5,7 @@ uniform float shininess;
 uniform float opacity;
 uniform sampler2D map2;
 uniform sampler2D blendmap;
+uniform vec2 repeat;
 
 #include <common>
 #include <packing>
@@ -37,10 +38,10 @@ void main() {
 	vec3 totalEmissiveRadiance = emissive;
 	#include <logdepthbuf_fragment>
     #ifdef USE_MAP
-        vec4 texelColor = texture2D( map, vUv );
+        vec4 texelColor = texture2D( map, vUv * repeat );
         texelColor = mapTexelToLinear( texelColor );
 
-        vec4 texelColor2 = texture2D( map2, vUv );
+        vec4 texelColor2 = texture2D( map2, vUv * repeat );
         texelColor2 = mapTexelToLinear( texelColor2 );
 
         vec4 texelColor3 = texture2D( blendmap, vUv );

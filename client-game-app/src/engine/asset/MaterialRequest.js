@@ -130,7 +130,8 @@ class MaterialRequest extends mix(AssetRequest).with()
 								diffuse: { type: "c", value: color },
 								emissive: { type: "c", value: new THREE.Color(0x000000) },
 								specular: { type: "c", value: new THREE.Color(0x111111) },
-								shininess: { type: "f", value: 30 }
+								shininess: { type: "f", value: 30 },
+								repeat: { type: "v2", value: new THREE.Vector2(data.repeat[0], data.repeat[1]) }
 							}
 						]),
 						vertexShader: glsl.vertexShader,
@@ -141,6 +142,21 @@ class MaterialRequest extends mix(AssetRequest).with()
 							USE_UV: true
 						}
 					});
+
+					if(data.repeat && data.repeat.length === 2)
+					{
+						if(data.repeat[0] > 1 || data.repeat[1] > 1)
+						{
+							//material.uniforms.map.value.repeat = new THREE.Vector2();
+							material.uniforms.map.value.repeat.set(data.repeat[0], data.repeat[1]);
+							material.uniforms.map.value.wrapS = THREE.RepeatWrapping;
+							material.uniforms.map.value.wrapT = THREE.RepeatWrapping;
+							//material.uniforms.map2.value.repeat = new THREE.Vector2();
+							material.uniforms.map2.value.repeat.set(data.repeat[0], data.repeat[1]);
+							material.uniforms.map2.value.wrapS = THREE.RepeatWrapping;
+							material.uniforms.map2.value.wrapT = THREE.RepeatWrapping;
+						}
+					}
 					
 					material.uniforms.map.value.needsUpdate = true;
 					material.uniforms.map2.value.needsUpdate = true;
@@ -149,8 +165,9 @@ class MaterialRequest extends mix(AssetRequest).with()
 
 					//material.map = map;
 					material.color = color;
+					material.blendmap = data.blendmap;
 
-					setInterval(() => {
+					/*setInterval(() => {
 						const imgData2 = context.createImageData(canvas.width, canvas.height);
 						
 						let index1 = 0;
@@ -177,7 +194,7 @@ class MaterialRequest extends mix(AssetRequest).with()
 						material.uniforms.blendmap.value = bm2;
 						material.uniforms.blendmap.value.needsUpdate = true;
 						material.uniformsNeedUpdate = true;
-					}, 5000);
+					}, 5000);*/
 					break;
 				}
 				default:

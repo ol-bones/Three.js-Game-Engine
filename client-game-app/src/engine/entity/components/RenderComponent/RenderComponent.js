@@ -138,11 +138,24 @@ class RenderComponent extends mix(Component).with()
 	{
 		const materialObject = this.m_Mesh.material;
 		
-		return {
-			type: materialObject.type ? `THREE.${materialObject.type}` : "THREE.MeshPhongMaterial",
-			texture: materialObject.map.image.currentSrc.split("textures")[1],
-			repeat: [materialObject.map.repeat.x, materialObject.map.repeat.y],
-			color: materialObject.color.getHex()
+		if(materialObject.map != void(0))
+		{
+			return {
+				type: materialObject.type ? `THREE.${materialObject.type}` : "THREE.MeshPhongMaterial",
+				texture: materialObject.map.image.currentSrc.split("textures")[1],
+				repeat: [materialObject.map.repeat.x, materialObject.map.repeat.y],
+				color: materialObject.color.getHex()
+			}
+		}
+		else if(materialObject.uniforms != void(0))
+		{
+			return {
+				type: "TerrainMapMaterial",
+				texture: materialObject.uniforms.map.value.image.currentSrc.split("textures")[1],
+				repeat: [materialObject.uniforms.repeat.value.x, materialObject.uniforms.repeat.value.y],
+				color: new THREE.Color(1,1,1).getHex(),
+				blendmap: materialObject.blendmap
+			}
 		}
 	}
 }

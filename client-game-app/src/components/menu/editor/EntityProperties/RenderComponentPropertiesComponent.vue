@@ -13,7 +13,7 @@
         <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
           <div class="row fill">
             <vector2-edit-component
-              :vector="this.materialObject.map.repeat"
+              :vector="this.repeatReference"
               v-on:changed="repeatChanged"/>
           </div>
         </div>
@@ -55,6 +55,19 @@ export default {
     },
     materialObject() {
       return this.renderComponent.m_Mesh.material;
+    },
+    repeatReference() {
+      if(this.materialObject.map != void(0)
+      && this.materialObject.map.value.repeat != void(0))
+      {
+        return this.materialObject.map.value.repeat;
+      }
+      else if(this.materialObject.uniforms != void(0)
+      && this.materialObject.uniforms.map.value != void(0)
+      && this.materialObject.uniforms.map2.value != void(0))
+      {
+        return this.materialObject.uniforms.repeat.value;
+      }
     }
   },
   methods: {
@@ -62,22 +75,44 @@ export default {
     {
       this.repeat[component] = value;
 
-      this.materialObject.map.repeat.set(
-        this.repeat.x, this.repeat.y
-      );
-
-      if(this.repeat.x > 1 || this.repeat.y > 1)
+      if(this.materialObject.map != void(0)
+      && this.materialObject.map.value.repeat != void(0))
       {
-        this.materialObject.map.wrapS = THREE.RepeatWrapping;
-        this.materialObject.map.wrapT = THREE.RepeatWrapping;
-      }
+        this.materialObject.map.value.repeat.set(
+          this.repeat.x, this.repeat.y
+        );
 
+        if(this.repeat.x > 1 || this.repeat.y > 1)
+        {
+          this.materialObject.map.value.wrapS = THREE.RepeatWrapping;
+          this.materialObject.map.value.wrapT = THREE.RepeatWrapping;
+        }
+      }
+      else if(this.materialObject.uniforms != void(0)
+      && this.materialObject.uniforms.map.value != void(0)
+      && this.materialObject.uniforms.map2.value != void(0))
+      {
+        this.materialObject.uniforms.repeat.value.set(
+          this.repeat.x, this.repeat.y
+        );
+      }
+      
       this.materialPropertyChanged();
     },
     materialPropertyChanged()
     {
-      this.materialObject.map.needsUpdate = true;
+      if(this.materialObject.map != void(0))
+      {
+        this.materialObject.map.value.needsUpdate = true;
+      }
+      else if(this.materialObject.uniforms != void(0))
+      {
+        this.materialObject.uniforms.map.value.needsUpdate = true;
+        this.materialObject.uniforms.map2.value.needsUpdate = true;
+      }
+
       this.materialObject.needsUpdate = true;
+			this.materialObject.uniformsNeedUpdate = true;
 
       this.renderComponent.m_Args.material = this.renderComponent.InlineMaterialArgs();
     }

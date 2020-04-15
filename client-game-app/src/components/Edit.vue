@@ -60,6 +60,14 @@
                         <icon name="chess-board" scale="1"/>
                       </b-button>
                     </th>
+                    <th v-if="SelectedEntity && SelectedEntity.m_Components && SelectedEntity.m_Components.RenderComponent && SelectedEntity.m_Components.RenderComponent.constructor.name === 'HeightmapPlaneMeshRenderComponent'">
+                      <b-button class="editor-button"
+                        v-b-tooltip.hover.topright title="Plane Paint Tool"
+                        v-on:click="onPlanePaintToolButtonClicked"
+                        :pressed.sync="ToolButtonStates.PlanePaintEditButtonSelected">
+                        <icon name="chess-board" scale="1"/>
+                      </b-button>
+                    </th>
                   </tr>
                 </div>
               </div>
@@ -104,7 +112,8 @@ export default {
         PositionEditButtonSelected: false,
         RotationEditButtonSelected: false,
         ScaleEditButtonSelected: false,
-        HeightmapEditButtonSelected: false
+        HeightmapEditButtonSelected: false,
+        PlanePaintEditButtonSelected: false
       }
     }
   },
@@ -171,6 +180,17 @@ export default {
       if(this.ToolButtonStates.HeightmapEditButtonSelected) {
         this.UntoggleAllToolsExcept("HeightmapEditButtonSelected");
         EDITOR.SelectHeightmapEditTool();
+      }
+      else
+      {
+        this.UntoggleAllToolsExcept();
+        EDITOR.NoTool();
+      }
+    },
+    onPlanePaintToolButtonClicked() {
+      if(this.ToolButtonStates.PlanePaintEditButtonSelected) {
+        this.UntoggleAllToolsExcept("PlanePaintEditButtonSelected");
+        EDITOR.SelectPlanePaintEditTool();
       }
       else
       {
