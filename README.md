@@ -1,4 +1,4 @@
-DEMO: http://35.204.51.255/#/
+DEMO: http://18.222.180.218:8080/#/Desert
 
 ![image](https://i.imgur.com/jAi2P8H.jpg)
 # Installation & Use
