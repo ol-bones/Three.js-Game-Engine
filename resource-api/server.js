@@ -50,7 +50,7 @@ const materials = glob.sync(`${materialsFolder}**/*.json`, [])
     .map(materialPath => {
         return {
             url: materialPath.split("./content/materials")[1],
-            name: materialPath.split("/").find((sub, i, arr) => i === arr.length-1).replace(".json","")
+            name: materialPath.replace("./content/materials/","").replace(".json","")
         };
 });
 

@@ -23,6 +23,9 @@ class PlanePaintEditComponent extends mix(Component).with()
 		this.m_AreaSelected = false;
 
 		this.m_Step = new THREE.Vector3(0, 0, 1);
+		this.m_PaintStrength = 1;
+
+		this.m_BlendMapMesh = null;
     }
 
     Initialise()
@@ -36,7 +39,7 @@ class PlanePaintEditComponent extends mix(Component).with()
 			(
 				up,
 				this.m_Parent.m_Position,
-				this.m_Parent.m_Components.RenderComponent.m_Mesh.geometry.boundingSphere.radius*0.1,
+				1,
 				0x00FF00,
 				4,
 				2
@@ -48,8 +51,58 @@ class PlanePaintEditComponent extends mix(Component).with()
 
 		this.m_Parent.m_ClickFunctions[0] = this.onMouseDown.bind(this);
 
+		const renderComponent = this.m_Parent.m_Components.RenderComponent;
+		const blendMapRef = renderComponent.m_Args.material.blendmap;
+		const width = blendMapRef.length;
+		const height = blendMapRef[0].length;
+		this.m_BlendMapMesh = this.CreateBlendMapMesh(width, height);
+		this.AddBlendMapMeshToEditorScene(this.m_BlendMapMesh);
+
 		this.OnInitialised();
     }
+
+	CreateBlendMapMesh(width, height)
+	{
+		try
+		{
+			const renderComponent = this.m_Parent.m_Components.RenderComponent;
+			const geometry = renderComponent.m_Mesh.geometry;
+
+			return new THREE.Mesh(
+				new THREE.PlaneGeometry(
+					geometry.boundingBox.max.x,
+					geometry.boundingBox.max.y,
+					width,
+					height
+				)
+			);
+		} catch(e) { return null; }
+	}
+
+	AddBlendMapMeshToEditorScene(mesh)
+	{
+		try
+		{
+			this.m_BlendMapMesh = mesh;
+			ENGINE.m_World.m_EditorScene.add(mesh);
+			mesh.applyMatrix4(this.m_Parent.m_Components.RenderComponent.m_Mesh.matrixWorld);
+			mesh.geometry.computeBoundingBox();
+			const offsetx = mesh.geometry.boundingBox.max.x;
+			const offsety = mesh.geometry.boundingBox.max.y;
+			mesh.geometry.translate(offsetx, offsety, 0);
+			mesh.geometry.verticesNeedUpdate = true;
+			mesh.material.visible = false;
+		} catch(e) {}
+	}
+
+	DeleteBlendMapMesh()
+	{
+		try
+		{
+			ENGINE.m_World.m_EditorScene.remove(this.m_BlendMapMesh);
+			this.m_BlendMapMesh = null;
+		} catch(e) {}
+	}
 
     Update()
     {
@@ -62,8 +115,8 @@ class PlanePaintEditComponent extends mix(Component).with()
 			{
 				if(hoveredEnt != void(0) && hoveredEnt === this.m_Parent)
 				{
-					const verts = hoveredEnt.m_Components.RenderComponent.m_Mesh.geometry.vertices
-						.map((v,i) => [v.clone().applyMatrix4(hoveredEnt.m_Components.RenderComponent.m_Mesh.matrixWorld), i])
+					const verts = this.m_BlendMapMesh.geometry.vertices
+						.map((v,i) => [v.clone().applyMatrix4(this.m_BlendMapMesh.matrixWorld), i])
 						.sort((v, n) => v[0].distanceTo(mousePos) - n[0].distanceTo(mousePos));
 
 					this.m_ModifyArrows.forEach((a,i) => a.position.set(verts[i][0].x, verts[i][0].y, verts[i][0].z));
@@ -93,97 +146,93 @@ class PlanePaintEditComponent extends mix(Component).with()
 
 				const blendMapRef = renderComponent.m_Args.material.blendmap;
 				const material = renderComponent.m_Mesh.material;
+				const blendGeometry = this.m_BlendMapMesh.geometry;
 
-				const vertRef = (i) => geometry.vertices[i];
-				this.m_VertsSelected
-					.map(v =>new THREE.Vector2(Math.round(26*(vertRef(v).x/200)), Math.round(26*(vertRef(v).y/200))))
-					.forEach(v => blendMapRef[v.x][v.y] = 254);
-
-				const canvas  = document.createElement('canvas');
-				canvas.width = blendMapRef[0].length;
-				canvas.height = blendMapRef.length;
-
-				const context = canvas.getContext("2d");
-				const imgData2 = context.createImageData(canvas.width, canvas.height);
-
-				let index1 = 0;
-				for(let y = blendMapRef.length - 1; y >= 0; y--)
-				{
-					for(let x = 0; x < blendMapRef[0].length; x++)
-					{
-						imgData2.data[index1++] = Math.floor(blendMapRef[x][y]); // R
-						imgData2.data[index1++] = Math.floor(blendMapRef[x][y]); // G
-						imgData2.data[index1++] = Math.floor(blendMapRef[x][y]); // B
-						imgData2.data[index1++] = Math.floor(blendMapRef[x][y]); // A
-					}
-				}
-
-				context.putImageData(imgData2, 0, 0);
-
-				var image2 = new Image();
-				image2.src = canvas.toDataURL();
-
-				const bm2 = new THREE.Texture();
-				bm2.format = THREE.RGBAFormat;
-				bm2.image = image2;
-
-				material.uniforms.blendmap.value = bm2;
-				material.uniforms.blendmap.value.needsUpdate = true;
-				material.uniformsNeedUpdate = true;
-
-				/*
-				const divs = this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.Divisions;
-				const saved = [];
-				
-				const heights = geometry.vertices.map(
-					v => v.z
-				).reverse();
-
-				let index = 0;
-				for(let y = divs; y >= 0; y--)
-				{
-					saved.push([]);
-					for(let x = 0; x <= divs; x++)
-					{
-						saved[saved.length-1].push([heights[index], x, y]);
-						index++;
-					}
-					saved[saved.length-1].reverse();
-				}
-
-				this.m_Parent.m_Components.PhysicsComponent.m_Args.BodySettings.HeightMap = saved.map(
-					row => row.map(v =>
-					{
-						const z = v[0];
-						const x = v[1];
-						const y = v[2];
-
-						const p = new THREE.Vector2(x,y);
-						const m = new THREE.Vector2(divs/2,divs/2);
-						const rot = Math.PI/2;
-						const r = p.rotateAround(m, rot);
-						const rp = saved[Math.round(r.y)][Math.round(r.x)];
-
-						return rp[0];
-					}).reverse()
+				const vertRef = (i) => new THREE.Vector2(
+					blendGeometry.vertices[i].x / geometry.boundingBox.max.x, 
+					blendGeometry.vertices[i].y / geometry.boundingBox.max.y
 				);
 
-				geometry.verticesNeedUpdate = true;
-				this.m_Parent.m_Components.PhysicsComponent.regeneratePhys();
-				*/
+				const min = new THREE.Vector2();
+				const max = new THREE.Vector2(blendMapRef.length, blendMapRef.length);
+
+				const vertVector = (v) => vertRef(v)
+					.multiplyScalar(blendMapRef.length)
+					.subScalar(1)
+					.floor()
+					.clamp(min, max);
+
+				const paint = (v) => blendMapRef[v.x][v.y] = Math.max(Math.min(Math.floor(
+					blendMapRef[v.x][v.y] + this.m_PaintStrength
+				), 255), 0);
+
+				this.m_VertsSelected.map(vertVector).forEach(paint);
+
+				this.UpdateMaterial()
 			}
+		}
+		catch(e) { console.log(e); }
+	}
+
+	UpdateMaterial()
+	{
+		try
+		{
+			const renderComponent = this.m_Parent.m_Components.RenderComponent;
+			const blendMapRef = renderComponent.m_Args.material.blendmap;
+			const material = renderComponent.m_Mesh.material;
+
+			const canvas  = document.createElement('canvas');
+			canvas.width = blendMapRef[0].length;
+			canvas.height = blendMapRef.length;
+
+			const context = canvas.getContext("2d");
+			const imgData2 = context.createImageData(canvas.width, canvas.height);
+
+			let index1 = 0;
+			for(let y = blendMapRef.length - 1; y >= 0; y--)
+			{
+				for(let x = 0; x < blendMapRef[0].length; x++)
+				{
+					const pixel = Math.abs(Math.max(Math.min(Math.floor(blendMapRef[x][y]), 255), 0));
+
+					imgData2.data[index1++] = pixel; // R
+					imgData2.data[index1++] = pixel; // G
+					imgData2.data[index1++] = pixel; // B
+					imgData2.data[index1++] = pixel; // A
+				}
+			}
+
+			context.putImageData(imgData2, 0, 0);
+
+			var image2 = new Image();
+			image2.src = canvas.toDataURL();
+
+			const bm2 = new THREE.Texture();
+			bm2.format = THREE.RGBAFormat;
+			bm2.image = image2;
+
+			material.uniforms.blendmap.value = bm2;
+			material.uniforms.blendmap.value.needsUpdate = true;
+			material.uniformsNeedUpdate = true;
 		}
 		catch(e) { console.log(e); }
 	}
 
     Remove()
     {
-		super.Remove();
-		
-		this.m_AreaSelected = false;
+		try
+		{
+			super.Remove();
+			
+			this.m_AreaSelected = false;
 
-		this.m_ModifyArrows.forEach(v => ENGINE.m_World.m_EditorScene.remove(v));
-		delete this.m_ModifyArrows;
+			this.m_ModifyArrows.forEach(v => ENGINE.m_World.m_EditorScene.remove(v));
+			delete this.m_ModifyArrows;
+
+			this.DeleteBlendMapMesh();
+		}
+		catch(e) { console.log(e); }
     }
 }
 

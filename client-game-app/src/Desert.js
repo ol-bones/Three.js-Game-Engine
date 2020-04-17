@@ -43,7 +43,27 @@ class Desert {
 							"updateable":false
 						},
 						{
-							"args": { "Type": 1, "BodySettings": { "type": "sphere", "radius": 2 } },
+							"args":
+							{
+								"Type": 1,
+								"BodySettings":
+								{
+									"type": "sphere",
+									"radius": 20,
+									"material":
+									{
+										"friction": 1000,
+										"restitution": 3,
+										"stiffness": 1e8,
+										"relaxation": 3,
+										"frictionstiffness": 1e12
+									},
+									"mass": 3,
+									"angularDamping": 0.1,
+									"linearDamping": 0.9,
+									"fixedRotation": false,
+								}
+							},
 							"name": "BasicPhysicsComponent"
 						},
 						{

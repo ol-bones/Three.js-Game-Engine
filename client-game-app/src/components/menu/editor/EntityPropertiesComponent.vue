@@ -67,6 +67,11 @@
           v-if="this.entity.m_Components && this.entity.m_Components.HeightmapEditComponent"
           :entity="this.entity"
         />
+        <plane-paint-edit-component-properties-component
+          v-show="tabSelected === 'PlanePaintEditComponent'"
+          v-if="this.entity.m_Components && this.entity.m_Components.PlanePaintEditComponent"
+          :entity="this.entity"
+        />
       </div>
     </div>  
   </div>
@@ -78,6 +83,7 @@ import GeneralPropertiesComponent from "./EntityProperties/GeneralPropertiesComp
 import RenderComponentPropertiesComponent from "./EntityProperties/RenderComponentPropertiesComponent";
 import PhysicsComponentPropertiesComponent from "./EntityProperties/PhysicsComponentPropertiesComponent";
 import HeightMapEditComponentPropertiesComponent from "./EntityProperties/HeightMapEditComponentPropertiesComponent";
+import PlanePaintEditComponentPropertiesComponent from "./EntityProperties/PlanePaintEditComponentPropertiesComponent";
 
 export default {
   name: "EntityPropertiesComponent",
@@ -85,7 +91,8 @@ export default {
     GeneralPropertiesComponent,
     RenderComponentPropertiesComponent,
     PhysicsComponentPropertiesComponent,
-    HeightMapEditComponentPropertiesComponent
+    HeightMapEditComponentPropertiesComponent,
+    PlanePaintEditComponentPropertiesComponent
   },
   props: {
     entity: {

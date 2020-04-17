@@ -154,7 +154,7 @@ class RenderComponent extends mix(Component).with()
 				texture: materialObject.uniforms.map.value.image.currentSrc.split("textures")[1],
 				repeat: [materialObject.uniforms.repeat.value.x, materialObject.uniforms.repeat.value.y],
 				color: new THREE.Color(1,1,1).getHex(),
-				blendmap: materialObject.blendmap
+				blendmap: materialObject.uniforms.blendmap.value
 			}
 		}
 	}

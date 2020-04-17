@@ -31,6 +31,7 @@
                 {
                     "type": "TerrainMapMaterial",
                     "texture": "/grass2.jpg",
+                    "texture2": "/dirt.jpg",
                     "color": "0xFFFFFF",
                     "repeat": [9, 9],
                     "blendmap":

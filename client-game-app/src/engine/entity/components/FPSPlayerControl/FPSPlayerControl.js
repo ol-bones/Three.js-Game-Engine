@@ -24,6 +24,9 @@ class FPSPlayerControl extends mix(Component).with()
 		this.m_PLControls = null;
 
 		this.m_Gun = null;
+		this.m_GunFlash = null;
+		this.m_GunFlashState = false;
+		this.m_CanJump = true;
     }
 
     Initialise()
@@ -41,7 +44,7 @@ class FPSPlayerControl extends mix(Component).with()
 	
 	RegisterKeyEvents()
 	{
-		window.addEventListener("click", this.onFire.bind(this), false);
+		window.addEventListener("mousedown", this.onFire.bind(this), false);
 
 		window.addEventListener("keydown", (e) =>
 		{
@@ -102,7 +105,45 @@ class FPSPlayerControl extends mix(Component).with()
 							"z": 1
 						},
 						"model": "gun.obj",
-						"texture":  "/poker_chair.jpg"
+						"texture":  "/gun.png"
+					},
+					"name":"OBJRenderComponent",
+					"updateable":false
+				}
+			]
+		}, this.m_Parent, new THREE.Vector3(0,0,0));
+
+
+		this.m_GunFlash = Entity.FromFile(
+		{
+			"pos":
+			{
+				"x":0,
+				"y":0,
+				"z":0
+			},
+			"rot":
+			{
+				"x":0,
+				"y":0,
+				"z":0,
+				"w":1
+			},
+			"parent": this.m_Parent.m_ID,
+			"entities": [],
+			"components":
+			[
+				{
+					"args":
+					{
+						"Scale":
+						{
+							"x": 1,
+							"y": 1,
+							"z": 1
+						},
+						"model": "gunflash.obj",
+						"texture":  "/2.png"
 					},
 					"name":"OBJRenderComponent",
 					"updateable":false
@@ -113,9 +154,15 @@ class FPSPlayerControl extends mix(Component).with()
 
     Jump()
     {
-		this.m_Parent.m_Components.PhysicsComponent.ApplyForce(
-			0, 200, 0
-		);
+		if(this.m_CanJump)
+		{
+			this.m_CanJump = false;
+			this.m_Parent.m_Components.PhysicsComponent.ApplyForce(
+				0, 6000, 0
+			);
+
+			setTimeout(() => this.m_CanJump = true, 1000);
+		}
 	}
 	
 	// unit vector, not angle
@@ -129,22 +176,16 @@ class FPSPlayerControl extends mix(Component).with()
 
     Update()
     {
-		/*
-		let m = ENGINE.m_Mouse.m_WorldPosition.clone();
-		const mworld = ENGINE.m_Mouse.m_WorldPosition.clone();
-		m.y = this.m_Parent.m_Position.y;
-		this.m_Dir = m.sub(this.m_Parent.m_Position).normalize();
-		this.m_Length = Math.min(Math.max(mworld.distanceTo(this.m_Parent.m_Position), 0), 110);
-		this.m_Arrow.setLength(this.m_Length, 0, 0);
-		this.m_Arrow.setDirection(this.m_Dir);
-		this.m_Arrow.position.set(this.m_Parent.m_Position.x, this.m_Parent.m_Position.y, this.m_Parent.m_Position.z);
-		*/
-
+		if(this.m_GunFlash.m_Components.RenderComponent.m_Mesh)
+		{
+			this.m_GunFlash.m_Components.RenderComponent.m_Mesh.visible = this.m_GunFlashState;
+		}
+		
 		const force = new THREE.Vector2();
-		if(this.m_MovementKeyStates["w"]) { force.x += 110; }
-		if(this.m_MovementKeyStates["a"]) { force.y -= 110; }
-		if(this.m_MovementKeyStates["s"]) { force.x -= 110; }
-		if(this.m_MovementKeyStates["d"]) { force.y += 110; }
+		if(this.m_MovementKeyStates["w"]) { force.x += 190; }
+		if(this.m_MovementKeyStates["a"]) { force.y -= 190; }
+		if(this.m_MovementKeyStates["s"]) { force.x -= 190; }
+		if(this.m_MovementKeyStates["d"]) { force.y += 190; }
 
 		const dir = this.GetDirection().clone();
 		const cr = new THREE.Vector2(dir.x, dir.z);
@@ -176,9 +217,11 @@ class FPSPlayerControl extends mix(Component).with()
 		gunPos.add(gunOffset);
 
 		this.m_Gun.SetPosition(gunPos.x, gunPos.y - 0.25, gunPos.z);
+		this.m_GunFlash.SetPosition(gunPos.x, gunPos.y - 0.25, gunPos.z);
 		if(rot && rot.x && rot.y && rot.z)
 		{
 			this.m_Gun.SetRotation(rot.x, rot.y, rot.z);
+			this.m_GunFlash.SetRotation(rot.x, rot.y, rot.z);
 		}
 	}
 	
@@ -186,6 +229,12 @@ class FPSPlayerControl extends mix(Component).with()
 	{
 		try
 		{
+			if(this.m_GunFlashState === false)
+			{
+				this.m_GunFlashState = true;
+				setTimeout(() => this.m_GunFlashState = false, 50);
+			}
+
 			this.m_Ray = new THREE.Raycaster();
 
 			this.m_ScreenPosition = new THREE.Vector2(0,0);

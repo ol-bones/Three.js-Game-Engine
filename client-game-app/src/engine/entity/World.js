@@ -28,7 +28,7 @@ class World extends mix(BaseObject).with(Comms)
 		this.m_Entities = [];
 
 		this.m_PhysicsWorld = new CANNON.World();
-		this.m_PhysicsWorld.gravity.set(0, -9.8, 0);
+		this.m_PhysicsWorld.gravity.set(0, -98, 0);
 		this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
 		this.m_PhysicsWorld.solver.iterations = 50;
 		this.m_PhysicsWorld.solver.tolerance = 0.0001;

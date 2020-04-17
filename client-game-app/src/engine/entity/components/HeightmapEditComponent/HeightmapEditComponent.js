@@ -36,7 +36,7 @@ class HeightmapEditComponent extends mix(Component).with()
 			(
 				up,
 				this.m_Parent.m_Position,
-				this.m_Parent.m_Components.RenderComponent.m_Mesh.geometry.boundingSphere.radius*0.1,
+				1,//this.m_Parent.m_Components.RenderComponent.m_Mesh.geometry.boundingSphere.radius*0.1,
 				0x00FF00,
 				4,
 				2
@@ -53,16 +53,10 @@ class HeightmapEditComponent extends mix(Component).with()
 
     Update()
     {
-		// todo :
-		// get mouse pos
-		// get vertices near mouse pos
-		// do stuff
-		// etc
-
 		try
 		{
-		const hoveredEnt = ENGINE.m_Mouse.m_CurrentHoveredObject.m_ParentEntity;
-		const mousePos = ENGINE.m_Mouse.m_WorldPosition;
+			const hoveredEnt = ENGINE.m_Mouse.m_CurrentHoveredObject.m_ParentEntity;
+			const mousePos = ENGINE.m_Mouse.m_WorldPosition;
 
 			try
 			{

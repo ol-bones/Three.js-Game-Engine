@@ -85,8 +85,8 @@ class MaterialRequest extends mix(AssetRequest).with()
 				}
 				case "TerrainMapMaterial":
 				{
-					const map = texture("/grass2.jpg");
-					const map2 = texture("/default.jpg");
+					const map = texture(data.texture || "/grass2.jpg");
+					const map2 = texture(data.texture2 || "/default.jpg");
 					const glsl = json("/shaders/TerrainMapMaterial");
 
 					const color = new THREE.Color(1,1,1);
@@ -147,11 +147,9 @@ class MaterialRequest extends mix(AssetRequest).with()
 					{
 						if(data.repeat[0] > 1 || data.repeat[1] > 1)
 						{
-							//material.uniforms.map.value.repeat = new THREE.Vector2();
 							material.uniforms.map.value.repeat.set(data.repeat[0], data.repeat[1]);
 							material.uniforms.map.value.wrapS = THREE.RepeatWrapping;
 							material.uniforms.map.value.wrapT = THREE.RepeatWrapping;
-							//material.uniforms.map2.value.repeat = new THREE.Vector2();
 							material.uniforms.map2.value.repeat.set(data.repeat[0], data.repeat[1]);
 							material.uniforms.map2.value.wrapS = THREE.RepeatWrapping;
 							material.uniforms.map2.value.wrapT = THREE.RepeatWrapping;
@@ -163,38 +161,8 @@ class MaterialRequest extends mix(AssetRequest).with()
 					material.uniforms.blendmap.value.needsUpdate = true;
 					material.combine = THREE.MultiplyOperation;
 
-					//material.map = map;
 					material.color = color;
 					material.blendmap = data.blendmap;
-
-					/*setInterval(() => {
-						const imgData2 = context.createImageData(canvas.width, canvas.height);
-						
-						let index1 = 0;
-						for(let y = data.blendmap.length - 1; y >= 0; y--)
-						{
-							for(let x = 0; x < data.blendmap[0].length; x++)
-							{
-								imgData2.data[index1++] = Math.floor(Math.random()*255); // R
-								imgData2.data[index1++] = Math.floor(Math.random()*255); // G
-								imgData2.data[index1++] = Math.floor(Math.random()*255); // B
-								imgData2.data[index1++] = Math.floor(Math.random()*255); // A
-							}
-						}
-
-						context.putImageData(imgData2, 0, 0);
-					
-						var image2 = new Image();
-						image2.src = canvas.toDataURL();
-
-						const bm2 = new THREE.Texture();
-						bm2.format = THREE.RGBAFormat;
-						bm2.image = image2;
-
-						material.uniforms.blendmap.value = bm2;
-						material.uniforms.blendmap.value.needsUpdate = true;
-						material.uniformsNeedUpdate = true;
-					}, 5000);*/
 					break;
 				}
 				default:

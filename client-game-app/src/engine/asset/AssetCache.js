@@ -11,12 +11,12 @@ class AssetCache
 {
     constructor()
     {
-	this.m_Assets = [];
+		this.m_Assets = [];
 
-	this.m_AddQueue = [];
-	this.m_RemoveQueue = [];
+		this.m_AddQueue = [];
+		this.m_RemoveQueue = [];
 
-	this._AssetLoader = new AssetLoader();
+		this._AssetLoader = new AssetLoader();
     }
 
     GetAsset(assetURI, type)
@@ -99,9 +99,9 @@ class AssetCache
 			this.m_Assets.push(
 			{
 				type: assetRequest.m_FileType,
-			name: assetRequest.m_FileName,
-			uri: assetRequest.m_URI,
-			asset: assetRequest.m_Asset
+				name: assetRequest.m_FileName,
+				uri: assetRequest.m_URI,
+				asset: assetRequest.m_Asset
 			});
 
 			assetRequest.OnCached();
