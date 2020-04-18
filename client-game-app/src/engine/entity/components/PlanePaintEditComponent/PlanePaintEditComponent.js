@@ -24,6 +24,7 @@ class PlanePaintEditComponent extends mix(Component).with()
 
 		this.m_Step = new THREE.Vector3(0, 0, 1);
 		this.m_PaintStrength = 1;
+		this.m_BrushSize = 1;
 
 		this.m_BlendMapMesh = null;
     }
@@ -32,8 +33,33 @@ class PlanePaintEditComponent extends mix(Component).with()
     {
 		super.Initialise();
 	
+		this.CreateArrows();
+
+		this.m_Parent.m_ClickFunctions[0] = this.onMouseDown.bind(this);
+
+		const renderComponent = this.m_Parent.m_Components.RenderComponent;
+		const blendMapRef = renderComponent.m_Args.material.blendmap;
+		const width = blendMapRef.length;
+		const height = blendMapRef[0].length;
+		this.m_BlendMapMesh = this.CreateBlendMapMesh(width, height);
+		this.AddBlendMapMeshToEditorScene(this.m_BlendMapMesh);
+
+		this.OnInitialised();
+    }
+
+	CreateArrows()
+	{
 		const up = new THREE.Vector3(0, 1, 0);
-		for(let i = 0; i < 9; i++)
+		if(this.m_ModifyArrows.length)
+		{
+			this.m_ModifyArrows.forEach(arrow => {
+				ENGINE.m_World.m_EditorScene.remove(arrow);
+			});
+
+			this.m_ModifyArrows = [];
+		}
+
+		for(let i = 0; i < this.m_BrushSize; i++)
 		{
 			const arrow = new THREE.ArrowHelper
 			(
@@ -48,18 +74,7 @@ class PlanePaintEditComponent extends mix(Component).with()
 			ENGINE.m_World.m_EditorScene.add(arrow);
 			this.m_ModifyArrows.push(arrow);
 		}
-
-		this.m_Parent.m_ClickFunctions[0] = this.onMouseDown.bind(this);
-
-		const renderComponent = this.m_Parent.m_Components.RenderComponent;
-		const blendMapRef = renderComponent.m_Args.material.blendmap;
-		const width = blendMapRef.length;
-		const height = blendMapRef[0].length;
-		this.m_BlendMapMesh = this.CreateBlendMapMesh(width, height);
-		this.AddBlendMapMeshToEditorScene(this.m_BlendMapMesh);
-
-		this.OnInitialised();
-    }
+	}
 
 	CreateBlendMapMesh(width, height)
 	{

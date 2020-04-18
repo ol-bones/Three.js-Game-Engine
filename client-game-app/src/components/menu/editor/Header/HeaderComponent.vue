@@ -15,7 +15,7 @@
             <div class="row">
               Save
             </div>
-            <div class="row">
+            <div class="row" @click="SaveAs">
               Save As
             </div>
           </div>
@@ -52,6 +52,7 @@
 
 <script>
 
+const axios = require("axios");
 import HeaderButtonComponent from "./HeaderButtonComponent";
 import WorldBrowserComponent from "./../Modal/WorldBrowserComponent";
 
@@ -138,6 +139,14 @@ export default {
     NewWorldPiece()
     {
       EDITOR.AddNewWorldPiece();
+    },
+    SaveAs()
+    {
+      axios.post(`http://${CONFIG.host}/save`, {
+        location: "./content/data/desert/",
+        name: "new.json",
+        world: entities()[0].DataModel().ToJSON()
+      });
     }
   }
 };

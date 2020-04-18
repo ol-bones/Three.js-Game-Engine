@@ -59,6 +59,7 @@ const config = require("./config.json");
 const app = express();
 
 app.use(require("./middleware/cors"));
+app.use(express.json());
 app.use(express.static(__dirname + "/content"));
 app.get("/", (req, res) => res.json("api"));
 app.get("/data/world/0.json", (req, res) => res.json(JSON.parse(fs.readFileSync(path.join(__dirname, "content/data/world/0.json")))));
@@ -161,14 +162,19 @@ app.get("/:world/pieces", (req, res) => {
     res.json({
         "pieces": getPieces(req.params.world) || []
     });
-})
+});
 
 app.get("/shaders/TerrainMapMaterial", (req, res) => {
     res.json({
         "fragmentShader": fs.readFileSync("./content/shaders/TerrainMapMaterial/TerrainMapMaterial_fragment.glsl", { encoding: "utf8"}),
         "vertexShader": fs.readFileSync("./content/shaders/TerrainMapMaterial/TerrainMapMaterial_vertex.glsl", { encoding: "utf8"})
     });
-})
+});
+
+app.post("/save", (req, res) => {
+    const data = req.body;
+    fs.writeFileSync(`${data.location}${data.name}`, JSON.stringify(data.world));
+});
 
 app.listen(Number(config.port), () => {
     console.log(`Started on port ${config.port}`);

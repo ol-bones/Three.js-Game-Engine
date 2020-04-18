@@ -27,6 +27,8 @@ class FPSPlayerControl extends mix(Component).with()
 		this.m_GunFlash = null;
 		this.m_GunFlashState = false;
 		this.m_CanJump = true;
+
+		this.m_EyeNormal = new THREE.Vector3();
     }
 
     Initialise()
@@ -170,7 +172,7 @@ class FPSPlayerControl extends mix(Component).with()
 	{
 		try
 		{
-			return ENGINE.m_World.m_Camera.getWorldDirection();
+			return ENGINE.m_World.m_Camera.getWorldDirection(this.m_EyeNormal);
 		} catch(e) { return new THREE.Vector3(); }
 	}
 
@@ -182,10 +184,10 @@ class FPSPlayerControl extends mix(Component).with()
 		}
 		
 		const force = new THREE.Vector2();
-		if(this.m_MovementKeyStates["w"]) { force.x += 190; }
-		if(this.m_MovementKeyStates["a"]) { force.y -= 190; }
-		if(this.m_MovementKeyStates["s"]) { force.x -= 190; }
-		if(this.m_MovementKeyStates["d"]) { force.y += 190; }
+		if(this.m_MovementKeyStates["w"]) { force.x += 390; }
+		if(this.m_MovementKeyStates["a"]) { force.y -= 390; }
+		if(this.m_MovementKeyStates["s"]) { force.x -= 390; }
+		if(this.m_MovementKeyStates["d"]) { force.y += 390; }
 
 		const dir = this.GetDirection().clone();
 		const cr = new THREE.Vector2(dir.x, dir.z);

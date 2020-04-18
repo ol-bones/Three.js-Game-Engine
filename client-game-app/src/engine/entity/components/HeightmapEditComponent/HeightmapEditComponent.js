@@ -21,6 +21,7 @@ class HeightmapEditComponent extends mix(Component).with()
 
 		this.m_ModifyArrows = [];
 		this.m_AreaSelected = false;
+		this.m_BrushSize = 1;
 
 		this.m_Step = new THREE.Vector3(0, 0, 1);
     }
@@ -28,15 +29,33 @@ class HeightmapEditComponent extends mix(Component).with()
     Initialise()
     {
 		super.Initialise();
-	
+		
+		this.CreateArrows();
+
+		this.m_Parent.m_ClickFunctions[0] = this.onMouseDown.bind(this);
+
+		this.OnInitialised();
+    }
+
+	CreateArrows()
+	{
 		const up = new THREE.Vector3(0, 1, 0);
-		for(let i = 0; i < 9; i++)
+		if(this.m_ModifyArrows.length)
+		{
+			this.m_ModifyArrows.forEach(arrow => {
+				ENGINE.m_World.m_EditorScene.remove(arrow);
+			});
+
+			this.m_ModifyArrows = [];
+		}
+
+		for(let i = 0; i < this.m_BrushSize; i++)
 		{
 			const arrow = new THREE.ArrowHelper
 			(
 				up,
 				this.m_Parent.m_Position,
-				1,//this.m_Parent.m_Components.RenderComponent.m_Mesh.geometry.boundingSphere.radius*0.1,
+				1,
 				0x00FF00,
 				4,
 				2
@@ -45,11 +64,7 @@ class HeightmapEditComponent extends mix(Component).with()
 			ENGINE.m_World.m_EditorScene.add(arrow);
 			this.m_ModifyArrows.push(arrow);
 		}
-
-		this.m_Parent.m_ClickFunctions[0] = this.onMouseDown.bind(this);
-
-		this.OnInitialised();
-    }
+	}
 
     Update()
     {

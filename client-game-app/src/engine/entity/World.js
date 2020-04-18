@@ -30,7 +30,7 @@ class World extends mix(BaseObject).with(Comms)
 		this.m_PhysicsWorld = new CANNON.World();
 		this.m_PhysicsWorld.gravity.set(0, -98, 0);
 		this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
-		this.m_PhysicsWorld.solver.iterations = 50;
+		this.m_PhysicsWorld.solver.iterations = 20;
 		this.m_PhysicsWorld.solver.tolerance = 0.0001;
 		this.m_PhysicsWorld.defaultMaterial.friction = 4;
 		this.m_PhysicsWorld.defaultContactMaterial.friction = 40;
@@ -46,7 +46,11 @@ class World extends mix(BaseObject).with(Comms)
 		this.m_Renderer = new THREE.WebGLRenderer();
 		this.m_Renderer.setClearColor(new THREE.Color(0x0, 0x0, 0x0));
 		this.m_Renderer.setSize(window.innerWidth, window.innerHeight);
-		this.m_Renderer.shadowMapEnabled = true;
+		this.m_Renderer.shadowMap.enabled = true;
+		this.m_Renderer.shadowMap.type = THREE.PCFSoftShadowMap;;
+		this.m_Renderer.shadowMap.autoUpdate = true;
+		//this.m_Renderer.shadowMap.renderSingleSided = false;
+		//this.m_Renderer.shadowMap.renderReverseSided = true;
 
 		this.m_Camera.position.x = -30;
 		this.m_Camera.position.y = 40;
@@ -56,9 +60,19 @@ class World extends mix(BaseObject).with(Comms)
 		var ambientLight = new THREE.AmbientLight(0x0c0c0c);
 		this.m_Scene.add(ambientLight);
 		var spotLight = new THREE.SpotLight(0xffffff);
-		spotLight.position.set(-400, 300, -10);
+		spotLight.position.set(-500, 300, -10);
 		spotLight.castShadow = true;
+		spotLight.castShadow = true;
+		spotLight.shadow.mapSize.width = 256;
+		spotLight.shadow.mapSize.height = 256;
+		spotLight.shadow.camera.near = 0.5;
+		spotLight.shadow.camera.far = 5000;
+		spotLight.shadow.bias = 0.00005;
 		this.m_Scene.add(spotLight);
+
+		const colour = new THREE.Color(0x423929);
+		this.m_Scene.background = colour;
+		this.m_Scene.fog = new THREE.FogExp2(colour, 0.0035);
 
 		document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
 

@@ -28,6 +28,19 @@
           </div>
         </div>
       </div>
+      <div class="row material-properties">
+        <div class="col-xs-8 col-sm-8 col-md-8 fill" style="font-size: 12px;">
+          Brush Size
+        </div> 
+        <div class="col-xs-4 col-sm-4 col-md-4 fill number-entry">
+          <div class="row fill">
+            <number-edit-component
+              :value="brushSize"
+              v-on:changed="brushChanged"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -74,6 +87,13 @@ export default {
       {
         this.reactFlag;
         return this.editComponent.m_PaintStrength;
+      } catch(e) { return 0; }
+    },
+    brushSize() {
+      try
+      {
+        this.reactFlag;
+        return this.editComponent.m_BrushSize;
       } catch(e) { return 0; }
     },
     blendMapArgRef() {
@@ -137,6 +157,14 @@ export default {
       try
       {
         this.editComponent.m_PaintStrength = value;
+      }
+      catch(Exception) { console.log(Exception); }
+    },
+    brushChanged(value) {
+      try
+      {
+        this.editComponent.m_BrushSize = value;
+        this.editComponent.CreateArrows();
       }
       catch(Exception) { console.log(Exception); }
     }

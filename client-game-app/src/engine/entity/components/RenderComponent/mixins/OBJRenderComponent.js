@@ -34,6 +34,8 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 			this.m_Meshes.forEach(m => {
 				m.material.map = texture(name);
 				m.material.map.needsUpdate = true;
+				m.material.transparent = true;
+				m.material.alphaTest = 0.5;
 				m.material.needsUpdate = true;
 			});
 		}

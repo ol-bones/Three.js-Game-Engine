@@ -53,6 +53,8 @@ class TextureRequest extends mix(AssetRequest).with()
 
     OnFinished(texture)
     {
+		texture.format = THREE.RGBAFormat;
+		texture.needsUpdate = true;
 	this.m_Asset = texture;
 	super.OnFinished();
     }

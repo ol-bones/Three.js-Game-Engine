@@ -137,6 +137,7 @@ class MaterialRequest extends mix(AssetRequest).with()
 						vertexShader: glsl.vertexShader,
 						fragmentShader: glsl.fragmentShader,
 						lights: true,
+						fog: true,
 						defines: {
 							USE_MAP: true,
 							USE_UV: true

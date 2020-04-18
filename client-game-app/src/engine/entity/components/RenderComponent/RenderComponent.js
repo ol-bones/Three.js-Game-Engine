@@ -26,14 +26,19 @@ class RenderComponent extends mix(Component).with()
 
     OnInitialised()
     {
-			this.SetPosition(
-				this.m_Parent.m_Position.x,
-				this.m_Parent.m_Position.y,
-				this.m_Parent.m_Position.z
-			);
-			this.m_Mesh.m_ParentEntity = this.m_Parent || null;
-			ENGINE.m_World.m_Scene.add(this.m_Mesh);
-			this.m_IsInitialised = true;
+		this.SetPosition(
+			this.m_Parent.m_Position.x,
+			this.m_Parent.m_Position.y,
+			this.m_Parent.m_Position.z
+		);
+
+		this.m_Mesh.m_ParentEntity = this.m_Parent || null;
+
+		this.m_Mesh.castShadow = true;
+		this.m_Mesh.receiveShadow = true;
+
+		ENGINE.m_World.m_Scene.add(this.m_Mesh);
+		this.m_IsInitialised = true;
     }
 
     GetSize3()
