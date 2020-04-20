@@ -171,6 +171,13 @@ app.get("/shaders/TerrainMapMaterial", (req, res) => {
     });
 });
 
+app.get("/shaders/VegetationMaterial", (req, res) => {
+    res.json({
+        "fragmentShader": fs.readFileSync("./content/shaders/VegetationMaterial/VegetationMaterial_fragment.glsl", { encoding: "utf8"}),
+        "vertexShader": fs.readFileSync("./content/shaders/VegetationMaterial/VegetationMaterial_vertex.glsl", { encoding: "utf8"})
+    });
+});
+
 app.post("/save", (req, res) => {
     const data = req.body;
     fs.writeFileSync(`${data.location}${data.name}`, JSON.stringify(data.world));

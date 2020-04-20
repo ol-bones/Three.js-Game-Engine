@@ -1,0 +1,50 @@
+{
+    "pos":
+    {
+        "x":0,
+        "y":150,
+        "z":0
+    },
+    "rot":
+    {
+        "x":0,
+        "y":0,
+        "z":0,
+        "w":1
+    },
+    "parent": 0,
+    "entities": [],
+    "components":
+    [
+        {
+            "args":
+            {
+                "Scale":
+                {
+                    "x": 10,
+                    "y": 10,
+                    "z": 10
+                },
+                "castShadow": false,
+                "count": 1000,
+                "distribution": "uniform",
+                "lathe": {
+                    "heightSegments": 1,
+                    "vegHeight": 25,
+                    "vegWidth": 8.5
+                },
+                "material": {
+                    "type": "VegetationMaterial",
+                    "texture": "/grass_2.png",
+                    "color": "0xFFFFFF",
+                    "repeat": [
+                        1,
+                        1
+                    ]
+                }
+            },
+            "name":"VegetationMeshRenderComponent",
+            "updateable":false
+        }
+    ]
+}

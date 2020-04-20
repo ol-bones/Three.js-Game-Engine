@@ -130,7 +130,7 @@ class MaterialRequest extends mix(AssetRequest).with()
 								diffuse: { type: "c", value: color },
 								emissive: { type: "c", value: new THREE.Color(0x000000) },
 								specular: { type: "c", value: new THREE.Color(0x111111) },
-								shininess: { type: "f", value: 30 },
+								shininess: { type: "f", value: 0 },
 								repeat: { type: "v2", value: new THREE.Vector2(data.repeat[0], data.repeat[1]) }
 							}
 						]),
@@ -164,6 +164,52 @@ class MaterialRequest extends mix(AssetRequest).with()
 
 					material.color = color;
 					material.blendmap = data.blendmap;
+					break;
+				}
+				case "VegetationMaterial":
+				{
+					const map = texture(data.texture || "/grass2.jpg");
+					map.format = THREE.RGBAFormat;
+					const glsl = json("/shaders/VegetationMaterial");
+					const color = data.color ? new THREE.Color().setHex(data.color) : new THREE.Color(1,1,1);
+
+					material = new THREE.ShaderMaterial(
+					{
+						uniforms: THREE.UniformsUtils.merge([
+							THREE.ShaderLib.phong.uniforms,
+							{
+								map: { type: "t", value: map},
+								diffuse: { type: "c", value: color},
+							//	emissive: { type: "c", value: new THREE.Color(0x000000) },
+							//	specular: { type: "c", value: new THREE.Color(0x111111) },
+						//		shininess: { type: "f", value: 30 },
+								repeat: { type: "v2", value: new THREE.Vector2(data.repeat[0], data.repeat[1]) }
+							}
+						]),
+						vertexShader: glsl.vertexShader,
+						fragmentShader: glsl.fragmentShader,
+						lights: true,
+						fog: true,
+						transparent: true,
+						opacity: 1,
+						depthWrite: false,
+						side: THREE.DoubleSide
+					});
+
+					if(data.repeat && data.repeat.length === 2)
+					{
+						if(data.repeat[0] > 1 || data.repeat[1] > 1)
+						{
+							material.uniforms.map.value.repeat.set(data.repeat[0], data.repeat[1]);
+							material.uniforms.map.value.wrapS = THREE.RepeatWrapping;
+							material.uniforms.map.value.wrapT = THREE.RepeatWrapping;
+						}
+					}
+					
+					material.map = map;
+					material.uniforms.map.value.needsUpdate = true;
+					material.combine = THREE.MultiplyOperation;
+					material.color = color;
 					break;
 				}
 				default:

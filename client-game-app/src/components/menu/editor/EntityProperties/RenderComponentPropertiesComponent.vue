@@ -1,10 +1,26 @@
 <template>
   <div class="col-xs-12 col-sm-12 col-md-12" v-if="this.entity">
-    <div class="row fill" style="height:45%;">
-      <material-preview-component :entity="this.entity" v-if="this.entity && this.materialObject.type === 'MeshPhongMaterial'"/>
+    <div class="row fill" style="height:45%;" v-if="!this.isVegetation">
+      <material-preview-component :entity="this.entity"
+        v-if="this.entity && this.materialObject && this.materialObject.type === 'MeshPhongMaterial'"
+      />
     </div>
     <div class="row fill" style="height:100%;overflow-y:scroll;">
-      <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="col-xs-12 col-sm-12 col-md-12"
+      v-if="this.entity && this.isVegetation">
+        <div class="row material-properties">
+          <div class="col-xs-4 col-sm-4 col-md-4 fill">
+            Count
+          </div> 
+          <div class="col-xs-8 col-sm-8 col-md-8 fill number-entry">
+            <div class="row fill">
+              <number-edit-component
+                :value="this.renderComponent.m_Args.count"
+                v-on:changed="vegetationCountChanged"
+              />
+            </div>
+          </div>
+        </div>
         <div class="row material-properties">
           <div class="col-xs-4 col-sm-4 col-md-4 fill">
             Repeat
@@ -26,12 +42,14 @@
 
 import MaterialPreviewComponent from "./../Generic/MaterialPreviewComponent";
 import Vector2EditComponent from "./../Generic/Vector2EditComponent.vue";
+import NumberEditComponent from "./../Generic/NumberEditComponent.vue";
 
 export default {
   name: "RenderComponentPropertiesComponent",
   components: {
     MaterialPreviewComponent,
-    Vector2EditComponent
+    Vector2EditComponent,
+    NumberEditComponent
   },
   props: {
     entity: {
@@ -55,8 +73,20 @@ export default {
     materialObject() {
       return this.renderComponent.m_Mesh.material;
     },
+    isVegetation() {
+      return this.renderComponent
+      && this.materialObject
+      && this.materialObject.map.image.src.endsWith("/vegetationseed.jpg");
+    },
     repeatReference() {
-      if(this.materialObject.map != void(0)
+      if(this.isVegetation)
+      {
+        return new THREE.Vector2(
+          this.renderComponent.m_Args.material.repeat[0],
+          this.renderComponent.m_Args.material.repeat[1]
+        )
+      }
+      else if(this.materialObject.map != void(0)
       && this.materialObject.map.value.repeat != void(0))
       {
         return this.materialObject.map.value.repeat;
@@ -74,7 +104,12 @@ export default {
     {
       this.repeat[component] = value;
 
-      if(this.materialObject.map != void(0)
+      if(this.isVegetation)
+      {
+        this.renderComponent.m_Args.material.repeat[0] = this.repeat.x;
+        this.renderComponent.m_Args.material.repeat[1] = this.repeat.y;
+      }
+      else if(this.materialObject.map != void(0)
       && this.materialObject.map.value.repeat != void(0))
       {
         this.materialObject.map.value.repeat.set(
@@ -100,6 +135,8 @@ export default {
     },
     materialPropertyChanged()
     {
+      if(this.isVegetation) return;
+
       if(this.materialObject.map != void(0))
       {
         this.materialObject.map.value.needsUpdate = true;
@@ -114,6 +151,15 @@ export default {
 			this.materialObject.uniformsNeedUpdate = true;
 
       this.renderComponent.m_Args.material = this.renderComponent.InlineMaterialArgs();
+    },
+    vegetationCountChanged(value)
+    {
+      try
+      {
+        if(!this.isVegetation || value == void(0) || value < 1) return;
+
+        this.renderComponent.m_Args.count = value;
+      } catch(e) {}
     }
   }
 };

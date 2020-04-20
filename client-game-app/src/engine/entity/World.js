@@ -70,9 +70,16 @@ class World extends mix(BaseObject).with(Comms)
 		spotLight.shadow.bias = 0.00005;
 		this.m_Scene.add(spotLight);
 
-		const colour = new THREE.Color(0x423929);
-		this.m_Scene.background = colour;
-		this.m_Scene.fog = new THREE.FogExp2(colour, 0.0035);
+		var light = new THREE.PointLight( 0xff0000, 1, 100 );
+		light.position.set( 509, 50, -490 );
+		this.m_Scene.add( light );
+
+		if(window.EDITOR == void(0))
+		{
+			const colour = new THREE.Color(0x15161f);
+			this.m_Scene.background = colour;
+			this.m_Scene.fog = new THREE.FogExp2(colour, 0.0035);
+		}
 
 		document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
 

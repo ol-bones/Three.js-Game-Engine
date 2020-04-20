@@ -34,7 +34,7 @@ class RenderComponent extends mix(Component).with()
 
 		this.m_Mesh.m_ParentEntity = this.m_Parent || null;
 
-		this.m_Mesh.castShadow = true;
+		this.m_Mesh.castShadow = this.m_Args.castShadow == void(0) ? true : this.m_Args.castShadow;
 		this.m_Mesh.receiveShadow = true;
 
 		ENGINE.m_World.m_Scene.add(this.m_Mesh);
@@ -121,7 +121,7 @@ class RenderComponent extends mix(Component).with()
 
     SetScale(x,y,z)
     {
-			this.m_Mesh.scale.set(x,y,z);
+		this.m_Mesh.scale.set(x,y,z);
     }
 
     Remove()
