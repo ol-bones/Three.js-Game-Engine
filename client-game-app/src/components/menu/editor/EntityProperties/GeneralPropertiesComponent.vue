@@ -68,6 +68,19 @@ export default {
   },
   mounted() {
   },
+  computed: {
+    renderComponent() {
+      return this.$props.entity.m_Components.RenderComponent;
+    },
+    materialObject() {
+      return this.renderComponent.m_Mesh.material;
+    },
+    isVegetation() {
+      return this.renderComponent
+      && this.materialObject
+      && this.materialObject.map.image.src.endsWith("/vegetationseed.jpg");
+    }
+  },
   methods: {
     positionChanged(vectorComponent, value) {
       try
@@ -104,6 +117,12 @@ export default {
           case "y": this.entity.SetScaleY(value); break;
           case "z": this.entity.SetScaleZ(value); break;
           default: return;
+        }
+
+        if(this.isVegetation)
+        {
+          this.renderComponent.m_Args.Scale.x = this.entity.m_Scale.x;
+          this.renderComponent.m_Args.Scale.z = this.entity.m_Scale.z;
         }
       }
       catch(Exception) {}

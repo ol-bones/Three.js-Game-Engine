@@ -31,10 +31,7 @@ class VegetationMeshRenderComponent extends mix(RenderComponent).with()
 
 			const count = this.m_Args.count;
 
-			let vegetationMesh = this.CreateMesh(
-				material(this.m_Args.material || "default"),
-				count
-			);
+			let vegetationMesh = this.CreateMesh(count);
 
 			const width = this.m_Args.Scale.x;
 			const height = this.m_Args.Scale.z;
@@ -123,11 +120,13 @@ class VegetationMeshRenderComponent extends mix(RenderComponent).with()
 		}
 	}
 
-	CreateMesh(veg_material, count)
+	CreateMesh(count)
 	{
-		if(veg_material == void(0)) throw new Error();
 		if(this.m_Args.lathe != void(0))
 		{
+			const veg_material = material(this.m_Args.material || "default");
+			if(veg_material == void(0)) throw new Error();
+
 			const heightSegments = this.m_Args.lathe.heightSegments;
 			const vegHeight = this.m_Args.lathe.vegHeight;
 			const vegWidth = this.m_Args.lathe.vegWidth;
@@ -143,6 +142,35 @@ class VegetationMeshRenderComponent extends mix(RenderComponent).with()
 
 			const geom = new THREE.LatheBufferGeometry(points);
 			return new THREE.InstancedMesh(geom, veg_material, count);
+		}
+		else if(this.m_Args.obj != void(0))
+		{
+			const veg_texture = texture(this.m_Args.obj.texture);
+			if(veg_texture == void(0)) throw new Error();
+			const veg_model = model(this.m_Args.obj.model).children[0].clone();
+			if(veg_model == void(0)) throw new Error();
+			const veg_geometry = veg_model.geometry.clone();
+			if(veg_geometry == void(0)) throw new Error();
+
+			veg_geometry.scale(
+				this.m_Args.obj.scale.x,
+				this.m_Args.obj.scale.y,
+				this.m_Args.obj.scale.z
+			);
+
+			veg_model.material.map = veg_texture;
+			veg_model.material.map.needsUpdate = true;
+			veg_model.material.transparent = true;
+			veg_model.material.alphaTest = 0.5;
+			veg_model.material.side = THREE.DoubleSide;
+			veg_model.material.shininess = 0;
+			veg_model.material.needsUpdate = true;
+
+			return new THREE.InstancedMesh(
+				veg_geometry,
+				veg_model.material.clone(),
+				count
+			);
 		}
 	}
 

@@ -1,5 +1,5 @@
 {
-    "id": "1",
+    "id": "21",
     "pos": {
         "x": 0,
         "y": 0,
@@ -18,7 +18,7 @@
     },
     "entities": [
         {
-            "id": "2",
+            "id": "22",
             "pos": {
                 "x": 0,
                 "y": 0,
@@ -34,7 +34,7 @@
                 "y": 1,
                 "z": 1
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -1146,7 +1146,7 @@
                                 ]
                             ]
                         },
-                        "Parent": 2
+                        "Parent": 22
                     },
                     "name": "HeightmapPlaneMeshRenderComponent",
                     "updateable": false
@@ -11573,7 +11573,7 @@
                                 ]
                             ]
                         },
-                        "Parent": 2
+                        "Parent": 22
                     },
                     "name": "HeightmapPhysicsComponent",
                     "updateable": false
@@ -11581,7 +11581,7 @@
             ]
         },
         {
-            "id": "3",
+            "id": "23",
             "pos": {
                 "x": 517.1984993366024,
                 "y": 30.736111949845778,
@@ -11597,7 +11597,7 @@
                 "y": 4,
                 "z": 60
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -11616,7 +11616,7 @@
                             ],
                             "color": 15000804
                         },
-                        "Parent": 3
+                        "Parent": 23
                     },
                     "name": "BasicBoxMeshRenderComponent",
                     "updateable": false
@@ -11643,7 +11643,7 @@
                                 1
                             ]
                         },
-                        "Parent": 3
+                        "Parent": 23
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -11651,7 +11651,7 @@
             ]
         },
         {
-            "id": "4",
+            "id": "24",
             "pos": {
                 "x": 640.2581468047636,
                 "y": 14.671141651608107,
@@ -11667,7 +11667,7 @@
                 "y": 30,
                 "z": 5
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -11677,7 +11677,7 @@
                             "y": 1,
                             "z": 1
                         },
-                        "Parent": 4
+                        "Parent": 24
                     },
                     "name": "BasicBoxMeshRenderComponent",
                     "updateable": false
@@ -11704,7 +11704,7 @@
                                 1
                             ]
                         },
-                        "Parent": 4
+                        "Parent": 24
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -11712,7 +11712,7 @@
             ]
         },
         {
-            "id": "5",
+            "id": "25",
             "pos": {
                 "x": 638.942247990343,
                 "y": 14.6945959065903,
@@ -11728,7 +11728,7 @@
                 "y": 30,
                 "z": 5
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -11738,7 +11738,7 @@
                             "y": 1,
                             "z": 1
                         },
-                        "Parent": 5
+                        "Parent": 25
                     },
                     "name": "BasicBoxMeshRenderComponent",
                     "updateable": false
@@ -11765,7 +11765,7 @@
                                 1
                             ]
                         },
-                        "Parent": 5
+                        "Parent": 25
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -11773,7 +11773,7 @@
             ]
         },
         {
-            "id": "6",
+            "id": "26",
             "pos": {
                 "x": 395,
                 "y": 14,
@@ -11789,7 +11789,7 @@
                 "y": 30,
                 "z": 5
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -11799,7 +11799,7 @@
                             "y": 1,
                             "z": 1
                         },
-                        "Parent": 6
+                        "Parent": 26
                     },
                     "name": "BasicBoxMeshRenderComponent",
                     "updateable": false
@@ -11826,7 +11826,7 @@
                                 1
                             ]
                         },
-                        "Parent": 6
+                        "Parent": 26
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -11834,7 +11834,7 @@
             ]
         },
         {
-            "id": "7",
+            "id": "27",
             "pos": {
                 "x": 395,
                 "y": 14,
@@ -11850,7 +11850,7 @@
                 "y": 30,
                 "z": 5
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -11860,7 +11860,7 @@
                             "y": 1,
                             "z": 1
                         },
-                        "Parent": 7
+                        "Parent": 27
                     },
                     "name": "BasicBoxMeshRenderComponent",
                     "updateable": false
@@ -11887,7 +11887,7 @@
                                 1
                             ]
                         },
-                        "Parent": 7
+                        "Parent": 27
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -11895,30 +11895,30 @@
             ]
         },
         {
-            "id": "8",
+            "id": "28",
             "pos": {
                 "x": 485.87263870731493,
                 "y": 24.280782318553342,
                 "z": -324.16293069351923
             },
             "rot": {
-                "x": 0.6702359222682789,
-                "y": -0.24645157775414264,
-                "z": -0.32014431580180785
+                "x": 0.7733365004398148,
+                "y": -0.5009485064191289,
+                "z": -0.5287929941994979
             },
             "scale": {
                 "x": 1,
                 "y": 1,
                 "z": 1
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
                     "args": {
                         "Radius": 25,
                         "Segments": 36,
-                        "Parent": 8
+                        "Parent": 28
                     },
                     "name": "BasicSphereMeshRenderComponent",
                     "updateable": false
@@ -11941,7 +11941,7 @@
                             "linearDamping": 0.9,
                             "fixedRotation": false
                         },
-                        "Parent": 8
+                        "Parent": 28
                     },
                     "name": "BasicPhysicsComponent",
                     "updateable": false
@@ -11949,7 +11949,7 @@
             ]
         },
         {
-            "id": "9",
+            "id": "29",
             "pos": {
                 "x": 50.26263148882244,
                 "y": 25.74842164673241,
@@ -11965,7 +11965,7 @@
                 "y": 26,
                 "z": 35
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -11977,7 +11977,7 @@
                         },
                         "model": "tree2.obj",
                         "texture": "/layout2_Tree2.png",
-                        "Parent": 9
+                        "Parent": 29
                     },
                     "name": "OBJRenderComponent",
                     "updateable": false
@@ -11985,7 +11985,7 @@
             ]
         },
         {
-            "id": "10",
+            "id": "30",
             "pos": {
                 "x": 0,
                 "y": 2.609845787769916,
@@ -12001,7 +12001,7 @@
                 "y": 26,
                 "z": 35
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -12013,7 +12013,7 @@
                         },
                         "model": "tree2.obj",
                         "texture": "/layout2_Tree2.png",
-                        "Parent": 10
+                        "Parent": 30
                     },
                     "name": "OBJRenderComponent",
                     "updateable": false
@@ -12021,10 +12021,10 @@
             ]
         },
         {
-            "id": "11",
+            "id": "31",
             "pos": {
                 "x": 512.6217497093,
-                "y": -4.0466032618232,
+                "y": -3.9533967381768,
                 "z": -111.808305701612
             },
             "rot": {
@@ -12037,7 +12037,7 @@
                 "y": 1,
                 "z": 72
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -12064,7 +12064,7 @@
                                 1
                             ]
                         },
-                        "Parent": 11
+                        "Parent": 31
                     },
                     "name": "VegetationMeshRenderComponent",
                     "updateable": false
@@ -12072,10 +12072,10 @@
             ]
         },
         {
-            "id": "12",
+            "id": "32",
             "pos": {
                 "x": 136.750329728941,
-                "y": -4.79625000106303,
+                "y": -4.20374999893697,
                 "z": -498.01102410718
             },
             "rot": {
@@ -12088,7 +12088,7 @@
                 "y": 1,
                 "z": 700
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -12115,7 +12115,7 @@
                                 1
                             ]
                         },
-                        "Parent": 12
+                        "Parent": 32
                     },
                     "name": "VegetationMeshRenderComponent",
                     "updateable": false
@@ -12123,10 +12123,10 @@
             ]
         },
         {
-            "id": "13",
+            "id": "33",
             "pos": {
                 "x": 880.446709855436,
-                "y": -4.5133737313812,
+                "y": -4.4866262686188,
                 "z": -497.569427510387
             },
             "rot": {
@@ -12139,7 +12139,7 @@
                 "y": 1,
                 "z": 700
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -12166,7 +12166,7 @@
                                 1
                             ]
                         },
-                        "Parent": 13
+                        "Parent": 33
                     },
                     "name": "VegetationMeshRenderComponent",
                     "updateable": false
@@ -12174,7 +12174,7 @@
             ]
         },
         {
-            "id": "14",
+            "id": "34",
             "pos": {
                 "x": 46.024967566741786,
                 "y": 14.47104287105368,
@@ -12190,7 +12190,7 @@
                 "y": 14,
                 "z": 14
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -12202,7 +12202,7 @@
                         },
                         "model": "tree_swamp_A_leaves.obj",
                         "texture": "/tree_swamp_A_leaves_texture.png",
-                        "Parent": 14
+                        "Parent": 34
                     },
                     "name": "OBJRenderComponent",
                     "updateable": false
@@ -12210,7 +12210,7 @@
             ]
         },
         {
-            "id": "15",
+            "id": "35",
             "pos": {
                 "x": 996,
                 "y": -10,
@@ -12226,7 +12226,7 @@
                 "y": 16,
                 "z": 16
             },
-            "parent": 1,
+            "parent": 21,
             "entities": [],
             "components": [
                 {
@@ -12238,9 +12238,394 @@
                         },
                         "model": "tree_swamp_A_leaves.obj",
                         "texture": "/tree_swamp_A_leaves_texture.png",
-                        "Parent": 15
+                        "Parent": 35
                     },
                     "name": "OBJRenderComponent",
+                    "updateable": false
+                }
+            ]
+        },
+        {
+            "id": "36",
+            "pos": {
+                "x": 460.60645944729674,
+                "y": 0,
+                "z": -1275.9985888356791
+            },
+            "rot": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1000,
+                "y": 1,
+                "z": 500
+            },
+            "parent": 21,
+            "entities": [],
+            "components": [
+                {
+                    "args": {
+                        "Scale": {
+                            "x": 1000,
+                            "y": 10,
+                            "z": 500
+                        },
+                        "castShadow": false,
+                        "count": 10,
+                        "distribution": "random",
+                        "material": {
+                            "type": "VegetationMaterial",
+                            "texture": "/grass_2.png",
+                            "color": "0xFFFFFF",
+                            "repeat": [
+                                1,
+                                1
+                            ]
+                        },
+                        "obj": {
+                            "model": "tree_swamp_A_leaves.obj",
+                            "texture": "/tree_swamp_A_leaves_texture.png",
+                            "scale": {
+                                "x": 20,
+                                "y": 20,
+                                "z": 20
+                            }
+                        },
+                        "Parent": 36
+                    },
+                    "name": "VegetationMeshRenderComponent",
+                    "updateable": false
+                }
+            ]
+        },
+        {
+            "id": "37",
+            "pos": {
+                "x": 500,
+                "y": 2,
+                "z": -1274.2281956311933
+            },
+            "rot": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1000,
+                "y": 1,
+                "z": 500
+            },
+            "parent": 21,
+            "entities": [],
+            "components": [
+                {
+                    "args": {
+                        "Scale": {
+                            "x": 1000,
+                            "y": 10,
+                            "z": 500
+                        },
+                        "castShadow": false,
+                        "count": 10,
+                        "distribution": "random",
+                        "material": {
+                            "type": "VegetationMaterial",
+                            "texture": "/grass_2.png",
+                            "color": "0xFFFFFF",
+                            "repeat": [
+                                1,
+                                1
+                            ]
+                        },
+                        "obj": {
+                            "model": "tree_tall_spider_base.obj",
+                            "texture": "/tree_tall_spider_base_texture.png",
+                            "scale": {
+                                "x": 20,
+                                "y": 25,
+                                "z": 20
+                            }
+                        },
+                        "Parent": 37
+                    },
+                    "name": "VegetationMeshRenderComponent",
+                    "updateable": false
+                }
+            ]
+        },
+        {
+            "id": "38",
+            "pos": {
+                "x": 500,
+                "y": 1,
+                "z": -1210
+            },
+            "rot": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 1000,
+                "y": 1,
+                "z": 300
+            },
+            "parent": 21,
+            "entities": [],
+            "components": [
+                {
+                    "args": {
+                        "Scale": {
+                            "x": 1000,
+                            "y": 10,
+                            "z": 300
+                        },
+                        "castShadow": false,
+                        "count": 10,
+                        "distribution": "random",
+                        "material": {
+                            "type": "VegetationMaterial",
+                            "texture": "/grass_2.png",
+                            "color": "0xFFFFFF",
+                            "repeat": [
+                                1,
+                                1
+                            ]
+                        },
+                        "obj": {
+                            "model": "spider_bush.obj",
+                            "texture": "/spider_bush_texture.png",
+                            "scale": {
+                                "x": 25,
+                                "y": 25,
+                                "z": 25
+                            }
+                        },
+                        "Parent": 38
+                    },
+                    "name": "VegetationMeshRenderComponent",
+                    "updateable": false
+                }
+            ]
+        },
+        {
+            "id": "39",
+            "pos": {
+                "x": -150,
+                "y": 0,
+                "z": -500
+            },
+            "rot": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 300,
+                "y": 1,
+                "z": 1000
+            },
+            "parent": 21,
+            "entities": [],
+            "components": [
+                {
+                    "args": {
+                        "Scale": {
+                            "x": 300,
+                            "y": 10,
+                            "z": 1000
+                        },
+                        "castShadow": false,
+                        "count": 10,
+                        "distribution": "random",
+                        "material": {
+                            "type": "VegetationMaterial",
+                            "texture": "/grass_2.png",
+                            "color": "0xFFFFFF",
+                            "repeat": [
+                                1,
+                                1
+                            ]
+                        },
+                        "Parent": 39,
+                        "obj": {
+                            "model": "tree_swamp_A_leaves.obj",
+                            "texture": "/tree_swamp_A_leaves_texture.png",
+                            "scale": {
+                                "x": 25,
+                                "y": 25,
+                                "z": 25
+                            }
+                        }
+                    },
+                    "name": "VegetationMeshRenderComponent",
+                    "updateable": false
+                }
+            ]
+        },
+        {
+            "id": "40",
+            "pos": {
+                "x": -150,
+                "y": 0,
+                "z": -500
+            },
+            "rot": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 300,
+                "y": 1,
+                "z": 1000
+            },
+            "parent": 21,
+            "entities": [],
+            "components": [
+                {
+                    "args": {
+                        "Scale": {
+                            "x": 300,
+                            "y": 10,
+                            "z": 1000
+                        },
+                        "castShadow": true,
+                        "count": 10,
+                        "distribution": "random",
+                        "material": {
+                            "type": "VegetationMaterial",
+                            "texture": "/grass_2.png",
+                            "color": "0xFFFFFF",
+                            "repeat": [
+                                1,
+                                1
+                            ]
+                        },
+                        "Parent": 40,
+                        "obj": {
+                            "model": "tree_tall_spider_base.obj",
+                            "texture": "/tree_tall_spider_base_texture.png",
+                            "scale": {
+                                "x": 25,
+                                "y": 30,
+                                "z": 25
+                            }
+                        }
+                    },
+                    "name": "VegetationMeshRenderComponent",
+                    "updateable": false
+                }
+            ]
+        },
+        {
+            "id": "41",
+            "pos": {
+                "x": 1150,
+                "y": 0,
+                "z": -500
+            },
+            "rot": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 300,
+                "y": 1,
+                "z": 1000
+            },
+            "parent": 21,
+            "entities": [],
+            "components": [
+                {
+                    "args": {
+                        "Scale": {
+                            "x": 300,
+                            "y": 10,
+                            "z": 1000
+                        },
+                        "castShadow": false,
+                        "count": 10,
+                        "distribution": "random",
+                        "material": {
+                            "type": "VegetationMaterial",
+                            "texture": "/grass_2.png",
+                            "color": "0xFFFFFF",
+                            "repeat": [
+                                1,
+                                1
+                            ]
+                        },
+                        "Parent": 41,
+                        "obj": {
+                            "model": "tree_swamp_A_leaves.obj",
+                            "texture": "/tree_swamp_A_leaves_texture.png",
+                            "scale": {
+                                "x": 25,
+                                "y": 25,
+                                "z": 25
+                            }
+                        }
+                    },
+                    "name": "VegetationMeshRenderComponent",
+                    "updateable": false
+                }
+            ]
+        },
+        {
+            "id": "42",
+            "pos": {
+                "x": 1150,
+                "y": 0,
+                "z": -500
+            },
+            "rot": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 300,
+                "y": 1,
+                "z": 1000
+            },
+            "parent": 21,
+            "entities": [],
+            "components": [
+                {
+                    "args": {
+                        "Scale": {
+                            "x": 300,
+                            "y": 10,
+                            "z": 1000
+                        },
+                        "castShadow": false,
+                        "count": 10,
+                        "distribution": "random",
+                        "material": {
+                            "type": "VegetationMaterial",
+                            "texture": "/grass_2.png",
+                            "color": "0xFFFFFF",
+                            "repeat": [
+                                1,
+                                1
+                            ]
+                        },
+                        "Parent": 42,
+                        "obj": {
+                            "model": "tree_tall_spider_base.obj",
+                            "texture": "/tree_tall_spider_base_texture.png",
+                            "scale": {
+                                "x": 25,
+                                "y": 30,
+                                "z": 25
+                            }
+                        }
+                    },
+                    "name": "VegetationMeshRenderComponent",
                     "updateable": false
                 }
             ]
@@ -12249,7 +12634,7 @@
     "components": [
         {
             "args": {
-                "Parent": 1
+                "Parent": 21
             },
             "name": "WorldPieceComponent",
             "updateable": false
