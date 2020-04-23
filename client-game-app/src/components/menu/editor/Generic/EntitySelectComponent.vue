@@ -37,7 +37,6 @@ export default {
   mounted() {
     try
     {
-      this.GetAllEntities();
 
       axios.get(`http://${CONFIG.host}/entityCategories`)
         .then(response => this.EntityGroups = response.data.map(
@@ -47,7 +46,10 @@ export default {
             entities: []
           })
         ))
-        .then(() => this.EntityGroups[0].show = true)
+        .then(() => {
+          this.EntityGroups[0].show = true;
+          this.GetAllEntities();
+        })
         .catch(error => console.error(error));
     } catch(e) { console.error(e); }
   },

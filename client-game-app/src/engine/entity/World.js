@@ -62,7 +62,6 @@ class World extends mix(BaseObject).with(Comms)
 		var spotLight = new THREE.SpotLight(0xffffff);
 		spotLight.position.set(-500, 300, -10);
 		spotLight.castShadow = true;
-		spotLight.castShadow = true;
 		spotLight.shadow.mapSize.width = 256;
 		spotLight.shadow.mapSize.height = 256;
 		spotLight.shadow.camera.near = 0.5;
@@ -70,8 +69,9 @@ class World extends mix(BaseObject).with(Comms)
 		spotLight.shadow.bias = 0.00005;
 		this.m_Scene.add(spotLight);
 
-		var light = new THREE.PointLight( 0xff0000, 1, 100 );
-		light.position.set( 509, 50, -490 );
+		var light = new THREE.PointLight( 0xff4400, 1, 100 );
+		light.position.set(475, 50, -900 );
+		light.castShadow = true;
 		this.m_Scene.add( light );
 
 		if(window.EDITOR == void(0))

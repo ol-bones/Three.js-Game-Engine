@@ -212,6 +212,26 @@ class MaterialRequest extends mix(AssetRequest).with()
 					material.color = color;
 					break;
 				}
+				case "FlameShader":
+				{
+					const glsl = json("/shaders/FlameShader");
+
+					material = new THREE.ShaderMaterial(
+					{
+						uniforms:
+						{
+							delta: { type: "f", value: 0.5 }
+						},
+						vertexShader: glsl.vertexShader,
+						fragmentShader: glsl.fragmentShader,
+						side: 0,
+						transparent: true
+					});
+
+					material.map = new THREE.Texture();
+					material.color = new THREE.Color(1,1,1);
+					break;
+				}
 				default:
 
 					break;

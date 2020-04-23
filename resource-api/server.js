@@ -178,6 +178,13 @@ app.get("/shaders/VegetationMaterial", (req, res) => {
     });
 });
 
+app.get("/shaders/FlameShader", (req, res) => {
+    res.json({
+        "fragmentShader": fs.readFileSync("./content/shaders/FlameShader/FlameShader_fragment.glsl", { encoding: "utf8"}),
+        "vertexShader": fs.readFileSync("./content/shaders/FlameShader/FlameShader_vertex.glsl", { encoding: "utf8"})
+    });
+});
+
 app.post("/save", (req, res) => {
     const data = req.body;
     fs.writeFileSync(`${data.location}${data.name}`, JSON.stringify(data.world));

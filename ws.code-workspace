@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "resource-api"
+		},
+		{
+			"path": "/home/o/Downloads/git/three.js"
 		}
 	],
 	"settings": {}

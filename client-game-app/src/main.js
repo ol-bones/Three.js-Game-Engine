@@ -19,7 +19,8 @@ import router from './router';
 
 import Engine from "./engine/Engine";
 
-window.THREE = require("./libs/three.min.js");
+//window.THREE = require("./libs/three.min.js");
+window.THREE = require("./../../../three.js/build/three.js");
 
 require("./libs/PointerLockControls");
 window.CANNON = require("./libs/cannon.min.js");

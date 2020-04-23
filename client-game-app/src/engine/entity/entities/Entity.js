@@ -265,8 +265,9 @@ import BasicHullMeshRenderComponent from "./../components/RenderComponent/mixins
 import BasicShapeMeshRenderComponent from "./../components/RenderComponent/mixins/BasicShapeMeshRenderComponent";
 import BasicSphereMeshRenderComponent from "./../components/RenderComponent/mixins/BasicSphereMeshRenderComponent";
 import HeightmapPlaneMeshRenderComponent from "./../components/RenderComponent/mixins/HeightmapPlaneMeshRenderComponent";
-import OBJRenderComponent from "./../components/RenderComponent/mixins/OBJRenderComponent";
+import OBJRenderComponent from "./../components/RenderComponent/mixins/OBJRenderComponent";FlameRenderComponent
 import VegetationMeshRenderComponent from "./../components/RenderComponent/mixins/VegetationMeshRenderComponent";
+import FlameRenderComponent from "./../components/RenderComponent/mixins/FlameRenderComponent";
 import RenderComponent from "./../components/RenderComponent/RenderComponent";
 import RotateEditComponent from "./../components/RotateEditComponent/RotateEditComponent";
 import ScaleEditComponent from "./../components/ScaleEditComponent/ScaleEditComponent";
@@ -294,6 +295,7 @@ window.ComponentTypes = [
 	BasicSphereMeshRenderComponent,
 	HeightmapPlaneMeshRenderComponent,
 	VegetationMeshRenderComponent,
+	FlameRenderComponent,
 	PlanePaintEditComponent,
     OBJRenderComponent,
     RenderComponent,

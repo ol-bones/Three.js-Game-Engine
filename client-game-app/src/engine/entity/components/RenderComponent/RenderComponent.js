@@ -100,15 +100,21 @@ class RenderComponent extends mix(Component).with()
 		this.m_Mesh.material.opacity = o;
 	}
 
-		Highlight()
+	Highlight()
+	{
+		try
 		{
 			this.m_Mesh.material.color.set(new THREE.Color(10, 1, 1));
-		}
+		} catch(e) {}
+	}
 
-		Unhighlight()
+	Unhighlight()
+	{
+		try
 		{
 			this.m_Mesh.material.color.set(this.m_Colour);
-		}
+		} catch(e) {}
+	}
 
     SetPosition(x,y,z)
     {
