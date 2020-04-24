@@ -31,6 +31,8 @@ class Engine extends mix(BaseObject).with()
 
 		this.m_Initialised = false;
 
+		this.m_LastUpdate = 0;
+
 		this.OnInitialised = () => console.log("ENGINE INITIALISED");
     }
 
@@ -42,7 +44,7 @@ class Engine extends mix(BaseObject).with()
 		this.m_Mouse = new Mouse();
 
 		this.BeginUpdating(0, () => ENGINE.m_AssetCache.Update());
-		this.BeginUpdating(1, () => ENGINE.m_World.Update());
+		this.BeginUpdating(1, (dt) => ENGINE.m_World.Update(dt));
 
 		this.m_UpdateIntervalID = setInterval(this.Update.bind(this), 1000/30);
 		this.OnInitialised();
@@ -71,7 +73,8 @@ class Engine extends mix(BaseObject).with()
 
     Update()
     {
-		this.m_UpdateArray.forEach(f => f.x());
+		const dt = Math.max((performance.now() - this.m_LastUpdate)/1000, 0);
+		this.m_UpdateArray.forEach(f => f.x(dt));
     }
 }
 

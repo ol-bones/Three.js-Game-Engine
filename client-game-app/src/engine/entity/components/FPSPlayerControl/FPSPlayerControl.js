@@ -93,6 +93,12 @@ class FPSPlayerControl extends mix(Component).with()
 				"z":0,
 				"w":1
 			},
+			"scale":
+			{
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
 			"parent": this.m_Parent.m_ID,
 			"entities": [],
 			"components":
@@ -100,12 +106,6 @@ class FPSPlayerControl extends mix(Component).with()
 				{
 					"args":
 					{
-						"Scale":
-						{
-							"x": 1,
-							"y": 1,
-							"z": 1
-						},
 						"model": "gun.obj",
 						"texture":  "/gun.png"
 					},
@@ -131,6 +131,12 @@ class FPSPlayerControl extends mix(Component).with()
 				"z":0,
 				"w":1
 			},
+			"scale":
+			{
+				"x": 1,
+				"y": 1,
+				"z": 1
+			},
 			"parent": this.m_Parent.m_ID,
 			"entities": [],
 			"components":
@@ -138,12 +144,6 @@ class FPSPlayerControl extends mix(Component).with()
 				{
 					"args":
 					{
-						"Scale":
-						{
-							"x": 1,
-							"y": 1,
-							"z": 1
-						},
 						"model": "gunflash.obj",
 						"texture":  "/2.png"
 					},

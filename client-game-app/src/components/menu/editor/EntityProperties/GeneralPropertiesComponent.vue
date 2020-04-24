@@ -118,12 +118,6 @@ export default {
           case "z": this.entity.SetScaleZ(value); break;
           default: return;
         }
-
-        if(this.isVegetation)
-        {
-          this.renderComponent.m_Args.Scale.x = this.entity.m_Scale.x;
-          this.renderComponent.m_Args.Scale.z = this.entity.m_Scale.z;
-        }
       }
       catch(Exception) {}
     }

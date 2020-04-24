@@ -23,7 +23,6 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 		});
 
 		if(this.m_Args.texture) this.SetTexture(this.m_Args.texture);
-		this.SetScale(this.m_Args.Scale.x, this.m_Args.Scale.y, this.m_Args.Scale.z);
 		this.OnInitialised();
     }
 

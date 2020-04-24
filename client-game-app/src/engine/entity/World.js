@@ -8,6 +8,8 @@ class World extends mix(BaseObject).with(Comms)
 	constructor() {
 		super();
 
+		this.m_Position = new THREE.Vector3();
+
 		this.m_EntityCount = 0;
 		this.m_Entities = [];
 		this.m_FlatEntities = [];
@@ -69,35 +71,29 @@ class World extends mix(BaseObject).with(Comms)
 		spotLight.shadow.bias = 0.00005;
 		this.m_Scene.add(spotLight);
 
-		var light = new THREE.PointLight( 0xff4400, 1, 100 );
-		light.position.set(475, 50, -900 );
-		light.castShadow = true;
-		this.m_Scene.add( light );
-
-		if(window.EDITOR == void(0))
-		{
-			const colour = new THREE.Color(0x15161f);
-			this.m_Scene.background = colour;
-			this.m_Scene.fog = new THREE.FogExp2(colour, 0.0035);
-		}
+		setTimeout(() => {
+			if(window.EDITOR == void(0))
+			{
+				const colour = new THREE.Color(0x15161f);
+				this.m_Scene.background = colour;
+				this.m_Scene.fog = new THREE.FogExp2(colour, 0.0035);
+			}
+		}, 10000);
 
 		document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
 
 		requestAnimationFrame(this.render.bind(this));
 	}
 
-	Update() {
+	Update(dt) {
 		this.ProcessInboundCommsQueue();
 		this.m_PhysicsWorld.step(1 / 30);
-		//	this.m_DebugRenderer.update(); // only use this if shit is really weird
 
-		this.m_Entities.forEach(e => e.Update());
+		this.m_Entities.forEach(e => e.Update(dt));
 	}
 
-	// clean this eventually
 	render() {
 		this.m_Renderer.autoClear = false;
-		//this.m_Controls.update();
 		this.m_Renderer.render(this.m_Scene, this.m_Camera);
 		this.m_Renderer.clearDepth();
 		this.m_Renderer.render(this.m_EditorScene, this.m_Camera);

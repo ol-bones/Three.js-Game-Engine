@@ -12,6 +12,12 @@
         "z":0,
         "w":1
     },
+    "scale":
+    {
+        "x": 1,
+        "y": 1,
+        "z": 1
+    },
     "parent": 0,
     "entities": [],
     "components":
@@ -19,12 +25,6 @@
         {
             "args":
             {
-                "Scale":
-                {
-                    "x": 1,
-                    "y": 1,
-                    "z": 1
-                },
                 "model": "tree.obj"
             },
             "name":"OBJRenderComponent",

@@ -1,9 +1,9 @@
 {
     "pos":
     {
-        "x":0,
-        "y":150,
-        "z":0
+        "x":475,
+        "y":0,
+        "z":-900
     },
     "rot":
     {
@@ -12,19 +12,64 @@
         "z":0,
         "w":1
     },
-    "parent": 0,
-    "entities": [],
+    "scale":
+    {
+        "x": 7.5,
+        "y": 7.5,
+        "z": 7.5
+    },
+    "entities":
+    [
+        {
+            "pos":
+            {
+                "x":0.5,
+                "y":64,
+                "z":-1.5
+            },
+            "rot":
+            {
+                "x":0,
+                "y":0,
+                "z":0,
+                "w":1
+            },
+            "scale":
+            {
+                "x": 0.175,
+                "y": 0.175,
+                "z": 0.175
+            },
+            "entities": [],
+            "components":
+            [
+                {
+                    "args":
+                    {
+                        "castShadow":false
+                    },
+                    "name":"FlameRenderComponent",
+                    "updateable":false
+                },
+                {
+                    "args":
+                    {
+                        "color": "#FF0000",
+                        "intensity": 0.7,
+                        "distance": 320,
+                        "decay": 2
+                    },
+                    "name": "PointLightComponent",
+                    "updateable":false
+                }
+            ]
+        }
+    ],
     "components":
     [
         {
             "args":
             {
-                "Scale":
-                {
-                    "x": 40,
-                    "y": 40,
-                    "z": 40
-                },
                 "model": "torch.obj",
                 "texture":  "/torch_texture.png"
             },

@@ -25,20 +25,18 @@ class Desert {
 				{
 					"pos": { "x": 525, "y": 170, "z": -675 },
 					"rot": { "x": 0, "y": 0, "z": 0, "w": 1 },
+					"scale":
+					{
+						"x": 10,
+						"y": 10,
+						"z": 10
+					},
 					"parent": 0,
 					"entities": [],
 					"components":
 					[
 						{
-							"args":
-							{
-								"Scale":
-								{
-									"x": 10,
-									"y": 10,
-									"z": 10
-								}
-							},
+							"args": {},
 							"name":"BasicBoxMeshRenderComponent",
 							"updateable":false
 						},

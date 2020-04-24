@@ -12,12 +12,17 @@ import {mix} from "mixwith";
 
 class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 {
-	constructor(x, y, z) {
+	constructor(
+		x, y, z,
+		px, py, pz,
+		sx, sy, sz,
+		parent)
+	{
 		super();
 
 		this.m_ID = Entity._idGenerator();
 
-		this.m_Parent = ENGINE.m_World;
+		this.m_Parent = parent || ENGINE.m_World;
 
 		this.m_Components = {};
 		this.m_Entities = [];
@@ -26,7 +31,10 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 		this.__OnInitialised = () => null;
 
 		this.m_Position = new THREE.Vector3(x, y, z);
-		this.m_Scale = new THREE.Vector3(1, 1, 1);
+		this.m_OriginalOffset = this.m_Position.clone();
+		this.m_ParentOffset = new THREE.Vector3(px, py, pz);
+
+		this.m_Scale = new THREE.Vector3(sx || 1, sy || 1, sz || 1);
 		this.m_Rotation = new THREE.Quaternion(0, 0, 0, 1);
 	}
 
@@ -138,6 +146,14 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 		if (this.m_Components.PhysicsComponent) {
 			this.m_Components.PhysicsComponent.m_PhysicsBody.position.set(x, y, z);
 		}
+
+		if(this.m_Entities.length > 0) this.m_Entities.forEach(e =>
+			e.SetPosition(
+				e.m_ParentOffset.x + this.m_Position.x,
+				e.m_ParentOffset.y + this.m_Position.y,
+				e.m_ParentOffset.z + this.m_Position.z
+			)
+		);
 	}
 
 	_SetPosition(x, y, z) {
@@ -148,7 +164,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 	SetPositionY(y) { this.SetPosition(this.m_Position.x, y, this.m_Position.z); }
 	SetPositionZ(z) { this.SetPosition(this.m_Position.x, this.m_Position.y, z); }
 
-	SetScale(x, y, z) {
+	SetScale(x, y, z, propagate = true) {
 		this.m_Scale.set(x, y, z);
 		if (this.m_Components.RenderComponent) {
 			this.m_Components.RenderComponent.SetScale(x, y, z);
@@ -162,13 +178,17 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 				this.m_Rotation.z
 			);
 		}
+
+		if(propagate && this.m_Entities.length > 0) this.m_Entities.forEach(e =>
+			e.SetScale(x, y, z, propagate)
+		);
 	}
 
 	SetScaleX(x) { this.SetScale(x, this.m_Scale.y, this.m_Scale.z); }
 	SetScaleY(y) { this.SetScale(this.m_Scale.x, y, this.m_Scale.z); }
 	SetScaleZ(z) { this.SetScale(this.m_Scale.x, this.m_Scale.y, z); }
 
-	_SetRotation(x, y, z) {
+	_SetRotation(x, y, z, propagate = true) {
 		this.m_Rotation.set(x, y, z);
 		if (this.m_Components.RenderComponent && this.m_Components.RenderComponent.m_Mesh
 		&& !this.m_Components.PhysicsComponent) {
@@ -181,11 +201,15 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 
 			return;
 		}
+
+		if(propagate && this.m_Entities.length > 0) this.m_Entities.forEach(e =>
+			e._SetRotation(x, y, z, propagate)
+		);
 	}
 
-	SetRotation(x, y, z)
+	SetRotation(x, y, z, propagate = true)
 	{
-		this._SetRotation(x, y, z);
+		this._SetRotation(x, y, z, propagate);
 	}
 
 	SetRotationX(x) {
@@ -227,9 +251,9 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 		);
 	}
 
-	Update() {
+	Update(dt) {
 		if (this.IsInitialised()) {
-			Object.keys(this.m_Components).forEach(c => this.m_Components[c].Update());
+			Object.keys(this.m_Components).forEach(c => this.m_Components[c].Update(dt));
 			if (this.m_Components.RenderComponent) {
 				this.m_Components.RenderComponent.SetPosition
 					(
@@ -237,7 +261,7 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 					);
 			}
 			this.ProcessInboundCommsQueue();
-			this.m_Entities.forEach(e => e.Update());
+			this.m_Entities.forEach(e => e.Update(dt));
 		}
 		else {
 			this._InitialiseComponents();
@@ -265,10 +289,12 @@ import BasicHullMeshRenderComponent from "./../components/RenderComponent/mixins
 import BasicShapeMeshRenderComponent from "./../components/RenderComponent/mixins/BasicShapeMeshRenderComponent";
 import BasicSphereMeshRenderComponent from "./../components/RenderComponent/mixins/BasicSphereMeshRenderComponent";
 import HeightmapPlaneMeshRenderComponent from "./../components/RenderComponent/mixins/HeightmapPlaneMeshRenderComponent";
-import OBJRenderComponent from "./../components/RenderComponent/mixins/OBJRenderComponent";FlameRenderComponent
+import OBJRenderComponent from "./../components/RenderComponent/mixins/OBJRenderComponent";
 import VegetationMeshRenderComponent from "./../components/RenderComponent/mixins/VegetationMeshRenderComponent";
 import FlameRenderComponent from "./../components/RenderComponent/mixins/FlameRenderComponent";
 import RenderComponent from "./../components/RenderComponent/RenderComponent";
+import PointLightComponent from "./../components/LightComponent/mixins/PointLightComponent";
+import LightComponent from "./../components/LightComponent/LightComponent";
 import RotateEditComponent from "./../components/RotateEditComponent/RotateEditComponent";
 import ScaleEditComponent from "./../components/ScaleEditComponent/ScaleEditComponent";
 import HeightmapEditComponent from "./../components/HeightmapEditComponent/HeightmapEditComponent";
@@ -298,7 +324,9 @@ window.ComponentTypes = [
 	FlameRenderComponent,
 	PlanePaintEditComponent,
     OBJRenderComponent,
-    RenderComponent,
+	RenderComponent,
+	PointLightComponent,
+	LightComponent,
     RotateEditComponent,
 	ScaleEditComponent,
 	HeightmapEditComponent,
@@ -318,16 +346,27 @@ Entity._idGenerator = () => Entity._idCount++;
 Entity.FindByID = (id) => entities().find(e => e.m_ID === id);
 
 Entity.FromFile = (json, parent, offset, postinit) => {
-	console.log(json)
-	let entity = new Entity(json.pos.x + offset.x, json.pos.y + offset.y, json.pos.z + offset.z);
+	console.log(json);
+
+	const entityPosition = new THREE.Vector3(json.pos.x, json.pos.y, json.pos.z);
+	const parentPosition = new THREE.Vector3();
+	if(parent != void(0)) parentPosition.add(parent.m_OriginalOffset);
+	const spawnPosition = entityPosition.clone().add(parentPosition);
+
+	let entity = new Entity(
+		spawnPosition.x, spawnPosition.y, spawnPosition.z,
+		entityPosition.x, entityPosition.y, entityPosition.z,
+		json.scale.x, json.scale.y, json.scale.z,
+		parent
+	);
 
 	if (json.rot || json.scale) {
 		entity.__OnInitialised = () => {
 			if(json.scale) entity.SetScale(
-				json.scale.x, json.scale.y, json.scale.z
+				json.scale.x, json.scale.y, json.scale.z, false
 			);
 			if(json.rot) entity.SetRotation(
-				json.rot.x, json.rot.y, json.rot.z, json.rot.w
+				json.rot.x, json.rot.y, json.rot.z, json.rot.w, false
 			);
 
 			const coloredComponent = json.components.find(c => { 

@@ -33,8 +33,8 @@ class VegetationMeshRenderComponent extends mix(RenderComponent).with()
 
 			let vegetationMesh = this.CreateMesh(count);
 
-			const width = this.m_Args.Scale.x;
-			const height = this.m_Args.Scale.z;
+			const width = this.m_Parent.m_Scale.x;
+			const height = this.m_Parent.m_Scale.z;
 			const veg = new THREE.Object3D();
 
 			if(this.m_Args.distribution === "uniform")

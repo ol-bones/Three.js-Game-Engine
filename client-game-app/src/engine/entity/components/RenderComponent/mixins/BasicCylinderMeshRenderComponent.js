@@ -14,12 +14,7 @@ class BasicCylinderMeshRenderComponent extends mix(RenderComponent).with()
     {
 	super.Initialise();
 
-	var geoBox = new THREE.CylinderGeometry(
-	    this.m_Args.Scale ? this.m_Args.Scale.rt : 25,
-	    this.m_Args.Scale ? this.m_Args.Scale.rb : 25,
-	    this.m_Args.Scale ? this.m_Args.Scale.h : 25,
-	    this.m_Args.Scale ? this.m_Args.Scale.s : 8
-	);
+	var geoBox = new THREE.CylinderGeometry(25,25,25,8);
 	geoBox.center();
 
 	var mshBox = new THREE.Mesh(geoBox, material("default"));
