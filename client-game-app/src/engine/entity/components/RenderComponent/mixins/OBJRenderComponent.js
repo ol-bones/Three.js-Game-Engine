@@ -35,6 +35,7 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 				m.material.map.needsUpdate = true;
 				m.material.transparent = true;
 				m.material.alphaTest = 0.5;
+				m.material.side = 2;
 				m.material.needsUpdate = true;
 			});
 		}
