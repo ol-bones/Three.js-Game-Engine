@@ -78,9 +78,10 @@ export default {
 
 <style scoped>
   .entity-select-container {
-    height: 100%;
+    height: 95vh;
     padding: 0;
     padding-left: 2.75%;
+    overflow-y: scroll;
   }
 
   .entity-group {

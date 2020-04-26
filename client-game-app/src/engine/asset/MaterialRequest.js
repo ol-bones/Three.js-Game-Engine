@@ -66,7 +66,10 @@ class MaterialRequest extends mix(AssetRequest).with()
 						color: data.color ? new THREE.Color().setHex(data.color) : new THREE.Color(1,1,1),
 						map: texture(data.texture),
 						transparent: true,
-						opacity: 1
+						opacity: 1,
+						shininess: 0,
+						lights: true,
+						fog: true
 					});
 
 					if(data.repeat && data.repeat.length === 2)
@@ -182,7 +185,7 @@ class MaterialRequest extends mix(AssetRequest).with()
 								diffuse: { type: "c", value: color},
 							//	emissive: { type: "c", value: new THREE.Color(0x000000) },
 							//	specular: { type: "c", value: new THREE.Color(0x111111) },
-						//		shininess: { type: "f", value: 30 },
+								shininess: { type: "f", value: 0 },
 								repeat: { type: "v2", value: new THREE.Vector2(data.repeat[0], data.repeat[1]) }
 							}
 						]),

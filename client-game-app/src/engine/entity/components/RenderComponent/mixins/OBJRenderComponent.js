@@ -20,6 +20,8 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 		this.m_Meshes.forEach(m =>
 		{
 			m.m_ParentEntity = this.m_Parent
+			m.castShadow = this.m_Args.castShadow == void(0) ? true : this.m_Args.castShadow;
+			m.receiveShadow = true;
 		});
 
 		if(this.m_Args.texture) this.SetTexture(this.m_Args.texture);
@@ -36,6 +38,9 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 				m.material.transparent = true;
 				m.material.alphaTest = 0.5;
 				m.material.side = 2;
+				m.material.shininess = 2;
+				m.material.lights = true;
+				m.material.fog = true;
 				m.material.needsUpdate = true;
 			});
 		}
