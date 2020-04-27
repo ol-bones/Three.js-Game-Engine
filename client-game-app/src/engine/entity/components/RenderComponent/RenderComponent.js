@@ -28,7 +28,7 @@ class RenderComponent extends mix(Component).with()
     {
 		this.SetPosition(
 			this.m_Parent.m_Position.x,
-			this.m_Parent.m_Position.y,
+			this.m_Parent.m_Position.y + 50,
 			this.m_Parent.m_Position.z
 		);
 

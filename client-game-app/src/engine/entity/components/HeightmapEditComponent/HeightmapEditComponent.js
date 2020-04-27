@@ -23,6 +23,8 @@ class HeightmapEditComponent extends mix(Component).with()
 		this.m_AreaSelected = false;
 		this.m_BrushSize = 1;
 
+		this.m_Set = false;
+
 		this.m_Step = new THREE.Vector3(0, 0, 1);
     }
 
@@ -104,9 +106,18 @@ class HeightmapEditComponent extends mix(Component).with()
 				const renderComponent = this.m_Parent.m_Components.RenderComponent;
 				const geometry = renderComponent.m_Mesh.geometry;
 				
-				this.m_VertsSelected.forEach(v =>
-					geometry.vertices[v].add(this.m_Step)
-				);
+				if(!this.m_Set)
+				{
+					this.m_VertsSelected.forEach(v =>
+						geometry.vertices[v].add(this.m_Step)
+					);
+				}
+				else
+				{
+					this.m_VertsSelected.forEach(v =>
+						geometry.vertices[v].setZ(this.m_Step.z)
+					);
+				}
 
 				const divs = this.m_Parent.m_Components.PhysicsComponent.m_BodySettings.Divisions;
 				const saved = [];

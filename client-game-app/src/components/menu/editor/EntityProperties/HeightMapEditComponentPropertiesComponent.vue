@@ -57,6 +57,21 @@
           </div>
         </div>
       </div>
+      <div class="row material-properties">
+        <div class="col-xs-8 col-sm-8 col-md-8 fill" style="font-size: 12px;">
+          Set
+        </div> 
+        <div class="col-xs-4 col-sm-4 col-md-4 fill number-entry">
+          <div class="row fill">
+            <b-form-checkbox
+              id="set-height-checkbox"
+              v-model="m_Set"
+              name="set-height-checkbox"
+              v-on:change="setChanged"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -83,7 +98,8 @@ export default {
       m_HeightMapStep: new THREE.Vector3(0, 0, 1),
       Size: 0,
       Divisions: 0,
-      m_RecreationTimer: null
+      m_RecreationTimer: null,
+      m_Set: false
     }
   },
   created() {
@@ -200,6 +216,9 @@ export default {
 
         if(debugComponent != void(0)) debugComponent.Initialise();
       }, 1000);
+    },
+    setChanged(value){
+        this.editComponent.m_Set = value;
     }
   }
 };

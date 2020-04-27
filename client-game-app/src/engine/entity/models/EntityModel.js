@@ -32,9 +32,10 @@ class EntityModel
 
 		this.PARENT = object.m_Parent ? object.m_Parent.m_ID : -1;
 		this.ENTITIES = object.m_Entities.map(e => e.DataModel().ToJSON()) || [];
-		this.COMPONENTS = Object.keys(object.m_Components).map(c =>
-			object.m_Components[c].DataModel().ToJSON()
-		) || [];
+		this.COMPONENTS = Object.keys(object.m_Components)
+			.filter(c => c !== "DebugComponent")
+			.filter(c => !c.endsWith("EditComponent"))
+			.map(c => object.m_Components[c].DataModel().ToJSON()) || [];
     }
 
     ToJSON()

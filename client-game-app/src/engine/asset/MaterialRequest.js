@@ -66,8 +66,8 @@ class MaterialRequest extends mix(AssetRequest).with()
 						color: data.color ? new THREE.Color().setHex(data.color) : new THREE.Color(1,1,1),
 						map: texture(data.texture),
 						transparent: true,
-						opacity: 1,
-						shininess: 0,
+						opacity: data.opacity || 1,
+						shininess: data.shininess || 0,
 						lights: true,
 						fog: true
 					});
