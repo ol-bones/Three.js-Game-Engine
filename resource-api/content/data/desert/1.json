@@ -7222,6 +7222,16 @@
                     },
                     "name": "OBJRenderComponent",
                     "updateable": false
+                },
+                {
+                    "args":
+                    {
+                        "model": "/models/torch/torch.phys",
+                        "type": 2,
+                        "mass": 0
+                    },
+                    "name":"OBJPhysicsComponent",
+                    "updateable":false
                 }
             ]
         },
@@ -7292,6 +7302,16 @@
                     },
                     "name": "OBJRenderComponent",
                     "updateable": false
+                },
+                {
+                    "args":
+                    {
+                        "model": "/models/torch/torch.phys",
+                        "type": 2,
+                        "mass": 0
+                    },
+                    "name":"OBJPhysicsComponent",
+                    "updateable":false
                 }
             ]
         },
@@ -7783,6 +7803,16 @@
                     },
                     "name": "OBJRenderComponent",
                     "updateable": false
+                },
+                {
+                    "args":
+                    {
+                        "model": "/models/fence_01/fence_01.phys",
+                        "type": 2,
+                        "mass": 0
+                    },
+                    "name":"OBJPhysicsComponent",
+                    "updateable":false
                 }
             ]
         },
@@ -7814,6 +7844,16 @@
                     },
                     "name": "OBJRenderComponent",
                     "updateable": false
+                },
+                {
+                    "args":
+                    {
+                        "model": "/models/fence_01/fence_01.phys",
+                        "type": 2,
+                        "mass": 0
+                    },
+                    "name":"OBJPhysicsComponent",
+                    "updateable":false
                 }
             ]
         },
@@ -7845,6 +7885,16 @@
                     },
                     "name": "OBJRenderComponent",
                     "updateable": false
+                },
+                {
+                    "args":
+                    {
+                        "model": "/models/fence_01/fence_01.phys",
+                        "type": 2,
+                        "mass": 0
+                    },
+                    "name":"OBJPhysicsComponent",
+                    "updateable":false
                 }
             ]
         },
@@ -7876,6 +7926,16 @@
                     },
                     "name": "OBJRenderComponent",
                     "updateable": false
+                },
+                {
+                    "args":
+                    {
+                        "model": "/models/fence_02/fence_02.phys",
+                        "type": 2,
+                        "mass": 0
+                    },
+                    "name":"OBJPhysicsComponent",
+                    "updateable":false
                 }
             ]
         },

@@ -31,6 +31,7 @@ class PhysicsComponent extends mix(Component).with()
 			this.m_PhysicsBody.m_ParentEntity = this.m_Parent;
 			this.m_PhysicsBody.collisionResponse = true;
 
+			this.m_PhysicsBody.sleep();
 			ENGINE.m_World.m_PhysicsWorld.add(this.m_PhysicsBody);
 
 			this.OnInitialised();

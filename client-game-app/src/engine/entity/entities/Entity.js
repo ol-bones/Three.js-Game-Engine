@@ -378,6 +378,11 @@ Entity.FromFile = (json, parent, offset, postinit) => {
 				entity.m_Components.RenderComponent.SetColor(new THREE.Color().setHex(coloredComponent.args.material.color));
 			}
 
+			if(entity.m_Components.PhysicsComponent)
+			{
+				entity.m_Components.PhysicsComponent.m_PhysicsBody.wakeUp();
+			}
+
 			if(postinit && typeof postinit === "function") try { postinit(entity); } catch(e) {}
 		}
 	}

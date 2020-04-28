@@ -51,7 +51,7 @@ class OBJPhysicsComponent extends mix(PhysicsComponent).with()
 				new CANNON.Box(new CANNON.Vec3(
 				...Object.keys(phys_data.scale).map(
 					dir => phys_data.scale[dir]
-					* this.m_Parent.m_Scale[dir]
+					* (this.m_Parent.m_Scale[dir]/2)
 				)
 				)),
 				new CANNON.Vec3(

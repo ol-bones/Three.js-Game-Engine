@@ -32,25 +32,28 @@ class World extends mix(BaseObject).with(Comms)
 		this.m_PhysicsWorld = new CANNON.World();
 		this.m_PhysicsWorld.gravity.set(0, -98, 0);
 		this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
-		this.m_PhysicsWorld.solver.iterations = 20;
+		this.m_PhysicsWorld.solver.iterations = 10;
 		this.m_PhysicsWorld.solver.tolerance = 0.0001;
 		this.m_PhysicsWorld.defaultMaterial.friction = 4;
 		this.m_PhysicsWorld.defaultContactMaterial.friction = 40;
 		this.m_Scene = new THREE.Scene();
 		this.m_EditorScene = new THREE.Scene();
-		this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
-
+		if(window.EDITOR != void(0)) this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
 
 		this.m_Camera = new THREE.PerspectiveCamera(
-			70, window.innerWidth / window.innerHeight, 0.1, 10000
+			70, window.innerWidth / window.innerHeight, 0.1, 5000
 		);
 
-		this.m_Renderer = new THREE.WebGLRenderer();
+		this.m_Renderer = new THREE.WebGLRenderer({
+			powerPreference: "high-performance"
+		});
+
 		this.m_Renderer.setClearColor(new THREE.Color(0x0, 0x0, 0x0));
 		this.m_Renderer.setSize(window.innerWidth, window.innerHeight);
 		this.m_Renderer.shadowMap.enabled = true;
 		this.m_Renderer.shadowMap.type = THREE.PCFSoftShadowMap;;
 		this.m_Renderer.shadowMap.autoUpdate = true;
+		this.m_Renderer.debug.checkShaderErrors = false;
 		//this.m_Renderer.shadowMap.renderSingleSided = false;
 		//this.m_Renderer.shadowMap.renderReverseSided = true;
 
@@ -82,12 +85,13 @@ class World extends mix(BaseObject).with(Comms)
 
 		document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
 
-		requestAnimationFrame(this.render.bind(this));
+		this.m_Renderer.setAnimationLoop(this.render.bind(this));
 	}
 
 	Update(dt) {
 		this.ProcessInboundCommsQueue();
 		this.m_PhysicsWorld.step(1 / 30);
+		//this.m_DebugRenderer.update();
 
 		this.m_Entities.forEach(e => e.Update(dt));
 	}
@@ -95,9 +99,8 @@ class World extends mix(BaseObject).with(Comms)
 	render() {
 		this.m_Renderer.autoClear = false;
 		this.m_Renderer.render(this.m_Scene, this.m_Camera);
-		this.m_Renderer.clearDepth();
-		this.m_Renderer.render(this.m_EditorScene, this.m_Camera);
-		requestAnimationFrame(this.render.bind(this));
+		
+		if(window.EDITOR != void(0)) this.m_Renderer.render(this.m_EditorScene, this.m_Camera);
 	}
 }
 

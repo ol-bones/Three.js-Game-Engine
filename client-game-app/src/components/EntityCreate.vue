@@ -327,7 +327,13 @@ export default {
     {
       if(entities().length <= 0) return;
 
-      let e = new Entity(p.pos.x, p.pos.y, p.pos.z);
+      let e = new Entity(
+        p.pos.x, p.pos.y, p.pos.z,
+        0,0,0,
+        p.scale.x, p.scale.y, p.scale.z,
+        null
+      );
+
       e.__physname = name;
       e.__phystype = p.type;
       e.__physscale = p.scale;
@@ -345,8 +351,12 @@ export default {
             new THREE.Vector3(p.rot.axis.x, p.rot.axis.y, p.rot.axis.z),
             p.rot.r
           );
+          
+          e.m_Components.RenderComponent.SetScale(
+            p.scale.x, p.scale.y, p.scale.z
+          );
 
-          e.m_Components.PhysicsComponent.m_PhysicsBody.sleep();
+          if(e.m_Components.PhysicsComponent) e.m_Components.PhysicsComponent.m_PhysicsBody.sleep();
           e.__postInitialised = true;
       };
 

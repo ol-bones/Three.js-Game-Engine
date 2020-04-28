@@ -73,8 +73,11 @@ class Engine extends mix(BaseObject).with()
 
     Update()
     {
-		const dt = Math.max((performance.now() - this.m_LastUpdate)/1000, 0);
-		this.m_UpdateArray.forEach(f => f.x(dt));
+		this.m_UpdateArray.forEach(
+			f => f.x(
+				Math.max((performance.now() - this.m_LastUpdate)/1000, 0)
+			)
+		);
     }
 }
 
