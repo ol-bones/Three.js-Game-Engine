@@ -47,7 +47,7 @@ class EntityCreate extends mix(BaseObject).with(WorldLoader, EditToolsControl)
 				window.json(json), entities()[0], new THREE.Vector3(0,0,0),
 				e => e.m_Components.PhysicsComponent.m_PhysicsBody.sleep()
 			);
-		} catch(e) { setTimeout(this.AddEntity.bind(this, json), 50); }
+		} catch(e) { setTimeout(this.AddEntity.bind(this, json), 500); }
 	}
 
     AddNewBox()

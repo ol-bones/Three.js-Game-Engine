@@ -52,7 +52,7 @@ class Game {
 				}, entities()[0], new THREE.Vector3(0, 0, 0));
 		}
 		catch (Exception) {
-			setTimeout(this.LoadWorld.bind(this), 50);
+			setTimeout(this.LoadWorld.bind(this), 500);
 		}
 	}
 
