@@ -67,13 +67,13 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 			this.m_PhysicsShape = new CANNON.Sphere(this.m_BodySettings.radius);
 		}
 
-		const contactMaterial = this.createContactMaterial();
-		ENGINE.m_World.m_PhysicsWorld.addContactMaterial(contactMaterial);
+		//const contactMaterial = this.createContactMaterial();
+		//ENGINE.m_World.m_PhysicsWorld.addContactMaterial(contactMaterial);
 		
 		this.m_PhysicsBody = new CANNON.Body({
-			mass: this.m_BodySettings.mass || 2,
+			mass: this.m_BodySettings.mass || 0,
 			type: this.m_Args.Type, // STATIC = 2, DYNAMIC = 1
-			material: contactMaterial,
+			//material: contactMaterial,
 			angularDamping: this.m_BodySettings.angularDamping || 0.1,
 			linearDamping: this.m_BodySettings.linearDamping || 0.9,
 			fixedRotation: this.m_BodySettings.fixedRotation || false
@@ -93,7 +93,8 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 				restitution: this.m_BodySettings.material.restitution || 3,
 				contactEquationStiffness: this.m_BodySettings.material.stiffness || 1e8,
 				contactEquationRelaxation: this.m_BodySettings.material.relaxation || 3,
-				frictionEquationStiffness: this.m_BodySettings.material.frictionstiffness || 1e8
+				frictionEquationStiffness: this.m_BodySettings.material.frictionstiffness || 1e8,
+				frictionEquationRegularizationTime: 3
 			});
 		}
 		catch(e)
@@ -104,7 +105,8 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 				restitution: 3,
 				contactEquationStiffness: 1e8,
 				contactEquationRelaxation: 3,
-				frictionEquationStiffness: 1e8
+				frictionEquationStiffness: 1e8,
+				frictionEquationRegularizationTime: 3
 			});
 		}
 	}

@@ -33,9 +33,9 @@ class World extends mix(BaseObject).with(Comms)
 		this.m_PhysicsWorld.gravity.set(0, -98, 0);
 		this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
 		this.m_PhysicsWorld.solver.iterations = 10;
-		this.m_PhysicsWorld.solver.tolerance = 0.0001;
-		this.m_PhysicsWorld.defaultMaterial.friction = 4;
-		this.m_PhysicsWorld.defaultContactMaterial.friction = 40;
+		this.m_PhysicsWorld.solver.tolerance = 0.05;
+		this.m_PhysicsWorld.defaultMaterial.friction = 0;
+		this.m_PhysicsWorld.defaultContactMaterial.friction = 0;
 		this.m_Scene = new THREE.Scene();
 		this.m_EditorScene = new THREE.Scene();
 		if(window.EDITOR != void(0)) this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
@@ -62,17 +62,6 @@ class World extends mix(BaseObject).with(Comms)
 		this.m_Camera.position.z = 30;
 		this.m_Camera.lookAt(this.m_Scene.position);
 
-		var ambientLight = new THREE.AmbientLight(0x0c0c0c);
-		this.m_Scene.add(ambientLight);
-		var spotLight = new THREE.SpotLight(0xffffff);
-		spotLight.position.set(-500, 300, -10);
-		spotLight.castShadow = true;
-		spotLight.shadow.mapSize.width = 256;
-		spotLight.shadow.mapSize.height = 256;
-		spotLight.shadow.camera.near = 0.5;
-		spotLight.shadow.camera.far = 5000;
-		spotLight.shadow.bias = 0.00005;
-		this.m_Scene.add(spotLight);
 
 		setTimeout(() => {
 			if(window.EDITOR == void(0))
@@ -80,8 +69,30 @@ class World extends mix(BaseObject).with(Comms)
 				const colour = new THREE.Color(0x15161f);
 				this.m_Scene.background = colour;
 				this.m_Scene.fog = new THREE.FogExp2(colour, 0.0035);
+				var ambientLight = new THREE.AmbientLight(0x000000);
+				this.m_Scene.add(ambientLight);
+				var spotLight = new THREE.SpotLight(0x606c7d);
+				spotLight.position.set(500, 500, 1000);
+				spotLight.castShadow = true;
+				spotLight.shadow.mapSize.width = 256;
+				spotLight.shadow.mapSize.height = 256;
+				spotLight.shadow.camera.near = 0.5;
+				spotLight.shadow.camera.far = 5000;
+				spotLight.shadow.bias = 0.00005;
+				//spotLight.angle = Math.PI/2;
+				const dummyObject = new THREE.Object3D();
+				dummyObject.position.set(1000, 0, -600);
+				this.m_Scene.add(dummyObject);
+				spotLight.target = dummyObject;
+				this.m_Scene.add(spotLight);
+				console.log(spotLight);
 			}
-		}, 10000);
+			else
+			{
+				var ambientLight = new THREE.AmbientLight(0x404040);
+				this.m_Scene.add(ambientLight);
+			}
+		}, 5000);
 
 		document.getElementsByClassName("game-canvas")[0].appendChild(this.m_Renderer.domElement);
 
@@ -89,8 +100,8 @@ class World extends mix(BaseObject).with(Comms)
 	}
 
 	Update(dt) {
-		this.ProcessInboundCommsQueue();
-		this.m_PhysicsWorld.step(1 / 30);
+		//this.ProcessInboundCommsQueue();
+		this.m_PhysicsWorld.step(1 / 30, dt, 3);
 		//this.m_DebugRenderer.update();
 
 		this.m_Entities.forEach(e => e.Update(dt));

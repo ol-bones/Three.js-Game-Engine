@@ -47,7 +47,7 @@ class HeightmapPhysicsComponent extends mix(PhysicsComponent).with()
         var groundMaterial = new CANNON.Material("groundMaterial");
 
 		let materialOptions = {
-            friction: 40,
+            friction: 0,
             restitution: 3,
             contactEquationStiffness: 1e8,
             contactEquationRelaxation: 3,

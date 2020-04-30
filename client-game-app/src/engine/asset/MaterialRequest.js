@@ -68,7 +68,6 @@ class MaterialRequest extends mix(AssetRequest).with()
 						transparent: true,
 						opacity: data.opacity || 1,
 						shininess: data.shininess || 0,
-						lights: true,
 						fog: true
 					});
 

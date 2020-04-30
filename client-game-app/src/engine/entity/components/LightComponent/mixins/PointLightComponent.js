@@ -16,8 +16,8 @@ class PointLightComponent extends mix(LightComponent).with()
 
         this.m_Light = new THREE.PointLight(
             this.m_Args.color || 0xff4400,
-            this.m_Args.intensity || 0.7,
-            this.m_Args.distance || 320,
+            this.m_Args.intensity || 0.9,
+            this.m_Args.distance || 520,
             this.m_Args.decay || 2
         );
 

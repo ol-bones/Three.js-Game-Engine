@@ -36,6 +36,12 @@ class LightComponent extends mix(Component).with()
 
 		this.m_Light.castShadow = this.m_Args.castShadow == void(0) ? true : this.m_Args.castShadow;
 
+        this.m_Light.shadow.mapSize.width = 1024;
+        this.m_Light.shadow.mapSize.height = 1024;
+        this.m_Light.shadow.camera.near = 0.05;
+        this.m_Light.shadow.camera.far = 750;
+        this.m_Light.shadow.bias = -0.005;
+
 		ENGINE.m_World.m_Scene.add(this.m_Light);
 		this.m_IsInitialised = true;
     }

@@ -23,7 +23,7 @@ class Desert {
 
 			Entity.FromFile(
 				{
-					"pos": { "x": 525, "y": 170, "z": -675 },
+					"pos": { "x": 1200, "y": 100, "z": -535 },
 					"rot": { "x": 0, "y": 0, "z": 0, "w": 1 },
 					"scale":
 					{
@@ -50,16 +50,16 @@ class Desert {
 									"radius": 20,
 									"material":
 									{
-										"friction": 1000,
+										"friction": 0,
 										"restitution": 3,
 										"stiffness": 1e8,
 										"relaxation": 3,
 										"frictionstiffness": 1e12
 									},
-									"mass": 3,
+									"mass": 2,
 									"angularDamping": 0.1,
-									"linearDamping": 0.9,
-									"fixedRotation": false,
+									"linearDamping": 0.925,
+									"fixedRotation": true
 								}
 							},
 							"name": "BasicPhysicsComponent"

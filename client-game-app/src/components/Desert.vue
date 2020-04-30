@@ -3,8 +3,16 @@
     <div id="blocker"
       @click="requestPointerLock"
       v-if="!hasPointerLock">
-      <div id="instructions">
-        PRESS TO PLAY
+      <div id="instructions" class="escape-menu container">
+        <div class="col-xs-12 col-sm-12 col-md-12">
+          <div class="row resume-text justify-content-center" v-if="!loading">
+            RESUME
+          </div>
+          <div class="row loading-bar justify-content-center" v-if="loading">
+            LOADING PLEASE WAIT
+            <b-progress :value="progress" :max="max" animated></b-progress>
+          </div>
+        </div>
       </div>
     </div>
     <div class="game-canvas"></div>
@@ -18,7 +26,11 @@ export default {
   name: "Play",
   data() {
     return {
-      hasPointerLock: false
+      hasPointerLock: false,
+      loading: true,
+      loadTestInterval: null,
+      progress: 0,
+      max: 1
     }
   },
   created() {
@@ -35,9 +47,33 @@ export default {
     document.addEventListener("webkitpointerlockerror", this.pointerLockEvent.bind(this), false );
 
     ENGINE.Initialise();
+
+    setTimeout(() => {
+      this.loadTestInterval = setInterval(() => {
+        try
+        {
+          const ents = entities();
+          const entsLoading = ents.filter(e => !e.IsInitialised()).length;
+          const sceneloaded = ENGINE.m_World.m_Scene.children.length;
+
+          const entprogress = (ents.length-entsLoading)/ents.length;
+          const sceneprogress = sceneloaded / 63;
+          this.progress = (entprogress/2)+(sceneprogress/2);
+
+          if(ents.length > 0 && entsLoading === 0 && this.progress >= 1)
+          {
+            clearInterval(this.loadTestInterval);
+            setTimeout(() => {
+              this.loading = false;
+            }, 2500);
+          }
+        } catch(e) {}
+      }, 50);
+    }, 2500);
   },
   methods:{
     requestPointerLock() {
+      if(this.loading) return;
       document.body.requestPointerLock();
       this.hasPointerLock = true;
     },
@@ -84,5 +120,35 @@ export default {
   width: 100%;
   height:100%;
   overflow: hidden;
+}
+
+.escape-menu {
+  color: white;
+  font-weight: bolder;
+  
+  display: flex;
+  align-self: center;
+  align-items: center;
+  align-content: center;
+}
+
+.resume-text {
+  width: 100%;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  align-content: center;
+}
+
+.loading-bar {
+  width: 100%;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  align-content: center;
+}
+
+.loading-bar > * {
+  width: 100%;
 }
 </style>

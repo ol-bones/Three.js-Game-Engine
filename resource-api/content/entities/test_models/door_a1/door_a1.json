@@ -1,0 +1,45 @@
+{
+    "pos":
+    {
+        "x":0,
+        "y":0,
+        "z":0
+    },
+    "rot":
+    {
+        "x":0,
+        "y":0,
+        "z":0,
+        "w":1
+    },
+    "scale":
+    {
+        "x": 1,
+        "y": 1,
+        "z": 1
+    },
+    "parent": 0,
+    "entities": [],
+    "components":
+    [
+        {
+            "args":
+            {
+                "model": "door_a1.obj",
+                "texture": "/door_a1_texture.png"
+            },
+            "name":"OBJRenderComponent",
+            "updateable":false
+        },
+        {
+            "args":
+            {
+                "model": "/models/door_a1/door_a1.phys",
+                "type": 2,
+                "mass": 0
+            },
+            "name":"OBJPhysicsComponent",
+            "updateable":false
+        }
+    ]
+}
