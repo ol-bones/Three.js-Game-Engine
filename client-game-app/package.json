@@ -12,7 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "mixwith": "^0.1.1",
     "vue": "^2.5.2",
     "vue-awesome": "^3.1.0",
