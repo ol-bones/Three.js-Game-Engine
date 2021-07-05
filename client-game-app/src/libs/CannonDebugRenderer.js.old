@@ -1,5 +1,5 @@
 "use strict";
-
+import * as CANNON from 'cannon-es';
 // Dependencies
 // @three.min.js@
 

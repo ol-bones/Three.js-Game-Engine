@@ -1,0 +1,64 @@
+<div class="panel-group" id="accordion">
+{if RenderComponent}
+    <div class="panel ent-accordion">
+	<div class="btn btn-primary btn-block ent-accordion" data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+	    <h4 class="panel-title">
+		Renderable Object
+	    </h4>
+	</div>
+	    <div id="collapse1" class="panel-collapse collapse">
+	    <div style="color:#FFF;">{>RenderComponent.Name}</div>
+	</div>
+    </div>
+{/if}
+{if PhysicsModel}
+    <div class="panel ent-accordion">
+	<div class="btn btn-primary btn-block ent-accordion" data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+	    <h4 class="panel-title">
+		{>PhysicsModel.Name}
+	    </h4>
+	</div>
+	<div id="collapse2" class="panel-collapse collapse">
+	    <div class="rigid-body-buttons">
+		<button class="btn btn-default btn-editor btn-save glyphicon glyphicon-open-file"></button>
+		<button class="btn btn-default btn-editor btn-copy glyphicon glyphicon-duplicate" onclick="EDITOR.CopyPhysJSON();"></button>
+		<button class="btn btn-default btn-editor btn-visible glyphicon glyphicon-eye-open" onclick="EDITOR.TogglePhysVisibility();"></button>
+		<button class="btn btn-default btn-editor btn-delete glyphicon glyphicon-trash" onclick="EDITOR.DeletePhysEnts();"></button>
+	    </div>
+
+	    <ul class="list-group">
+		<li class="list-group-item">Count: {>PhysicsModel.Count}</li>
+	    </ul>
+	    <div class="panel" style="background:#222;color:#FFF;border:0;">
+		<div class="btn btn-primary btn-block ent-accordion" data-toggle="collapse" href="#collapse3">
+		    <h4 class="panel-title">
+			Rigid Bodies
+		    </h4>
+		</div>
+		<div id="collapse3" class="panel-collapse collapse" style="border:0;">
+		    <ul class="list-group" style="border-color:#111;">
+			{for SubEnt in PhysicsModel.Entities}
+			    <li class="list-group-item"
+			          onclick="EDITOR.SelectPhysEnt('{>SubEnt}', event);">
+				<textarea data-physname="{>SubEnt}" rows="1" class="rigid-body-shape-name">{>SubEnt}</textarea>
+				<button
+				    class="btn btn-default btn-editor btn-delete glyphicon glyphicon-trash"
+				     onclick="EDITOR.DeletePhysEnt('{>SubEnt}', event);"
+				    style="float:right;padding:0;"
+				>
+			    </li>
+			{/for}
+		    </ul>
+		    <div class="rigid-body-buttons">
+			<button
+			    class="btn btn-default btn-editor btn-save glyphicon glyphicon-plus"
+			    onclick="$('#rigid-body-shape-select-modal').modal();">
+			</button>
+		    </div>
+		</div>
+	    </div>
+	</div>
+    </div>
+{/if}
+<div style="display:none;" id="clipdiv"><textarea id="clip"></textarea></div>
+</div>

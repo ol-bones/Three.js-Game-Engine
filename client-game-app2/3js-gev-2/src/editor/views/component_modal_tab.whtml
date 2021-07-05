@@ -1,0 +1,13 @@
+{if firstComponent}
+    <li class="active">
+{else}
+    <li>
+{/if}
+
+	<a data-toggle="tab" href="#{componentName}">
+
+	    {componentName}
+
+	</a>
+    </li>
+

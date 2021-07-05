@@ -14,6 +14,7 @@ THREE.PointerLockControls = function ( camera, domElement ) {
 
 	this.domElement = domElement;
 	this.isLocked = false;
+	this.isEnabled = true;
 
 	//
 	// internals
@@ -31,9 +32,19 @@ THREE.PointerLockControls = function ( camera, domElement ) {
 
 	var vec = new THREE.Vector3();
 
+	function Enable()
+	{
+		this.isEnabled = true;
+	}
+
+	function Disable()
+	{
+		this.isEnabled = false;
+	}
+
 	function onMouseMove( event ) {
 
-		if ( scope.isLocked === false ) return;
+		if ( scope.isLocked === false && this.isEnabled ) return;
 
 		var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
 		var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;

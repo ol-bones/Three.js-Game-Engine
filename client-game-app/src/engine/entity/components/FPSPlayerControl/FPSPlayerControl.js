@@ -27,8 +27,14 @@ class FPSPlayerControl extends mix(Component).with()
 		this.m_GunFlash = null;
 		this.m_GunFlashState = false;
 		this.m_CanJump = true;
+		this.m_MovementControlsEnabled = false;
+		this.m_EyeControlsEnabled = false;
 
 		this.m_EyeNormal = new THREE.Vector3();
+
+		this.m_Ray = {};
+		this.m_TargetPosition = {};
+		this.m_JumpRay = {};
     }
 
     Initialise()
@@ -39,7 +45,11 @@ class FPSPlayerControl extends mix(Component).with()
 		);
 		
 		ENGINE.m_World.m_Scene.add(this.m_PLControls.getObject());
-		
+
+		this.m_TargetPosition = this.m_Parent.m_Position.clone();
+		this.m_JumpRay = new THREE.Raycaster();
+		this.m_JumpRay.far = 30;
+
 		super.Initialise();
 		this.OnInitialised();
 	}
@@ -154,16 +164,46 @@ class FPSPlayerControl extends mix(Component).with()
 		}, this.m_Parent, new THREE.Vector3(0,0,0));
     }
 
+	EnableMovement()
+	{
+		this.m_MovementControlsEnabled = true;
+	}
+
+	DisableMovement()
+	{
+		this.m_MovementControlsEnabled = false;
+	}
+
+	EnableEyeControl()
+	{
+		this.m_PLControls.Enable();
+		this.m_EyeControlsEnabled = true;
+	}
+
+	DisableEyeControl()
+	{
+		this.m_PLControls.Disable();
+		this.m_EyeControlsEnabled = false;
+	}
+
     Jump()
     {
-		if(this.m_CanJump)
+		if(this.m_MovementControlsEnabled && this.m_CanJump)
 		{
-			this.m_CanJump = false;
-			this.m_Parent.m_Components.PhysicsComponent.ApplyForce(
-				0, 6000, 0
-			);
+			this.m_JumpRay.ray.origin.set(this.m_Parent.m_Position.x, this.m_Parent.m_Position.y, this.m_Parent.m_Position.z);
+			this.m_JumpRay.ray.direction = new THREE.Vector3(0, -1, 0);
+			let intersects = this.m_JumpRay.intersectObjects(entities().filter(e => e.m_Components.PhysicsComponent && e.m_Components.RenderComponent)
+				.map(e => e.m_Components.RenderComponent.m_Mesh));//.filter(e => e === this.m_Parent));
+				
+			if(intersects.length > 0)
+			{
+				this.m_CanJump = false;
+				this.m_Parent.m_Components.PhysicsComponent.ApplyForce(
+					0, 6000, 0
+				);
 
-			setTimeout(() => this.m_CanJump = true, 1000);
+				setTimeout(() => this.m_CanJump = true, 1000);
+			}
 		}
 	}
 	
@@ -183,20 +223,24 @@ class FPSPlayerControl extends mix(Component).with()
 			this.m_GunFlash.m_Components.RenderComponent.m_Mesh.visible = this.m_GunFlashState;
 		}
 		
-		const force = new THREE.Vector2();
-		if(this.m_MovementKeyStates["w"]) { force.x += 390; }
-		if(this.m_MovementKeyStates["a"]) { force.y -= 390; }
-		if(this.m_MovementKeyStates["s"]) { force.x -= 390; }
-		if(this.m_MovementKeyStates["d"]) { force.y += 390; }
-
 		const dir = this.GetDirection().clone();
 		const cr = new THREE.Vector2(dir.x, dir.z);
 		const angle = cr.angle();
-		force.rotateAround(new THREE.Vector2(0,0), angle);
 		
-		this.m_Parent.m_Components.PhysicsComponent.ApplyForce(
-			force.x, 0, force.y
-		);
+		if(this.m_MovementControlsEnabled)
+		{
+			const force = new THREE.Vector2();
+			if(this.m_MovementKeyStates["w"]) { force.x += 590; }
+			if(this.m_MovementKeyStates["a"]) { force.y -= 590; }
+			if(this.m_MovementKeyStates["s"]) { force.x -= 590; }
+			if(this.m_MovementKeyStates["d"]) { force.y += 590; }
+
+			force.rotateAround(new THREE.Vector2(0,0), angle);
+			this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.wakeUp();
+			this.m_Parent.m_Components.PhysicsComponent.ApplyForce(
+				force.x, 0, force.y
+			);
+		}
 
 		const pb = this.m_Parent.m_Components.PhysicsComponent.m_PhysicsBody.position;
 		ENGINE.m_World.m_Camera.position.set(pb.x, pb.y + 64, pb.z);

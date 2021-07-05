@@ -22,10 +22,18 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 			m.m_ParentEntity = this.m_Parent
 			m.castShadow = this.m_Args.castShadow == void(0) ? true : this.m_Args.castShadow;
 			m.receiveShadow = true;
+			if(this.m_Args.renderOrder !== undefined) m.renderOrder = this.m_Args.renderOrder;
 		});
 
 		if(this.m_Args.texture) this.SetTexture(this.m_Args.texture);
-		this.OnInitialised();
+		if(this.m_Args.material)
+		{
+			this.SetMaterial(this.m_Args.material, this.OnInitialised.bind(this));
+		}
+		else
+		{
+			this.OnInitialised();
+		}
     }
 
     SetTexture(name)
@@ -50,7 +58,7 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 		}
 	}
 
-	SetMaterial(name)
+	SetMaterial(name, oncomplete)
 	{
 		try
 		{
@@ -59,6 +67,8 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 				m.material.map.needsUpdate = true;
 				m.material.needsUpdate = true;
 			});
+
+			if(oncomplete) oncomplete();
 		}
 		catch(Exception)
 		{
@@ -66,12 +76,27 @@ class OBJRenderComponent extends mix(RenderComponent).with()
 		}
 	}
 	
-    SetColor(col)
+    SetColor(col, failedAttempts = 0)
     {
 		this.m_Colour = col;
 		this.m_Meshes.forEach(m =>
-			m.material.color.set(col)
-		);
+		{
+			try
+			{
+				m.material.color.set(col);
+			}
+			catch (e)
+			{
+				if(failedAttempts > 10)
+				{
+					console.error(e);
+				}
+				else
+				{
+					setTimeout(() => this.SetColor(col, failedAttempts + 1), 100);
+				}
+			}
+		});
 	}
 	
 	SetOpacity(o)

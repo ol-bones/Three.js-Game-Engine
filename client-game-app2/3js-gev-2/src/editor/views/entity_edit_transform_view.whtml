@@ -1,0 +1,36 @@
+<div class="panel-group" id="accordion-transform">
+    <div class="panel ent-accordion">
+	<div class="btn btn-primary btn-block ent-accordion" data-toggle="collapse" data-parent="#accordion-transform" href="#collapse-position">
+	    <h4 class="panel-title">
+		Position
+	    </h4>
+	</div>
+	    <div id="collapse-position" class="panel-collapse collapse">
+	    <div id="position-transform-x" style="color:#FFF;">x: 0</div>
+	    <div id="position-transform-y" style="color:#FFF;">y: 0</div>
+	    <div id="position-transform-z" style="color:#FFF;">z: 0</div>
+	</div>
+    </div>
+    <div class="panel ent-accordion">
+	<div class="btn btn-primary btn-block ent-accordion" data-toggle="collapse" data-parent="#accordion-transform" href="#collapse-scale">
+	    <h4 class="panel-title">
+		Scale
+	    </h4>
+	</div>
+	    <div id="collapse-scale" class="panel-collapse collapse">
+	    <div id="scale-transform-x" style="color:#FFF;">x: 0</div>
+	    <div id="scale-transform-y" style="color:#FFF;">y: 0</div>
+	    <div id="scale-transform-z" style="color:#FFF;">z: 0</div>
+	</div>
+    </div>
+    <div class="panel ent-accordion">
+	<div class="btn btn-primary btn-block ent-accordion" data-toggle="collapse" data-parent="#accordion-transform" href="#collapse-rotation">
+	    <h4 class="panel-title">
+		Rotation
+	    </h4>
+	</div>
+	    <div id="collapse-rotation" class="panel-collapse collapse">
+	    <div id="rotation-transform" style="color:#FFF;">x,y,z,w</div>
+	</div>
+    </div>
+</div>

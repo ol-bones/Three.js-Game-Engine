@@ -59,7 +59,7 @@ const config = require("./config.json");
 const app = express();
 
 app.use(require("./middleware/cors"));
-app.use(express.json());
+app.use(express.json({limit: 1000000}));
 app.use(express.static(__dirname + "/content"));
 app.get("/", (req, res) => res.json("api"));
 app.get("/data/world/0.json", (req, res) => res.json(JSON.parse(fs.readFileSync(path.join(__dirname, "content/data/world/0.json")))));

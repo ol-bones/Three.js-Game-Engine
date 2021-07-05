@@ -29,13 +29,20 @@ class Editor extends mix(BaseObject).with(WorldLoader, EditToolsControl)
 
 		ENGINE.m_World.m_Controls = new THREE.OrbitControls(ENGINE.m_World.m_Camera, ENGINE.m_World.m_Renderer.domElement);
 
-		ENGINE.m_World.m_Camera.position.set(-120.65558286328287, 151.31431689725994, 49.16004438380608);
-		ENGINE.m_World.m_Camera.quaternion.set(-0.313321793870273, -0.638001400182456, -0.2988145120070227, 0.6570095484000732);
+		ENGINE.m_World.m_Camera.position.set(4615, 2983, 440);
+
+		ENGINE.m_World.m_Camera.quaternion.set(
+			-0.37519805904961856,
+			0.24519856029339523,
+			0.10361291255600737,
+			0.8879011470130592
+		);
+
 		this.m_EditModeToggled = true;
 		ENGINE.StopUpdating(1);
 		ENGINE.BeginUpdating(2, () => ENGINE.m_World.m_Entities.forEach(e=>e.Update()));
 
-		let grid = new THREE.GridHelper(10000, 10);
+		let grid = new THREE.GridHelper(100000, 100);
 		ENGINE.m_World.m_Scene.add(grid);
 	//	this.LoadWorld();
 	}

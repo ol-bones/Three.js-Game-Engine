@@ -8,7 +8,14 @@
 		},
 		{
 			"path": "/home/o/Downloads/git/three.js"
+		},
+		{
+			"path": "client-game-app2"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"search.exclude": {
+			"**/bower_components": false
+		}
+	}
 }

@@ -1,4 +1,6 @@
 "use strict";
+
+import * as CANNON from 'cannon-es';
 import BaseObject from "./../entity/entities/BaseObject";
 import Comms from "./mixins/Comms/Comms";
 import {mix} from "mixwith";
@@ -29,10 +31,14 @@ class World extends mix(BaseObject).with(Comms)
 		console.log(ENGINE);
 		this.m_Entities = [];
 
-		this.m_PhysicsWorld = new CANNON.World();
+		this.m_PhysicsWorld = new CANNON.World({
+			allowSleep: true,
+			quatNormalizeFast: true,
+			quatNormalizeSkip: 1.0
+		});
 		this.m_PhysicsWorld.gravity.set(0, -98, 0);
 		this.m_PhysicsWorld.broadphase = new CANNON.NaiveBroadphase();
-		this.m_PhysicsWorld.solver.iterations = 10;
+		this.m_PhysicsWorld.solver.iterations = 3;
 		this.m_PhysicsWorld.solver.tolerance = 0.05;
 		this.m_PhysicsWorld.defaultMaterial.friction = 0;
 		this.m_PhysicsWorld.defaultContactMaterial.friction = 0;
@@ -41,7 +47,7 @@ class World extends mix(BaseObject).with(Comms)
 		if(window.EDITOR != void(0)) this.m_DebugRenderer = new THREE.CannonDebugRenderer(this.m_Scene, this.m_PhysicsWorld);
 
 		this.m_Camera = new THREE.PerspectiveCamera(
-			70, window.innerWidth / window.innerHeight, 0.1, 5000
+			70, window.innerWidth / window.innerHeight, 0.1, 100000
 		);
 
 		this.m_Renderer = new THREE.WebGLRenderer({
@@ -57,9 +63,9 @@ class World extends mix(BaseObject).with(Comms)
 		//this.m_Renderer.shadowMap.renderSingleSided = false;
 		//this.m_Renderer.shadowMap.renderReverseSided = true;
 
-		this.m_Camera.position.x = -30;
-		this.m_Camera.position.y = 40;
-		this.m_Camera.position.z = 30;
+		this.m_Camera.position.x = 1500;
+		this.m_Camera.position.y = 1000;
+		this.m_Camera.position.z = -2500;
 		this.m_Camera.lookAt(this.m_Scene.position);
 
 

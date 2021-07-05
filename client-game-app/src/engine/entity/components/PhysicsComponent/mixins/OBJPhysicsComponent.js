@@ -1,5 +1,6 @@
 "use strict";
 
+import * as CANNON from 'cannon-es';
 import Entity from "./../../../entities/Entity";
 import Component from "./../../Component";
 import PhysicsComponent from "./../PhysicsComponent";
@@ -112,7 +113,7 @@ class OBJPhysicsComponent extends mix(PhysicsComponent).with()
 
     Remove()
     {
-		ENGINE.m_World.m_PhysicsWorld.remove(this.m_PhysicsBody);
+		ENGINE.m_World.m_PhysicsWorld.removeBody(this.m_PhysicsBody);
     }
 }
 

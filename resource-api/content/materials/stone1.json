@@ -1,0 +1,6 @@
+{
+    "type": "THREE.MeshPhongMaterial",
+    "texture": "/stone1.png",
+    "color": "0xFFFFFF",
+    "repeat": [4, 4]
+}

@@ -3,6 +3,7 @@ uniform vec3 emissive;
 uniform vec3 specular;
 uniform float shininess;
 uniform float opacity;
+
 uniform sampler2D map2;
 uniform sampler2D blendmap;
 uniform vec2 repeat;
@@ -31,24 +32,24 @@ uniform vec2 repeat;
 #include <specularmap_pars_fragment>
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
+
 void main() {
 	#include <clipping_planes_fragment>
 	vec4 diffuseColor = vec4( diffuse, opacity );
 	ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
 	vec3 totalEmissiveRadiance = emissive;
 	#include <logdepthbuf_fragment>
+
     #ifdef USE_MAP
         vec4 texelColor = texture2D( map, vUv * repeat );
-        texelColor = mapTexelToLinear( texelColor );
 
         vec4 texelColor2 = texture2D( map2, vUv * repeat );
-        texelColor2 = mapTexelToLinear( texelColor2 );
 
         vec4 texelColor3 = texture2D( blendmap, vUv );
-        texelColor3 = mapTexelToLinear( texelColor3 );
 
 		diffuseColor *= vec4(mix(texelColor.xyz, texelColor2.xyz, texelColor3.g),0);
     #endif
+
 	#include <color_fragment>
 	#include <alphamap_fragment>
 	#include <alphatest_fragment>

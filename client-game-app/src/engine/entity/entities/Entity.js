@@ -16,11 +16,12 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 		x, y, z,
 		px, py, pz,
 		sx, sy, sz,
-		parent)
+		parent,
+		usePredefinedID, id)
 	{
 		super();
 
-		this.m_ID = Entity._idGenerator();
+		this.m_ID = usePredefinedID ? id : Entity._idGenerator();
 
 		this.m_Parent = parent || ENGINE.m_World;
 
@@ -189,27 +190,65 @@ class Entity extends mix(BaseObject).with(Comms, Movable, Clickable, Savable)
 	SetScaleZ(z) { this.SetScale(this.m_Scale.x, this.m_Scale.y, z); }
 
 	_SetRotation(x, y, z, propagate = true) {
-		this.m_Rotation.set(x, y, z);
+		this.m_Rotation.setFromEuler(new THREE.Euler(x, y, z), "XYZ");
 		if (this.m_Components.RenderComponent && this.m_Components.RenderComponent.m_Mesh
 		&& !this.m_Components.PhysicsComponent) {
-			this.m_Components.RenderComponent.m_Mesh.rotation.set(x, y, z);
-
-			return;
+			if(this.m_Components.RenderComponent.m_Mesh.rotation.isQuaternion)
+			{
+				this.m_Components.RenderComponent.m_Mesh.rotation.setFromEuler(new THREE.Euler(x, y, z), "XYZ");
+			}
+			else if(this.m_Components.RenderComponent.m_Mesh.rotation.isEuler)
+			{
+				this.m_Components.RenderComponent.m_Mesh.rotation.set(x, y, z);
+			}
 		}
 		if (this.m_Components.PhysicsComponent && this.m_Components.PhysicsComponent.m_PhysicsBody) {
 			this.m_Components.PhysicsComponent.SetRotation(x, y, z);
-
-			return;
 		}
 
 		if(propagate && this.m_Entities.length > 0) this.m_Entities.forEach(e =>
 			e._SetRotation(x, y, z, propagate)
 		);
 	}
+	
+	_SetRotationQ(x, y, z, w, propagate = true) {
+		if(this.m_Rotation.isQuaternion)
+		{
+			this.m_Rotation.set(x, y, z, w);
+		}
+		else if(this.m_Rotation.isEuler)
+		{
+			this.m_Rotation.setFromQuaternion(new THREE.Quaternion(x,y,z,w));
+		}
+
+		if (this.m_Components.RenderComponent && this.m_Components.RenderComponent.m_Mesh
+		&& !this.m_Components.PhysicsComponent) {
+			if(this.m_Components.RenderComponent.m_Mesh.rotation.isQuaternion)
+			{
+				this.m_Components.RenderComponent.m_Mesh.rotation.set(x, y, z, w);
+			}
+			else if(this.m_Components.RenderComponent.m_Mesh.rotation.isEuler)
+			{
+				this.m_Components.RenderComponent.m_Mesh.rotation.setFromQuaternion(new THREE.Quaternion(x,y,z,w));
+			}
+		}
+		if (this.m_Components.PhysicsComponent && this.m_Components.PhysicsComponent.m_PhysicsBody) {
+			this.m_Components.PhysicsComponent.SetRotationQ(x, y, z, w);
+		}
+
+		if(propagate && this.m_Entities.length > 0) this.m_Entities.forEach(e =>
+			e._SetRotationQ(x, y, z, w, propagate)
+		);
+	}
 
 	SetRotation(x, y, z, propagate = true)
 	{
 		this._SetRotation(x, y, z, propagate);
+	}
+
+	SetRotationQ(x, y, z, w, propagate = true)
+	{
+		this._SetRotationQ(x, y, z, w, propagate);
 	}
 
 	SetRotationX(x) {
@@ -290,6 +329,7 @@ import BasicShapeMeshRenderComponent from "./../components/RenderComponent/mixin
 import BasicSphereMeshRenderComponent from "./../components/RenderComponent/mixins/BasicSphereMeshRenderComponent";
 import HeightmapPlaneMeshRenderComponent from "./../components/RenderComponent/mixins/HeightmapPlaneMeshRenderComponent";
 import OBJRenderComponent from "./../components/RenderComponent/mixins/OBJRenderComponent";
+import GLTFRenderComponent from "./../components/RenderComponent/mixins/GLTFRenderComponent";
 import VegetationMeshRenderComponent from "./../components/RenderComponent/mixins/VegetationMeshRenderComponent";
 import FlameRenderComponent from "./../components/RenderComponent/mixins/FlameRenderComponent";
 import RenderComponent from "./../components/RenderComponent/RenderComponent";
@@ -300,6 +340,11 @@ import ScaleEditComponent from "./../components/ScaleEditComponent/ScaleEditComp
 import HeightmapEditComponent from "./../components/HeightmapEditComponent/HeightmapEditComponent";
 import PlanePaintEditComponent from "./../components/PlanePaintEditComponent/PlanePaintEditComponent";
 import TriggerComponent from "./../components/TriggerComponent/TriggerComponent";
+import DoorComponent from "./../components/DoorComponent/DoorComponent";
+import SlidingDoorComponent from "./../components/DoorComponent/mixins/SlidingDoorComponent";
+import BasicTrainComponent from "./../components/BasicTrainComponent/BasicTrainComponent";
+import BasicNodeComponent from "./../components/BasicNodeComponent/BasicNodeComponent";
+import VehiclePassengerComponent from "./../components/VehiclePassengerComponent/VehiclePassengerComponent";
 import WASDPlayerControlComponent from "./../components/WASDPlayerControlComponent/WASDPlayerControlComponent";
 import WorldPieceComponent from "./../components/WorldPieceComponent/WorldPieceComponent";
 
@@ -324,6 +369,7 @@ window.ComponentTypes = [
 	FlameRenderComponent,
 	PlanePaintEditComponent,
     OBJRenderComponent,
+    GLTFRenderComponent,
 	RenderComponent,
 	PointLightComponent,
 	LightComponent,
@@ -331,6 +377,11 @@ window.ComponentTypes = [
 	ScaleEditComponent,
 	HeightmapEditComponent,
     TriggerComponent,
+	DoorComponent,
+	SlidingDoorComponent,
+	BasicTrainComponent,
+	BasicNodeComponent,
+	VehiclePassengerComponent,
     WASDPlayerControlComponent,
     WorldPieceComponent,
     Component
@@ -341,7 +392,8 @@ Component.FromFile = (json) => new (Component._TypeFromName(json))(json.args);
 
 Entity._idCount = 0;
 
-Entity._idGenerator = () => Entity._idCount++;
+Entity._usedIDs = [];
+Entity._idGenerator = () => Entity._usedIDs.reduce((max, next) => Math.max(max, next)) + 1;
 
 Entity.FindByID = (id) => entities().find(e => e.m_ID === id);
 
@@ -353,21 +405,42 @@ Entity.FromFile = (json, parent, offset, postinit) => {
 	if(parent != void(0)) parentPosition.add(parent.m_OriginalOffset);
 	const spawnPosition = entityPosition.clone().add(parentPosition);
 
+	const jsonID = Number(json.id);
+
+	let usePredefinedID = false;
+	if(jsonID && typeof jsonID === "number" && !Entity._usedIDs.find(n => n === jsonID))
+	{
+		usePredefinedID = true;
+	}
+
 	let entity = new Entity(
 		spawnPosition.x, spawnPosition.y, spawnPosition.z,
 		entityPosition.x, entityPosition.y, entityPosition.z,
 		json.scale.x, json.scale.y, json.scale.z,
-		parent
+		parent,
+		usePredefinedID,
+		jsonID
 	);
+
+	Entity._usedIDs.push(entity.m_ID);
 
 	if (json.rot || json.scale) {
 		entity.__OnInitialised = () => {
 			if(json.scale) entity.SetScale(
 				json.scale.x, json.scale.y, json.scale.z, false
 			);
-			if(json.rot) entity.SetRotation(
-				json.rot.x, json.rot.y, json.rot.z, json.rot.w, false
-			);
+
+			if(json.rot && json.rot.w)
+			{
+				entity.SetRotationQ(
+					json.rot.x, json.rot.y, json.rot.z, json.rot.w, false
+				);
+			} else if(json.rot && json.rot.w == void(0))
+			{
+				entity.SetRotation(
+					json.rot.x, json.rot.y, json.rot.z, false
+				);
+			}
 
 			const coloredComponent = json.components.find(c => { 
 				try { if(c.args.material.color) {return true;} } catch(e) { return false; }

@@ -1,5 +1,6 @@
 "use strict";
 
+import * as CANNON from 'cannon-es';
 import Entity from "./../../../entities/Entity";
 import Component from "./../../Component";
 import PhysicsComponent from "./../PhysicsComponent";
@@ -17,12 +18,29 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 
 		this.m_PhysicsBody = {};
 		this.m_BodySettings = args.BodySettings || {};
+
+		this.m_GeometryBounds = {
+			min: new THREE.Vector3(),
+			max: new THREE.Vector3()
+		};
     }
 
     Initialise()
     {
-		this.m_Parent.m_Components.RenderComponent.m_Mesh.geometry.computeBoundingBox();
-		const geomBounds = this.m_Parent.m_Components.RenderComponent.m_Mesh.geometry.boundingBox;
+		const scale = this.m_Parent.m_Scale;
+
+		if(this.m_Parent.m_Components.RenderComponent)
+		{
+			this.m_Parent.m_Components.RenderComponent.m_Mesh.geometry.computeBoundingBox();
+			this.m_GeometryBounds = this.m_Parent.m_Components.RenderComponent.m_Mesh.geometry.boundingBox;
+		}
+		else
+		{
+			this.m_GeometryBounds = {
+				min: new THREE.Vector3(-scale.x/2, -scale.y/2, -scale.z/2),
+				max: new THREE.Vector3(scale.x/2, scale.y/2, scale.z/2)
+			};
+		}
 
 		// Default box if no body settings
 		this.m_BodySettings = this.m_BodySettings.type ? this.m_BodySettings :
@@ -30,9 +48,9 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 			type: "box",
 			size:
 			[
-				Math.abs(geomBounds.min.x - geomBounds.max.x),
-				Math.abs(geomBounds.min.y - geomBounds.max.y),
-				Math.abs(geomBounds.min.z - geomBounds.max.z)
+				Math.abs(this.m_GeometryBounds.min.x - this.m_GeometryBounds.max.x),
+				Math.abs(this.m_GeometryBounds.min.y - this.m_GeometryBounds.max.y),
+				Math.abs(this.m_GeometryBounds.min.z - this.m_GeometryBounds.max.z)
 			],
 			pos:
 			[
@@ -43,15 +61,14 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 			move: true
 		};
 
-		const scale = this.m_Parent.m_Scale;
 
 		if(this.m_BodySettings.type === "box")
 		{
 			if(this.m_BodySettings.size == void(0)) this.m_BodySettings.size =
 			[
-				Math.abs(geomBounds.min.x - geomBounds.max.x),
-				Math.abs(geomBounds.min.y - geomBounds.max.y),
-				Math.abs(geomBounds.min.z - geomBounds.max.z)
+				Math.abs(this.m_GeometryBounds.min.x - this.m_GeometryBounds.max.x),
+				Math.abs(this.m_GeometryBounds.min.y - this.m_GeometryBounds.max.y),
+				Math.abs(this.m_GeometryBounds.min.z - this.m_GeometryBounds.max.z)
 			];
 
 			this.m_PhysicsShape = new CANNON.Box(
@@ -113,7 +130,7 @@ class BasicPhysicsComponent extends mix(PhysicsComponent).with()
 
     Remove()
     {
-		ENGINE.m_World.m_PhysicsWorld.remove(this.m_PhysicsBody);
+		ENGINE.m_World.m_PhysicsWorld.removeBody(this.m_PhysicsBody);
     }
 }
 

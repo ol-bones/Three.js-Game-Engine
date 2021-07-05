@@ -68,7 +68,11 @@ class MaterialRequest extends mix(AssetRequest).with()
 						transparent: true,
 						opacity: data.opacity || 1,
 						shininess: data.shininess || 0,
-						fog: true
+						fog: true,
+						depthTest: data.depthTest || true,
+						depthFunc: data.depthFunc || THREE.LessEqualDepth,
+						depthWrite: data.depthWrite || true,
+						alphaTest: data.alphaTest || 0
 					});
 
 					if(data.repeat && data.repeat.length === 2)
