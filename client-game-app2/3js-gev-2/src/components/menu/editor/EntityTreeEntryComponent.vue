@@ -1,27 +1,15 @@
 <template>
-  <div class="entity-tree-entry" :style="style">
-    <div class="entity-tree-entry-info" v-on:mouseover="onHover" v-on:click="onSelect" @contextmenu.prevent="context_show">
-      {{this.GetDisplayInfo().name}}
-      <span class="entity-tree-expand" v-on:click="expandChildren" v-show="!this.expanded && this.entity.m_Entities.length > 0">[+]</span>
-      <span class="entity-tree-collapse" v-on:click="expandChildren" v-show="this.expanded && this.entity.m_Entities.length > 0">[-]</span>
-      <b-dropdown ref="ddown" size="lg" variant="link" toggle-class="text-decoration-none" no-caret lazy class="entity-context-menu">
-        <b-dropdown-header>
-          Entity {{this.entity.m_ID}}
-        </b-dropdown-header>
-        <b-dropdown-item>Save</b-dropdown-item>
-        <b-dropdown-item @click="CopyEntityData">Copy Data</b-dropdown-item>
-        <b-dropdown-item @click="DeleteSelectedEntity">Delete</b-dropdown-item>
-      </b-dropdown>
+  <div class="entity-tree-entry">
+    
+    <div class="q-pa-md q-gutter-sm">
+      <q-tree
+        :nodes="entity"
+        accordion
+        node-key="GetDisplayInfo().name"
+        v-model:expanded="expanded"
+      />
     </div>
-    <div class="entity-tree-entry-children" v-if="expanded">
-      <div v-for="(entity, index) in this.entity.m_Entities" :key='index'>
-        <entity-tree-entry-component
-          :entity="entity"
-          :depth="1"
-          v-on:entitySelected="entitySelected"
-        />
-      </div>
-    </div>
+    
   </div>
 </template>
 
@@ -54,6 +42,29 @@ export default {
   created() {
   },
   mounted() {
+    /*
+    <div class="entity-tree-entry-info" v-on:mouseover="onHover" v-on:click="onSelect" @contextmenu.prevent="context_show">
+      {{this.GetDisplayInfo().name}}
+      <span class="entity-tree-expand" v-on:click="expandChildren" v-show="!this.expanded && this.entity.m_Entities.length > 0">[+]</span>
+      <span class="entity-tree-collapse" v-on:click="expandChildren" v-show="this.expanded && this.entity.m_Entities.length > 0">[-]</span>
+      <b-dropdown ref="ddown" size="lg" variant="link" toggle-class="text-decoration-none" no-caret lazy class="entity-context-menu">
+        <b-dropdown-header>
+          Entity {{this.entity.m_ID}}
+        </b-dropdown-header>
+        <b-dropdown-item>Save</b-dropdown-item>
+        <b-dropdown-item @click="CopyEntityData">Copy Data</b-dropdown-item>
+        <b-dropdown-item @click="DeleteSelectedEntity">Delete</b-dropdown-item>
+      </b-dropdown>
+    </div>
+    <div class="entity-tree-entry-children" v-if="expanded">
+      <div v-for="(entity, index) in this.entity.m_Entities" :key='index'>
+        <entity-tree-entry-component
+          :entity="entity"
+          :depth="1"
+          v-on:entitySelected="entitySelected"
+        />
+      </div>
+      */
   },
   methods: {
     CopyEntityData() {

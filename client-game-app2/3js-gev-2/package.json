@@ -8,12 +8,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "cannon-es": "^0.18.0",
     "cannon-es-debugger": "^0.1.4",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
     "mixwith": "^0.1.1",
+    "quasar": "^2.0.0",
     "three": "^0.130.0",
     "vue": "^3.0.0",
     "vue-color": "^2.8.1",
@@ -28,7 +30,8 @@
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "vue-cli-plugin-quasar": "~4.0.1"
   },
   "eslintConfig": {
     "root": true,

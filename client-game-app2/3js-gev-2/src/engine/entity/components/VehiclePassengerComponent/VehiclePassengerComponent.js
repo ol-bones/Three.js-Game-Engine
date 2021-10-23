@@ -86,6 +86,7 @@ class VehiclePassengerComponent extends mix(Component).with()
 		if(localPlayer)
 		{
 			localPlayer.m_Components.FPSPlayerControl.DisableMovement();
+			this.m_IsSeated = true;
 		}
 	}
 
@@ -95,6 +96,7 @@ class VehiclePassengerComponent extends mix(Component).with()
 		if(localPlayer)
 		{
 			localPlayer.m_Components.FPSPlayerControl.EnableMovement();
+			this.m_IsSeated = false;
 		}
 	}
 

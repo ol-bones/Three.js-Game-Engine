@@ -12,6 +12,11 @@ class Desert {
 		ENGINE.m_World.m_Camera.position.set(150, 170, -175);
 	}
 
+	OnInitialised()
+	{
+		setInterval(this.Update.bind(this), 1000/5);
+	}
+
 	LoadWorld() {
 		try {
 			let data = json(`/data/desert/1.json`);
@@ -75,10 +80,39 @@ class Desert {
 		catch (e) {
 			console.log(e);
 			setTimeout(this.LoadWorld.bind(this), 50);
+			return;
 		}
+
+		this.OnInitialised();
 	}
 
 	Update() {
+		try
+		{
+			const IntroBoatTrainEntity = entities().find(e => e.m_Components.BasicTrainComponent);
+			const IntroBoatPassengerEntity = entities().find(e => e.m_Components.VehiclePassengerComponent);
+			const PlayerControlsEntity = entities().find(e => e.m_Components.FPSPlayerControl);
+	
+			const IntroBoatInitialised = IntroBoatTrainEntity != void(0) && IntroBoatTrainEntity.m_Components != void(0) && IntroBoatTrainEntity.m_Components.BasicTrainComponent != void(0);
+			const IntroBoatPassengerInitialised = IntroBoatPassengerEntity != void(0) && IntroBoatPassengerEntity.m_Components != void(0) && IntroBoatPassengerEntity.m_Components.VehiclePassengerComponent != void(0);
+			const PlayerControlsInitialised = PlayerControlsEntity !== null && PlayerControlsEntity.m_Components != void(0) && PlayerControlsEntity.m_Components.FPSPlayerControl != void(0);
+
+			const IntroBoatComponent = IntroBoatTrainEntity.m_Components.BasicTrainComponent;
+			const IntroBoatPassengerComponent = IntroBoatTrainEntity.m_Components.VehiclePassengerComponent;
+			const PlayerControlComponent = PlayerControlsEntity.m_Components.FPSPlayerControl;
+
+			if(IntroBoatInitialised && IntroBoatComponent.m_Finished && IntroBoatPassengerComponent.m_IsSeated)
+			{
+					IntroBoatPassengerComponent.Exit();
+					PlayerControlsEntity.SetPosition(
+						1200,
+						100,
+						-535,
+						true
+					);
+			}
+		}
+		catch (e) { console.error(e); }
 	}
 }
 

@@ -3,11 +3,14 @@ import App from './App.vue'
 
 import router from './router';
 import "./libs/bootstrap.css";
+import './../src/assets/main.css';
 
 import Engine from "./engine/Engine";
 import * as THREE from "three";
 
 import * as CANNON from 'cannon-es';
+import { Quasar } from 'quasar'
+import quasarUserOptions from './quasar-user-options'
 
 
 window.OrbitControls = require("./libs/OrbitControls");
@@ -21,4 +24,4 @@ require("./libs/GLTFLoader");
 
 window.ENGINE = new Engine();
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(Quasar, quasarUserOptions).use(router).mount('#app')

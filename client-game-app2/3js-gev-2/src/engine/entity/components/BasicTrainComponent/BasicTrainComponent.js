@@ -21,7 +21,8 @@ class BasicTrainComponent extends mix(Component).with()
       this.m_Speed = 5;
       this.m_RotateSpeed = 0.0075;
 
-      this.m_Loop = true;
+      this.m_Loop = false;
+      this.m_Finished = false;
     }
 
     Initialise()
@@ -75,6 +76,8 @@ class BasicTrainComponent extends mix(Component).with()
       const currentNode = this.m_Nodes[currentNodeIndex === -1 ? 0 : currentNodeIndex];
       const nextNode = this.m_Nodes[nextNodeIndex];
 
+      if(nextNode == void(0) && !this.m_Loop) return;
+
       const normal = new THREE.Vector3(
         nextNode.m_Position.x - this.m_Parent.m_Position.x,
         nextNode.m_Position.y - this.m_Parent.m_Position.y,
@@ -104,9 +107,17 @@ class BasicTrainComponent extends mix(Component).with()
         this.m_CurrentNode += 1;
       }
 
-      if(this.m_Loop && this.m_CurrentNode >= this.m_Nodes.length - 1)
+      if(this.m_CurrentNode >= this.m_Nodes.length - 1)
       {
-        this.m_CurrentNode = -1;
+          if (this.m_Loop)
+          {
+            this.m_CurrentNode = -1;
+          }
+          else
+          {
+            this.m_Finished = true;
+          }
+
       }
 
     }

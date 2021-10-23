@@ -77,7 +77,7 @@ class World extends mix(BaseObject).with(Comms)
 			{
 				const colour = new THREE.Color(0x15161f);
 				this.m_Scene.background = colour;
-				//this.m_Scene.fog = new THREE.FogExp2(colour, 0.0035);
+				this.m_Scene.fog = new THREE.FogExp2(colour, 0.0035);
 				var ambientLight = new THREE.AmbientLight(0x000000);
 				this.m_Scene.add(ambientLight);
 				var spotLight = new THREE.SpotLight(0x606c7d);

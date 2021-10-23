@@ -72810,11 +72810,13 @@
                 },
                 {
                     "args": {
-                        "Nodes": [
+                        "otherNodesRemovedCauseTakesTooLong": [
                             375,
                             244,
                             245,
-                            246,
+                            246
+                        ],
+                        "Nodes": [
                             247,
                             248
                         ],
@@ -72830,7 +72832,7 @@
                             "y": 50,
                             "z": 0
                         },
-                        "enterOnLoad": false,
+                        "enterOnLoad": true,
                         "Parent": 235
                     },
                     "name": "VehiclePassengerComponent",
@@ -78104,6 +78106,99 @@
                         "Parent": 375
                     },
                     "name": "BasicBoxMeshRenderComponent",
+                    "updateable": false
+                }
+            ]
+        },
+        {
+            "id": "376",
+            "pos":
+            {
+                "x":520,
+                "y":-6,
+                "z":-500
+            },
+            "rot":
+            {
+                "x":0,
+                "y":0,
+                "z":0,
+                "w":1
+            },
+            "scale":
+            {
+                "x": 1000,
+                "y": 1,
+                "z": 500
+            },
+            "parent": 0,
+            "entities": [],
+            "components":
+            [
+                {
+                    "args":
+                    {
+                        "Parent": 376,
+                        "castShadow": false,
+                        "count": 10000,
+                        "distribution": "uniform",
+                        "lathe": {
+                            "heightSegments": 1,
+                            "vegHeight": 25,
+                            "vegWidth": 8.5
+                        },
+                        "material": {
+                            "type": "VegetationMaterial",
+                            "texture": "/grass_2.png",
+                            "color": "0x555555",
+                            "repeat": [
+                                1,
+                                1
+                            ]
+                        }
+                    },
+                    "name":"VegetationMeshRenderComponent",
+                    "updateable":false
+                }
+            ]
+        },
+        {
+            "id": "377",
+            "pos": {
+                "x": 215,
+                "y": 72.5,
+                "z": -762
+            },
+            "rot": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "scale": {
+                "x": 20,
+                "y": 20,
+                "z": 20
+            },
+            "parent": 377,
+            "entities": [],
+            "components": [
+                {
+                    "args": {
+                        "castShadow": false,
+                        "model": "mushroom.obj",
+                        "texture": "/mushroom.png",
+                        "Parent": 377
+                    },
+                    "name": "OBJRenderComponent",
+                    "updateable": false
+                },
+                {
+                    "args": {
+                        "color": "0x0000FF",
+                        "decay": 10,
+                        "Parent": 377
+                    },
+                    "name": "PointLightComponent",
                     "updateable": false
                 }
             ]

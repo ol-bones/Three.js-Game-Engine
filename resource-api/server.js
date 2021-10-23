@@ -186,6 +186,7 @@ app.get("/shaders/FlameShader", (req, res) => {
 });
 
 app.post("/save", (req, res) => {
+    return;
     const data = req.body;
     fs.writeFileSync(`${data.location}${data.name}`, JSON.stringify(data.world));
 });

@@ -1,79 +1,55 @@
 <template>
-  <div class="row entity-properties-container fill" v-if="this.entity">
+  <div class="row entity-properties-container fill" v-if="entity">
     <div class="col-xs-12 col-sm-12 col-md-12 entity-properties-inner-container">
-      <div class="row properties-tabs-row"
-        @contextmenu.prevent="propertiesRightClick">
-        <div v-bind:class="componentButtonClassList"
-             v-b-tooltip.hover.topright title="General Properties"
-             v-on:click="tabSelect('General')">
-          <icon style="pointer-events: none;" name="bars" scale="1"/>
-        </div>
-        <div 
-          v-bind:class="componentButtonClassList"
-          v-for="(component, index) in this.entity.m_Components" :key='index'
-          v-b-tooltip.hover.topright :title="component.m_Name + ' Properties'"
-          v-on:click="tabSelect(component.m_Name)">
-          <icon style="pointer-events: none;" :name="ComponentIcon(component)" scale="1"></icon>  
-        </div>
+      <div class="row">
+        <q-card style="width:100%;">
+          <q-tabs
+            v-model="tab"
+            dense
+            class="bg-grey-3 text-grey-7"
+            active-color="primary"
+            indicator-color="purple"
+            align="justify"
+          >
+            <q-tab name="General">
+                <q-icon
+                  name="settings"
+                  :color="'grey'"
+                  class="q-mr-sm"
+                />
+            </q-tab>
+            
+            <q-tab
+              v-for="(component, index) in entity.m_Components" :key='index'
+              :name="component.m_Name">
+                <q-icon
+                  :name="ComponentIcon(component) || 'settings'"
+                  :color="'grey'"
+                  class="q-mr-sm"
+                />
+            </q-tab>
+          </q-tabs>
+
+          <q-separator></q-separator>
+
+          <q-tab-panels v-model="tab" animated class="bg-primary text-white">
+
+            <q-tab-panel name="General">
+                <div class="text-h6">Mails</div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </q-tab-panel>
+
+            <q-tab-panel
+              v-for="(component, index) in entity.m_Components" :key='index'
+              :name="component.m_Name">
+                <div class="text-h6">Mails</div>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </q-tab-panel>
+
+          </q-tab-panels>
+        </q-card>
       </div>
-      <div class="properties-context col"
-        v-if="showPropertiesContext"
-        v-on:mouseleave="showPropertiesContext = false"
-        v-bind:style="propertesContextStyle">
-        <div class="properties-context-row row"
-          @click="removeComponent">
-          <div class="col-xs-12 col-sm-12 col-md-12">
-            Remove
-          </div>
-        </div>
-        <div class="properties-context-row row">
-          <div class="col-xs-6 col-sm-6 col-md-6">
-            <div style="float:left;"
-            v-on:mouseover="addComponentsListHovered = true">
-              Add
-            </div>
-          </div>
-          <div class="col-xs-6 col-sm-6 col-md-6">
-            <icon style="float:right;transform:translateY(20%);" name="caret-right" scale="1"/>
-          </div>
-        </div>
-        <div class="componentsList"
-          v-on:mouseover="componentsListHovered = true"
-          v-if="showComponentsList">
-          <div class="col-xs-12 col-sm-12 col-md-12 fill"
-            v-for="(component, componentIndex) in componentTypes" :key="componentIndex">
-              {{component.name}}
-          </div>
-        </div>
-      </div>
-      <div class="row properties-options-row" id="properties-panel">
-        <general-properties-component
-          v-show="tabSelected === 'General'"
-          v-if="this.entity"
-          :entity="this.entity"
-        />
-        <render-component-properties-component
-          v-show="tabSelected === 'RenderComponent'"
-          v-if="this.entity.m_Components && this.entity.m_Components.RenderComponent"
-          :entity="this.entity"
-        />
-        <physics-component-properties-component
-          v-show="tabSelected === 'PhysicsComponent'"
-          v-if="this.entity.m_Components && this.entity.m_Components.PhysicsComponent"
-          :entity="this.entity"
-        />
-        <height-map-edit-component-properties-component
-          v-show="tabSelected === 'HeightmapEditComponent'"
-          v-if="this.entity.m_Components && this.entity.m_Components.HeightmapEditComponent"
-          :entity="this.entity"
-        />
-        <plane-paint-edit-component-properties-component
-          v-show="tabSelected === 'PlanePaintEditComponent'"
-          v-if="this.entity.m_Components && this.entity.m_Components.PlanePaintEditComponent"
-          :entity="this.entity"
-        />
-      </div>
-    </div>  
+    </div>
   </div>
 </template>
 
@@ -84,6 +60,8 @@ import RenderComponentPropertiesComponent from "./EntityProperties/RenderCompone
 import PhysicsComponentPropertiesComponent from "./EntityProperties/PhysicsComponentPropertiesComponent";
 import HeightMapEditComponentPropertiesComponent from "./EntityProperties/HeightMapEditComponentPropertiesComponent";
 import PlanePaintEditComponentPropertiesComponent from "./EntityProperties/PlanePaintEditComponentPropertiesComponent";
+
+import { ref } from 'vue'
 
 export default {
   name: "EntityPropertiesComponent",
@@ -98,6 +76,14 @@ export default {
     entity: {
       type: Object,
       required: false
+    }
+  },
+  watch: {
+    entity: {
+      immediate: true,
+      handler(changed, previous) {
+        this.tab = ref("General");
+      }
     }
   },
   computed: {
@@ -121,7 +107,7 @@ export default {
   },
   data() {
     return {
-      tabSelected: "General",
+      tab: ref("General"),
       showPropertiesContext: false,
       propertiesContextClickPos: {x: 0, y: 0},
       propertiesContextSelectedComponent: String(""),
@@ -130,6 +116,9 @@ export default {
       componentsListHovered: false
 
     }
+  },
+  setup(props) {
+
   },
   created() {
   },
@@ -151,14 +140,16 @@ export default {
     },
     ComponentIcon(component)
     {
+      console.error(component.m_Name)
       switch(component.m_Name)
       {
-        case "WorldPieceComponent": return "puzzle-piece";
-        case "WASDPlayerControlComponent": return "male";
-        case "TriggerComponent": return "bolt";
-        case "RenderComponent": return "draw-polygon";
-        case "PhysicsComponent": return "magnet"
-        default: return "cog";
+        case "WorldPieceComponent": return "public";
+        case "FPSPlayerControl": return "person";
+        case "TriggerComponent": return "notification_important";
+        case "RenderComponent": return "extension";
+        case "PhysicsComponent": return "format_shapes";
+        case "LightComponent": return "wb_twilight";
+        default: return "settings";
       }
     }
   }
@@ -170,6 +161,7 @@ export default {
     width: 100%;
     height:100%;
     background-color: red;
+    margin-left: 0;
   }
 
   .entity-properties-container > ::-webkit-scrollbar {
@@ -185,6 +177,7 @@ export default {
     -webkit-box-shadow: inset 0px -59px 79px -33px rgba(0,0,0,0.5);
     -moz-box-shadow: inset 0px -59px 79px -33px rgba(0,0,0,0.5);
     box-shadow: inset 0px -59px 79px -33px rgba(0,0,0,0.5);
+    margin-left: 0;
   }
 
   .entity-properties-inner-container > ::-webkit-scrollbar {
